@@ -1,5 +1,9 @@
 # 🗺️ Croquis — Editor de Planos y Campus
 
+[![Despliegue en GitHub Pages](https://img.shields.io/badge/Demo_en_vivo-GitHub_Pages-2ea44f?style=for-the-badge&logo=github)](https://wguandique-2005.github.io/CROQUIS/)
+
+> 🌐 **Acceso y Demostración en vivo:** [https://wguandique-2005.github.io/CROQUIS/](https://wguandique-2005.github.io/CROQUIS/)
+
 **Croquis** es una aplicación web interactiva, ligera y autónoma diseñada para la delimitación, edición y diseño vectorial de planos de campus, complejos deportivos, recintos educativos e instalaciones arquitectónicas. 
 
 Desarrollado exclusivamente con tecnologías web nativas (**HTML5**, **CSS3**, **Vanilla JavaScript** y gráficos vectoriales **SVG**), funciona directamente en cualquier navegador web sin requerir instalaciones, dependencias externas complejas ni procesos de compilación (*zero-build*).
@@ -89,7 +93,7 @@ A diferencia de capturas de pantalla convencionales, el motor de exportación re
 
 ```text
 CROQUIS/
-├── croquis.html             # Aplicación completa (HTML, CSS y JavaScript integrados)
+├── index.html               # Aplicación completa (HTML, CSS y JavaScript integrados)
 ├── croquis-campus.json      # Archivo de datos de ejemplo (exportación en formato JSON)
 ├── croquis-campus-UGB.pdf   # Ejemplo del PDF generado con el croquis y registro de zonas
 └── README.md                # Documentación del proyecto
@@ -101,17 +105,21 @@ CROQUIS/
 
 No se requieren herramientas de construcción (*bundlers* como Webpack o Vite) ni servidores de Node.js.
 
-### Opción 1: Apertura Directa
-1. Haz doble clic sobre el archivo `croquis.html` o arrástralo directamente a cualquier navegador web moderno (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Brave).
+### Opción 1: Acceso en Línea (GitHub Pages)
+Puedes acceder y utilizar la aplicación directamente en tu navegador sin instalar nada:
+👉 **[https://wguandique-2005.github.io/CROQUIS/](https://wguandique-2005.github.io/CROQUIS/)**
 
-### Opción 2: Mediante un Servidor Local Ligero (Opcional)
+### Opción 2: Apertura Local Directa
+1. Haz doble clic sobre el archivo `index.html` o arrástralo directamente a cualquier navegador web moderno (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Brave).
+
+### Opción 3: Mediante un Servidor Local Ligero (Opcional)
 Si deseas servir el proyecto a través de HTTP/HTTPS local:
 
 * **Con Python 3:**
   ```bash
   python3 -m http.server 8000
   ```
-  Abre en tu navegador `http://localhost:8000/croquis.html`.
+  Abre en tu navegador `http://localhost:8000/`.
 
 * **Con Node.js (npx serve):**
   ```bash
