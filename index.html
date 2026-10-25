@@ -2233,8 +2233,15 @@ function drawDetailHandles(){
   const r = roomById(DET.sel);
   if (!r || DET.tool !== 'select') return;
   const u = 1/DET.view.k;
-  if (r.poly.length <= 24)
-    r.poly.forEach((p, i) =>
+  if (r.poly.length <= 14){
+    r.poly.forEach((p, i) => {
+      const q = r.poly[(i + 1) % r.poly.length];
+      const mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2, s = 4.5 * u;
+      el('path', {d:`M${mx-s},${my} L${mx},${my-s} L${mx+s},${my} L${mx},${my+s} Z`,
+        fill:'#F8F4E7', stroke:'#7A7D6A', 'stroke-width':1.2*u, 'data-dmid':i, style:'cursor:copy'}, dRoot);
+    });
+  }
+  r.poly.forEach((p, i) =>
       el('circle', {cx:p.x, cy:p.y, r:5.5*u, fill:'#F8F4E7', stroke:'#B04A26', 'stroke-width':2*u,
         'data-dv':i, style:'cursor:move'}, dRoot));
   const b = polyBBox(r.poly), s = 9*u;
@@ -2443,7 +2450,7 @@ function setDetailHint(){
   } else if (DET.tool === 'draw'){
     h.innerHTML = `Dibujar ambiente: <kbd>clic</kbd> añade vértices · <kbd>ENTER</kbd>/<kbd>doble clic</kbd> cierra · <kbd>⌫</kbd> quita el último · <kbd>ESC</kbd> cancela`;
   } else {
-    h.innerHTML = `Clic: seleccionar ambiente · arrastrar: mover · puntos: editar forma · <kbd>ESC</kbd> volver al campus`;
+    h.innerHTML = `Clic: seleccionar · arrastrar: mover · puntos: editar forma · ◇ añade vértice · <kbd>ALT</kbd> + clic: elimina · <kbd>ESC</kbd> volver al campus`;
   }
   h.classList.add('on');
 }
@@ -2478,6 +2485,14 @@ function detailDeleteRoom(id){
   if (DET.sel === id) DET.sel = null;
   save(); renderRoomList(); detailRenderProp(); detailRenderCanvas();
   toast(`Ambiente ${r.code || ''} eliminado — Ctrl+Z para deshacer.`);
+}
+
+function detailDeleteVertex(r, idx){
+  if (!r) return;
+  if (r.poly.length <= 3){ toast('Un ambiente necesita al menos 3 vértices.', 'warn'); return; }
+  pushUndo();
+  r.poly.splice(idx, 1);
+  save(); detailRenderCanvas(); renderRoomList(); detailRenderProp();
 }
 
 /* =====================================================================
@@ -2905,7 +2920,19 @@ function wireDetail(){
       const dv = t.getAttribute && t.getAttribute('data-dv');
       if (dv !== null && dv !== undefined && !isNaN(+dv)){
         const r = roomById(DET.sel);
+        if (e.altKey){ detailDeleteVertex(r, +dv); return; }
         if (r) dDrag = {type:'dvertex', r, idx:+dv, snap:snapshot(), moved:false};
+        return;
+      }
+      const dmid = t.getAttribute && t.getAttribute('data-dmid');
+      if (dmid !== null && dmid !== undefined && !isNaN(+dmid)){
+        const r = roomById(DET.sel);
+        if (r){
+          const snap = snapshot(), i = +dmid, a = r.poly[i], b = r.poly[(i + 1) % r.poly.length];
+          r.poly.splice(i + 1, 0, {x:grid((a.x + b.x) / 2), y:grid((a.y + b.y) / 2)});
+          dDrag = {type:'dvertex', r, idx:i + 1, snap, moved:true};
+          dSchedule();
+        }
         return;
       }
       const dsc = t.getAttribute && t.getAttribute('data-dsc');
@@ -2958,6 +2985,12 @@ function wireDetail(){
   }, {passive:false});
   dsvg.addEventListener('dblclick', e => {
     if (DET.open && DET.tool === 'draw'){ e.preventDefault(); detailCloseDraw(); }
+    else if (DET.open && DET.tool === 'select'){
+      const dv = e.target.getAttribute && e.target.getAttribute('data-dv');
+      if (dv !== null && dv !== undefined && !isNaN(+dv)){
+        e.preventDefault(); detailDeleteVertex(roomById(DET.sel), +dv);
+      }
+    }
   });
 
   window.addEventListener('pointermove', e => {
