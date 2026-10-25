@@ -1288,7 +1288,7 @@ function renderHandles(){
   }
   const z = getSel();
   if (!z || z.visible === false || state.tool !== 'select' || z.locked) return;
-  drawVertexHandles(gUi, z.poly.map(p => worldPt(z, p)), 'item');
+  drawVertexHandles(gUi, z.poly.map(p => worldPt(z, p)), 'item', true);
   const b = polyBBox(z.poly), c = itemCenter(z);
   SCALE_KEYS.forEach(k => {
     const hx = k.includes('w') ? b.x : b.x+b.w, hy = k.includes('n') ? b.y : b.y+b.h;
@@ -1301,7 +1301,15 @@ function renderHandles(){
   el('circle', {cx:rh.x, cy:rh.y, r:7, fill:'#F8F4E7', stroke:'#B04A26', 'stroke-width':2, 'data-rot':'1', style:'cursor:grab'}, gUi);
   txt(gUi, 'R', {x:rh.x, y:rh.y+3, 'text-anchor':'middle', class:'ft-m', 'font-weight':700, 'font-size':9, fill:'#B04A26'});
 }
-function drawVertexHandles(g, pts, owner){
+function drawVertexHandles(g, pts, owner, showFaceHandles = false){
+  if (showFaceHandles && pts.length <= 14){
+    pts.forEach((a, i) => {
+      const b = pts[(i + 1) % pts.length];
+      el('line', {x1:a.x, y1:a.y, x2:b.x, y2:b.y, stroke:'#B04A26', 'stroke-width':2.4,
+        'stroke-dasharray':'6 4', opacity:.58, 'data-face':i, 'data-owner':owner,
+        style:'cursor:crosshair'}, g);
+    });
+  }
   if (pts.length <= 14){
     for (let i = 0; i < pts.length; i++){
       const a = pts[i], bp = pts[(i+1)%pts.length];
@@ -1472,6 +1480,8 @@ function select(id){
   const item = document.querySelector(`.zitem[data-id="${id}"]`);
   if (item) item.scrollIntoView({block:'nearest'});
   const zz = itemById(id);
+  if (zz && !zz.locked)
+    setHint('Editar forma: <kbd>clic</kbd> en ◇ añade un vértice · arrastrá un <b>borde punteado</b> para extruir una cara · <kbd>ALT</kbd>+clic elimina un vértice');
   if (zz && (zz.kind === 'bldg' || zz.kind === 'aud') && !dblHintShown){
     dblHintShown = true;
     toast('Doble clic sobre el edificio para editar sus ambientes interiores.');
@@ -1513,13 +1523,25 @@ svg.addEventListener('pointerdown', e => {
       const owner = t.getAttribute('data-owner');
       const arr = owner === 'terrain' ? state.terrain.points : (getSel() && !getSel().locked ? getSel().poly : null);
       if (arr){
-        const i = +mAttr;
-        pushUndo();
-        arr.splice(i+1, 0, {x: arr[i].x, y: arr[i].y});
-        drag = {type:'vertex', owner, idx:i+1, z: owner === 'item' ? getSel() : null, snap:null, moved:true};
+        const snap = snapshot(), i = +mAttr, a = arr[i], b = arr[(i + 1) % arr.length];
+        arr.splice(i+1, 0, {x:(a.x+b.x)/2, y:(a.y+b.y)/2});
+        drag = {type:'vertex', owner, idx:i+1, z: owner === 'item' ? getSel() : null, snap, moved:true};
         if (owner === 'terrain') buildTerrain(); else updateItemNode(getSel());
         renderHandles();
       }
+      return;
+    }
+    const fAttr = t.getAttribute && t.getAttribute('data-face');
+    if (fAttr !== null && fAttr !== undefined && !isNaN(+fAttr)){
+      const z = getSel();
+      if (!z || z.locked) return;
+      const i = +fAttr, a = z.poly[i], b = z.poly[(i + 1) % z.poly.length];
+      const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+      if (len < .1) return;
+      const start = localPt(z, p), snap = snapshot();
+      z.poly.splice(i + 1, 0, {x:a.x, y:a.y}, {x:b.x, y:b.y});
+      drag = {type:'face', z, idx:i, a:{...a}, b:{...b}, nx:-dy/len, ny:dx/len, start, snap, moved:false};
+      renderHandles();
       return;
     }
     const sAttr = t.getAttribute && t.getAttribute('data-scale');
@@ -1625,6 +1647,15 @@ window.addEventListener('pointermove', e => {
           ttShow(`<span class="tt-name">${cur.length} vértices</span>`, e.clientX, e.clientY);
         }
       }
+      else if (drag.type === 'face'){
+        const p = localPt(drag.z, svgPoint(e));
+        const amount = (p.x-drag.start.x)*drag.nx + (p.y-drag.start.y)*drag.ny;
+        drag.z.poly[drag.idx+1] = {x:grid(drag.a.x + drag.nx*amount), y:grid(drag.a.y + drag.ny*amount)};
+        drag.z.poly[drag.idx+2] = {x:grid(drag.b.x + drag.nx*amount), y:grid(drag.b.y + drag.ny*amount)};
+        drag.moved = Math.abs(amount) > .5;
+        scheduleFullItem(drag.z);
+        ttShow(`<span class="tt-name">Extruir cara · ${Math.round(Math.abs(amount))} px</span>`, e.clientX, e.clientY);
+      }
       else if (drag.type === 'scale'){
         const p = svgPoint(e), z = drag.z, o = polyBBox(drag.orig);
         const lp = localPt(z, p);
@@ -1709,6 +1740,15 @@ window.addEventListener('pointerup', () => {
       if (drag.snap) pushUndoAt(drag.snap);
       if (drag.z) updateItemNode(drag.z);
       save(); renderHandles(); renderEditor();
+      ttHide();
+    }
+    else if (drag.type === 'face'){
+      if (drag.moved){
+        updateItemNode(drag.z); pushUndoAt(drag.snap); save(); renderHandles(); renderEditor();
+      } else {
+        drag.z.poly.splice(drag.idx + 1, 2);
+        updateItemNode(drag.z); renderHandles();
+      }
       ttHide();
     }
     else if (drag.type === 'scale' && drag.tf){
