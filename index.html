@@ -1279,6 +1279,7 @@ function renderItems(){
    MANIJAS
 ==================================================================== */
 const SCALE_KEYS = ['nw','ne','se','sw'];
+const DETAIL_SCALE_KEYS = [...SCALE_KEYS, 'n', 'e', 's', 'w'];
 function renderHandles(){
   gUi.innerHTML = '';
   if (state.terrainEdit){
@@ -2245,11 +2246,19 @@ function drawDetailHandles(){
       el('circle', {cx:p.x, cy:p.y, r:5.5*u, fill:'#F8F4E7', stroke:'#B04A26', 'stroke-width':2*u,
         'data-dv':i, style:'cursor:move'}, dRoot));
   const b = polyBBox(r.poly), s = 9*u;
-  SCALE_KEYS.forEach(k => {
-    const hx = k.includes('w') ? b.x : b.x + b.w, hy = k.includes('n') ? b.y : b.y + b.h;
+  DETAIL_SCALE_KEYS.forEach(k => {
+    const hx = k.includes('w') ? b.x : k.includes('e') ? b.x + b.w : b.x + b.w / 2;
+    const hy = k.includes('n') ? b.y : k.includes('s') ? b.y + b.h : b.y + b.h / 2;
+    const cursor = k === 'e' || k === 'w' ? 'ew-resize' : k === 'n' || k === 's' ? 'ns-resize' : 'nwse-resize';
     el('rect', {x:hx - s/2, y:hy - s/2, width:s, height:s, fill:'#F8F4E7', stroke:'#20241A',
-      'stroke-width':1.5*u, 'data-dsc':k, style:'cursor:nwse-resize'}, dRoot);
+      'stroke-width':1.5*u, 'data-dsc':k, style:`cursor:${cursor}`}, dRoot);
   });
+  const c = polyCentroid(r.poly), ry = b.y - 27*u;
+  el('line', {x1:c.x, y1:b.y, x2:c.x, y2:ry, stroke:'#20241A', 'stroke-width':1.4*u, opacity:.75, 'pointer-events':'none'}, dRoot);
+  el('circle', {cx:c.x, cy:ry, r:7*u, fill:'#F8F4E7', stroke:'#B04A26', 'stroke-width':2*u,
+    'data-drot':'1', style:'cursor:grab'}, dRoot);
+  txt(dRoot, 'R', {x:c.x, y:ry + 3*u, 'text-anchor':'middle', class:'ft-m', 'font-weight':700,
+    'font-size':9*u, fill:'#B04A26', 'pointer-events':'none'});
 }
 function drawDetailGhost(p){
   const b = bld(); if (!b) return;
@@ -2450,7 +2459,7 @@ function setDetailHint(){
   } else if (DET.tool === 'draw'){
     h.innerHTML = `Dibujar ambiente: <kbd>clic</kbd> añade vértices · <kbd>ENTER</kbd>/<kbd>doble clic</kbd> cierra · <kbd>⌫</kbd> quita el último · <kbd>ESC</kbd> cancela`;
   } else {
-    h.innerHTML = `Clic: seleccionar · arrastrar: mover · puntos: editar forma · ◇ añade vértice · <kbd>ALT</kbd> + clic: elimina · <kbd>ESC</kbd> volver al campus`;
+    h.innerHTML = `Clic: seleccionar · arrastrar: mover · manijas laterales: ancho/alto · <b>R</b>: rotar · ◇ añade vértice · <kbd>ALT</kbd> + clic: elimina · <kbd>ESC</kbd> volver al campus`;
   }
   h.classList.add('on');
 }
@@ -2941,6 +2950,14 @@ function wireDetail(){
         if (r) dDrag = {type:'dscale', r, key:dsc, orig:r.poly.map(q => ({...q})), snap:snapshot(), moved:false};
         return;
       }
+      if (t.getAttribute && t.getAttribute('data-drot')){
+        const r = roomById(DET.sel);
+        if (r){
+          const c = polyCentroid(r.poly);
+          dDrag = {type:'drot', r, c, a0:Math.atan2(p.y-c.y, p.x-c.x), orig:r.poly.map(q => ({...q})), snap:snapshot(), moved:false};
+        }
+        return;
+      }
       const rg = t.closest ? t.closest('[data-rid]') : null;
       if (rg){
         const r = roomById(rg.getAttribute('data-rid'));
@@ -3021,14 +3038,24 @@ function wireDetail(){
         dSchedule();
       }
       else if (dDrag.type === 'dscale'){
-        const p = dPt(e), o = polyBBox(dDrag.orig);
-        const ax = dDrag.key.includes('w') ? o.x + o.w : o.x;
-        const ay = dDrag.key.includes('n') ? o.y + o.h : o.y;
-        const hx = dDrag.key.includes('w') ? o.x : o.x + o.w;
-        const hy = dDrag.key.includes('n') ? o.y : o.y + o.h;
-        const d0 = Math.hypot(hx - ax, hy - ay) || 1;
-        const s = clamp(Math.hypot(p.x - ax, p.y - ay)/d0, .12, 10);
-        dDrag.r.poly = dDrag.orig.map(q => ({x: ax + (q.x - ax)*s, y: ay + (q.y - ay)*s}));
+        const p = dPt(e), o = polyBBox(dDrag.orig), key = dDrag.key;
+        let x0 = o.x, x1 = o.x + o.w, y0 = o.y, y1 = o.y + o.h;
+        if (key.includes('w')) x0 = Math.min(p.x, x1 - 20);
+        if (key.includes('e')) x1 = Math.max(p.x, x0 + 20);
+        if (key.includes('n')) y0 = Math.min(p.y, y1 - 20);
+        if (key.includes('s')) y1 = Math.max(p.y, y0 + 20);
+        const ax = key.includes('w') ? x1 : key.includes('e') ? x0 : o.x + o.w / 2;
+        const ay = key.includes('n') ? y1 : key.includes('s') ? y0 : o.y + o.h / 2;
+        const sx = (x1 - x0) / o.w, sy = (y1 - y0) / o.h;
+        dDrag.r.poly = dDrag.orig.map(q => ({x: ax + (q.x - ax)*sx, y: ay + (q.y - ay)*sy}));
+        dDrag.moved = true;
+        dSchedule();
+      }
+      else if (dDrag.type === 'drot'){
+        const p = dPt(e);
+        let deg = (Math.atan2(p.y-dDrag.c.y, p.x-dDrag.c.x) - dDrag.a0) * 180 / Math.PI;
+        if (e.shiftKey) deg = Math.round(deg / 15) * 15;
+        dDrag.r.poly = dDrag.orig.map(q => rotatePoint(q, dDrag.c, deg));
         dDrag.moved = true;
         dSchedule();
       }
