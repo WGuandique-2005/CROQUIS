@@ -113,8 +113,8 @@
   #zoomctrl .btn{padding:9px 10px;box-shadow:2px 2px 0 rgba(36,39,29,.22)}
 
   #legend{
-    position:absolute;left:14px;bottom:14px;z-index:29;background:rgba(248,244,231,.95);
-    border:1.5px solid var(--ink);box-shadow:var(--hard);width:262px;
+    position:absolute;left:68px;bottom:14px;z-index:29;background:rgba(248,244,231,.95);
+    border:1.5px solid var(--ink);box-shadow:var(--hard);width:min(262px,calc(100% - 82px));
   }
   #legend .lg-head{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 8px 12px;
     border-bottom:1.5px solid var(--ink);cursor:pointer}
@@ -160,12 +160,15 @@
   .p-search .box{display:flex;align-items:center;gap:8px;border:1.5px solid var(--ink);background:var(--paper);padding:7px 10px}
   .p-search input{border:none;outline:none;background:none;font:500 12px var(--sans);width:100%;color:var(--ink)}
   .p-search svg{color:var(--ink2);flex:none}
-  .chips{display:flex;flex-wrap:wrap;gap:5px;padding:8px 12px 10px;border-bottom:1px solid var(--line)}
+  .chips{display:flex;flex:0 0 auto;flex-wrap:wrap;gap:5px;padding:8px 12px 10px;border-bottom:1px solid var(--line);max-height:96px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  .chips::-webkit-scrollbar{width:6px}
+  .chips::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+  .chips::-webkit-scrollbar-thumb:hover{background:var(--ink2)}
   .chip{font:600 10px var(--sans);border:1px solid var(--ink);background:var(--paper);padding:3px 8px;cursor:pointer;color:var(--ink2)}
   .chip.on{background:var(--ink);color:var(--paper)}
 
   #zoneList{list-style:none;padding:6px 8px}
-  .zitem{display:flex;align-items:center;gap:8px;padding:8px 9px;cursor:pointer;
+  .zitem{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 9px;cursor:pointer;
     border:1.5px solid transparent;margin-bottom:3px}
   .zitem:hover{border-color:var(--line)}
   .zitem.sel{background:var(--ink);color:var(--paper)}
@@ -175,8 +178,26 @@
   .zitem.sel .zsw{border-color:rgba(248,244,231,.7)}
   .zcode{font:700 12px var(--mono);width:32px;flex:none}
   .zname{font:500 11.5px var(--sans);color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+  .zmeta{flex-basis:100%;font:500 9.5px var(--mono);letter-spacing:.4px;color:var(--ink2);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:63px;margin-top:-3px}
+  .zitem.sel .zmeta{color:rgba(248,244,231,.72)}
   .zitem .mini{border:none;background:none;cursor:pointer;padding:3px;color:inherit;display:flex;flex:none}
   .zitem .mini:hover{color:var(--accent)}
+  /* resultados globales de ambientes (T6) */
+  .rhead{font:700 9.5px var(--mono);letter-spacing:1.5px;color:var(--ink2);padding:10px 9px 5px;
+    border-bottom:1px dashed var(--line);margin-bottom:2px}
+  .rhit{display:flex;align-items:center;gap:8px;padding:6px 9px;cursor:pointer;
+    border:1.5px solid transparent;margin-bottom:2px}
+  .rhit:hover{border-color:var(--line)}
+  .rhit.sel{background:var(--ink);color:var(--paper)}
+  .rcol{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+  .rrow{display:flex;align-items:baseline;gap:8px;min-width:0}
+  .rrow .zname{font-size:11px}
+  .rmeta{font:400 9.5px var(--mono);color:var(--ink2);text-transform:uppercase;letter-spacing:.4px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rhit.sel .rmeta{color:rgba(248,244,231,.72)}
+  .zempty{padding:14px 10px;font:500 11.5px var(--sans);color:var(--ink2);text-align:center;
+    border:1.5px dashed var(--line)}
 
   #editor{padding:12px 16px 18px;border-top:1.5px solid var(--ink);flex:1}
   .ed-title{display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -230,6 +251,18 @@
   .pvbox{border:1.5px solid var(--ink);background:#fff;padding:6px;margin-bottom:10px}
   .pvbox img{width:100%;display:block}
 
+  /* ===== vista 3D isométrica (T4) ===== */
+  .isoStage{border:1.5px solid var(--ink);background:var(--paper);height:min(56vh,500px);margin-bottom:12px}
+  .isoStage svg{width:100%;height:100%;display:block}
+  .isoCtrls .isoRow{display:flex;gap:14px;align-items:center;margin-bottom:4px;flex-wrap:wrap}
+  .isoCtrls .field{margin-bottom:4px}
+  .isoCtrls .field label b{font:700 11px var(--mono);color:var(--accent);text-transform:none;letter-spacing:0}
+  .isoChips{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:220px}
+  .ichip{font:700 10px var(--mono);letter-spacing:.6px;border:1.5px solid var(--ink);background:var(--paper3);
+    color:var(--ink);padding:5px 8px;cursor:pointer;box-shadow:1.5px 1.5px 0 rgba(36,39,29,.18)}
+  .ichip:hover{background:rgba(36,39,29,.09)}
+  .ichip.on{background:var(--ink);color:var(--paper)}
+
   #toasts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:250;display:flex;flex-direction:column;gap:8px;align-items:center}
   .toast{background:var(--ink);color:var(--paper);font:600 12px var(--sans);padding:11px 18px;
     border:1px solid #10120C;box-shadow:var(--hard);opacity:0;transform:translateY(12px);transition:all .25s;max-width:78vw}
@@ -237,10 +270,94 @@
   .toast.warn{background:var(--accent);border-color:#6E2D12}
   .toast.err{background:var(--danger)}
 
+  /* ===== vista de detalle (ambientes interiores) ===== */
+  #detailWrap{position:fixed;inset:0;z-index:45;display:none;flex-direction:column;background:var(--paper2)}
+  #detailWrap.on{display:flex}
+  #dHead{display:flex;align-items:center;gap:9px;padding:0 14px;height:58px;flex:none;
+    background:var(--paper);border-bottom:2px solid var(--ink);position:relative;z-index:5;
+    overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
+  #dHead::-webkit-scrollbar{height:6px}
+  #dHead::-webkit-scrollbar-thumb{background:var(--line)}
+  #dTitleBox{display:flex;align-items:center;gap:9px;min-width:0}
+  #dTitleBox b{font-size:14.5px;font-weight:800;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}
+  .dchip{font:700 11px var(--mono);background:var(--ink);color:var(--paper);padding:3px 7px;letter-spacing:1px;flex:none}
+  .dtabs{display:flex;gap:4px;align-items:center;border-left:1.5px solid var(--line);padding-left:12px;flex:none}
+  .dtab{font:700 11px var(--mono);border:1.5px solid var(--ink);background:var(--paper3);color:var(--ink);
+    padding:6px 9px;cursor:pointer;letter-spacing:.5px}
+  .dtab:hover{background:rgba(36,39,29,.09)}
+  .dtab.on{background:var(--ink);color:var(--paper)}
+  .dtab:disabled{opacity:.4;cursor:not-allowed;background:var(--paper3);color:var(--ink)}
+  .dsep{width:1.5px;height:26px;background:var(--line);flex:none}
+  .dspring{flex:1}
+  .btn.on{background:var(--ink);color:var(--paper)}
+  .dcheck{white-space:nowrap;font-size:11.5px;padding:0;flex:none}
+  #dMain{flex:1;display:flex;min-height:0}
+  #dSide{width:280px;flex:none;background:var(--paper3);border-right:2px solid var(--ink);overflow-y:auto;display:flex;flex-direction:column}
+  #dSide::-webkit-scrollbar{width:9px}
+  #dSide::-webkit-scrollbar-thumb{background:var(--line);border:2px solid var(--paper3)}
+  #dStage{flex:1;position:relative;background:var(--paper3);overflow:hidden;user-select:none}
+  #dsvg{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+  #dsvg.panning{cursor:grabbing}
+  #dsvg.stamping{cursor:crosshair}
+  #dsvg [data-rid]{cursor:move}
+  #dHint{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:4;display:none;
+    background:var(--accent);color:#FBF8EE;border:1.5px solid #6E2D12;padding:8px 15px;
+    font:600 12px var(--sans);letter-spacing:.3px;box-shadow:var(--hard);max-width:62vw;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+  #dHint.on{display:block}
+  #dHint kbd{font:700 10px var(--mono);background:rgba(0,0,0,.28);padding:2px 6px;margin:0 2px}
+  .dlist{list-style:none;padding:4px 0 8px}
+  .ditem{display:flex;align-items:center;gap:8px;padding:8px 9px;cursor:pointer;
+    border:1.5px solid transparent;margin:0 7px 3px}
+  .ditem:hover{border-color:var(--line)}
+  .ditem.sel{background:var(--ink);color:var(--paper)}
+  .ditem.sel .zname{color:var(--paper)}
+  .ditem .mini{border:none;background:none;cursor:pointer;padding:2px 4px;color:inherit;display:flex;flex:none;
+    font:700 14px var(--sans);line-height:1}
+  .ditem .mini:hover{color:var(--accent)}
+  .ditem .mini.confirm{background:var(--danger);color:#FBF8EE;font:700 10px var(--mono);padding:4px 7px}
+  .dempty{border:1.5px dashed var(--line);margin:6px 10px 2px;padding:13px 10px;font:500 11px var(--sans);
+    color:var(--ink2);line-height:1.65;text-align:center;list-style:none}
+  #dProp{border-top:1.5px solid var(--ink);padding:12px 14px 16px}
+  .dcat{margin-top:auto;border-top:1.5px solid var(--ink);padding:11px 12px 14px}
+  .dcat h4{font:700 9.5px var(--mono);letter-spacing:2px;color:var(--ink2);margin-bottom:8px}
+  .dcatg{display:flex;align-items:center;gap:8px;width:100%;border:1.5px solid var(--ink);background:var(--paper);
+    padding:6px 9px;margin-bottom:5px;cursor:pointer;font:600 11.5px var(--sans);color:var(--ink);text-align:left}
+  .dcatg:hover{background:rgba(36,39,29,.08)}
+  .dcatg.on{background:var(--ink);color:var(--paper)}
+  .catrow{border:1.5px solid var(--ink);background:var(--paper);margin-bottom:8px;padding:9px 10px}
+  .catrow .cr1{display:flex;align-items:center;gap:8px}
+  .cat-ic{width:32px;height:32px;flex:none;border:1.5px solid var(--ink);background:var(--paper3);
+    display:grid;place-items:center;cursor:pointer;color:var(--ink);padding:0}
+  .cat-ic:hover{background:var(--ink);color:var(--paper)}
+  .catrow input.cat-name{flex:1;min-width:60px;border:1.5px solid var(--ink);background:var(--paper3);
+    padding:6px 8px;font:600 12.5px var(--sans);outline:none}
+  .catrow input.cat-code{width:58px;border:1.5px solid var(--ink);background:var(--paper3);padding:6px 4px;
+    font:700 12px var(--mono);text-transform:uppercase;outline:none;text-align:center}
+  .catrow .crdel{border:1.5px solid var(--danger);color:var(--danger);background:none;font:700 11px var(--sans);
+    padding:6px 9px;cursor:pointer;flex:none}
+  .catrow .crdel:hover{background:var(--danger);color:#FBF8EE}
+  .catrow .cr2{display:flex;align-items:center;gap:5px;margin-top:8px;flex-wrap:wrap}
+  .catrow .cr2 .swb{width:19px;height:19px}
+  .catrow .cr2 input[type=color]{width:27px;height:24px;border:1.5px dashed var(--ink);background:var(--paper3);cursor:pointer;padding:2px}
+  .iconpick{display:none;gap:4px;flex-wrap:wrap;margin-top:9px;border-top:1px dashed var(--line);padding-top:9px}
+  .iconpick.on{display:flex}
+  .iconpick button{width:31px;height:31px;border:1.5px solid var(--line);background:var(--paper3);
+    display:grid;place-items:center;cursor:pointer;color:var(--ink);padding:0}
+  .iconpick button:hover{border-color:var(--ink)}
+  .iconpick button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  /* T3b · gestor de niveles + modales de grid/dibujo */
+  .lvnum{font:700 11px var(--mono);width:22px;text-align:center;color:var(--ink2);flex:none}
+  .lvcount{font:400 10.5px var(--mono);color:var(--ink2);flex:none;white-space:nowrap}
+  .lvfixed{font:700 9px var(--mono);color:var(--ink2);letter-spacing:1px;flex:none}
+  .lvwarn{font:600 11px var(--sans);color:var(--danger);padding:6px 2px 0 30px}
+  .catrow .crdel.confirm{background:var(--danger);color:#FBF8EE}
+  .m-note{font:400 11px var(--mono);color:var(--ink2);line-height:1.65;margin-top:10px}
+
   @media (max-width:900px){
     main{grid-template-columns:1fr;grid-template-rows:60vh 1fr}
     aside{border-left:none;border-top:2px solid var(--ink)}
-    #legend{width:205px}
   }
 </style>
 </head>
@@ -306,6 +423,9 @@
         <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="6" stroke="#3A3E30" stroke-width="1" stroke-opacity="0.16"/>
         </pattern>
+        <pattern id="shedHatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="7" stroke="#24271D" stroke-width="1.1" stroke-opacity="0.18"/>
+        </pattern>
         <pattern id="pav" width="13" height="13" patternUnits="userSpaceOnUse">
           <path d="M13 0H0V13" fill="none" stroke="#D8D0B8" stroke-width="0.7"/>
         </pattern>
@@ -361,6 +481,15 @@
       <button class="tool" data-stamp="plaza" title="Colocar plaza / glorieta (G)">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.6"/><circle cx="8" cy="8" r="1.5" stroke-width=".9"/></svg>
       </button>
+      <button class="tool" data-stamp="bath" title="Colocar baño / sanitario (H)">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 8.6h11v.9a3.2 3.2 0 0 1-3.2 3.2H5.7a3.2 3.2 0 0 1-3.2-3.2z"/><path d="M4.3 8.6V4.7c0-1 .8-1.7 1.7-1.7.8 0 1.5.6 1.7 1.4"/><path d="M4.7 12.7 4.1 14M11.3 12.7l.6 1.3" stroke-width=".9"/></svg>
+      </button>
+      <button class="tool" data-stamp="pool" title="Colocar piscina (S)">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.2 10.6V4.4M9.8 10.6V4.4M6.2 6.2h3.6M6.2 8.5h3.6"/><path d="M2.2 12.7q1.45-1.4 2.9 0t2.9 0 2.9 0 2.9 0" stroke-width="1.2"/></svg>
+      </button>
+      <button class="tool" data-stamp="shed" title="Colocar bodega (D)">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4.4" width="10" height="7.6"/><path d="M8 4.4v7.6M3 6.9h10" stroke-width=".9"/></svg>
+      </button>
     </div>
 
     <div id="brushOpts"></div>
@@ -388,7 +517,7 @@
     <div class="p-search">
       <div class="box">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
-        <input id="search" type="text" placeholder="Buscar zona…">
+        <input id="search" type="text" placeholder="Buscar zona o ambiente…">
       </div>
     </div>
     <div class="chips" id="chips"></div>
@@ -397,6 +526,77 @@
     <div class="p-foot"><span class="dot"></span><span id="savedLbl">Cambios sin guardar</span></div>
   </aside>
 </main>
+
+<div id="detailWrap">
+  <div id="dHead">
+    <button class="btn" id="dBack" title="Volver al campus (ESC)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.5 3 4.5 8l5 5M4.5 8H14"/></svg>
+      <span class="lbl">Campus</span>
+    </button>
+    <div id="dTitleBox">
+      <b id="dName">—</b>
+      <span class="dchip" id="dCode">—</span>
+      <span class="dchip" id="dLvChip" style="display:none;background:var(--accent)"></span>
+    </div>
+    <div class="dtabs" id="dTabs"></div>
+    <div class="dsep"></div>
+    <button class="btn" id="dToolSelect" title="Seleccionar, mover y editar ambientes">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M4.5 2.2 12 10.1l-3.2.6 1.8 3.6-1.8.9-1.8-3.7-2.5 2V2.2z"/></svg>
+      <span class="lbl">Seleccionar</span>
+    </button>
+    <button class="btn" id="dToolStamp" title="Estampar un ambiente con la categoría elegida en el panel">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.6" y="4.4" width="10.8" height="7.2"/><path d="M8 6.4v3.2M6.4 8h3.2"/></svg>
+      <span class="lbl">Estampar ambiente</span>
+    </button>
+    <button class="btn" id="dToolGrid" title="Dividir en grid: filas × columnas recortadas a la forma real (G)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.2" y="2.2" width="11.6" height="11.6"/><path d="M6.1 2.2v11.6M9.9 2.2v11.6M2.2 6.1h11.6M2.2 9.9h11.6"/></svg>
+      <span class="lbl">Grid</span>
+    </button>
+    <button class="btn" id="dToolCut" title="Cortar ambientes arrastrando una línea (C)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4.3" cy="12.3" r="1.7"/><circle cx="11.7" cy="12.3" r="1.7"/><path d="M5.5 10.9 10.9 2.6M10.5 10.9 5.1 2.6"/></svg>
+      <span class="lbl">Cortar</span>
+    </button>
+    <button class="btn" id="dToolDraw" title="Dibujar un ambiente vértice a vértice (D)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13.2l.9-3.4 7-7 2.3 2.3-7 7L3 13.2z"/><path d="M9.5 4.2l2.3 2.3"/></svg>
+      <span class="lbl">Dibujar</span>
+    </button>
+    <button class="btn" id="dToolIso" title="Vista 3D isométrica: pisos apilados tipo vista explotada">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.8 14 5v6L8 14.2 2 11V5Z"/><path d="M2 5l6 3.2L14 5M8 8.2v6"/></svg>
+      <span class="lbl">Vista 3D</span>
+    </button>
+    <button class="btn" id="dCatBtn" title="Editar el catálogo de ambientes">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.4" y="2.4" width="4.8" height="4.8"/><rect x="8.8" y="2.4" width="4.8" height="4.8"/><rect x="2.4" y="8.8" width="4.8" height="4.8"/><rect x="8.8" y="8.8" width="4.8" height="4.8"/></svg>
+      <span class="lbl">Catálogo</span>
+    </button>
+    <label class="check dcheck" title="Pintar cada ambiente con el color de su categoría"><input type="checkbox" id="dByType"> Colores por tipo</label>
+    <div class="dspring"></div>
+    <button class="btn icon" id="dZoomOut" title="Alejar"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10"/></svg></button>
+    <button class="btn icon" id="dZoomIn" title="Acercar"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg></button>
+    <button class="btn icon" id="dFit" title="Encuadrar el edificio"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg></button>
+  </div>
+  <div id="dMain">
+    <aside id="dSide">
+      <div class="p-head"><b id="dSideTitle">AMBIENTES · PB</b><span class="count" id="dCount">0</span></div>
+      <div class="chips" id="dChips"></div>
+      <ul class="dlist" id="dList"></ul>
+      <div id="dProp" style="display:none"></div>
+      <div class="dcat" id="dCatBox"></div>
+    </aside>
+    <div id="dStage">
+      <svg id="dsvg">
+        <defs>
+          <pattern id="dgrid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M10 0H0V10" fill="none" stroke="#8F8A74" stroke-width="0.55" opacity="0.35"/>
+          </pattern>
+          <clipPath id="dClip"><path id="dClipPath" d=""/></clipPath>
+        </defs>
+        <style>.ft-s{font-family:'Archivo','Trebuchet MS',sans-serif}.ft-m{font-family:'IBM Plex Mono','Courier New',monospace}</style>
+        <g id="dRoot"></g>
+      </svg>
+      <div id="dHint"></div>
+    </div>
+  </div>
+</div>
 
 <button class="btn" id="exitPresent">Salir de la presentación (ESC)</button>
 <div id="modalWrap"><div class="modal" id="modalCard"></div></div>
@@ -427,7 +627,6 @@ errbar.addEventListener('click', () => errbar.classList.remove('on'));
 
 const NS = 'http://www.w3.org/2000/svg';
 const W = 1600, H = 1000, RATIO = W / H;
-const M = 0.25, M2 = M * M;
 /* hoja grande: se puede dibujar fuera del área inicial sin perder el papel */
 const SHEET = {x:-1200, y:-800, w:4000, h:2600};
 
@@ -439,7 +638,6 @@ const gBase = $('gBase'), gTerrain = $('gTerrain'), gTrees = $('gTrees'),
 const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
 const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = v => v.toFixed(1).replace('.', ',');
-const fmtA = v => v.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const uid = () => 'z' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 
 function el(tag, attrs = {}, parent){
@@ -481,14 +679,6 @@ function polyArea(pts){
     a += p.x*q.y - q.x*p.y;
   }
   return Math.abs(a)/2;
-}
-function polyPerim(pts){
-  let s = 0;
-  for (let i = 0; i < pts.length; i++){
-    const p = pts[i], q = pts[(i+1)%pts.length];
-    s += Math.hypot(q.x-p.x, q.y-p.y);
-  }
-  return s;
 }
 function polyCentroid(pts){
   let a=0, cx=0, cy=0;
@@ -540,6 +730,105 @@ function tfPoint(p, t){
 }
 const tfAttr = t => `translate(${t.dx} ${t.dy})`;
 
+/* recorte Sutherland–Hodgman de un polígono contra un rectángulo convexo.
+   Lo usa el estampado de ambientes (T3a) y el grid automático (T3b). */
+function clipPolyRect(poly, r){
+  let out = poly.slice();
+  const edges = [
+    {f: p => p.x >= r.x,        i: (a,b) => ({x: r.x,     y: a.y + (b.y-a.y)*(r.x - a.x)/(b.x-a.x)})},
+    {f: p => p.x <= r.x + r.w,  i: (a,b) => ({x: r.x+r.w, y: a.y + (b.y-a.y)*(r.x + r.w - a.x)/(b.x-a.x)})},
+    {f: p => p.y >= r.y,        i: (a,b) => ({y: r.y,     x: a.x + (b.x-a.x)*(r.y - a.y)/(b.y-a.y)})},
+    {f: p => p.y <= r.y + r.h,  i: (a,b) => ({y: r.y+r.h, x: a.x + (b.x-a.x)*(r.y + r.h - a.y)/(b.y-a.y)})},
+  ];
+  for (const e of edges){
+    const inp = out; out = [];
+    for (let k = 0; k < inp.length; k++){
+      const cur = inp[k], prev = inp[(k + inp.length - 1) % inp.length];
+      const cIn = e.f(cur), pIn = e.f(prev);
+      if (cIn){ if (!pIn) out.push(e.i(prev, cur)); out.push(cur); }
+      else if (pIn) out.push(e.i(prev, cur));
+    }
+    if (out.length < 3) return [];
+  }
+  return out;
+}
+
+/* T3b: limpieza de polígonos resultado de clips (vértices duplicados y casi colineales) */
+function cleanPoly(pts, tol = .5){
+  const ded = [];
+  for (const p of pts){
+    const q = ded[ded.length - 1];
+    if (!q || Math.hypot(p.x - q.x, p.y - q.y) > tol) ded.push({x: p.x, y: p.y});
+  }
+  while (ded.length > 1 && Math.hypot(ded[0].x - ded[ded.length-1].x, ded[0].y - ded[ded.length-1].y) <= tol) ded.pop();
+  const out = [], n = ded.length;
+  for (let i = 0; i < n; i++){
+    if (out.length + (n - i) <= 3){ out.push(ded[i]); continue; }
+    const prev = out[out.length - 1] || ded[n - 1];
+    const cur = ded[i], next = ded[(i + 1) % n];
+    if (distToSeg(cur, prev, next) <= tol) continue;
+    out.push(cur);
+  }
+  return out.length >= 3 ? out : ded;
+}
+/* T3b: intersección de un segmento p→q con la recta infinita a→b */
+function lineIx(p, q, a, b){
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const den = (q.x - p.x) * dy - (q.y - p.y) * dx;
+  if (Math.abs(den) < 1e-9) return {x: p.x, y: p.y};
+  const t = ((a.x - p.x) * dy - (a.y - p.y) * dx) / den;
+  return {x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t};
+}
+/* T3b: recorte Sutherland–Hodgman contra un semiplano (línea a→b).
+   keepNeg=false conserva el lado izquierdo (cross ≥ 0), true el derecho. */
+function clipPolyHalfPlane(poly, a, b, keepNeg){
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const side = p => dx * (p.y - a.y) - dy * (p.x - a.x);
+  const out = [];
+  for (let k = 0; k < poly.length; k++){
+    const cur = poly[k], prev = poly[(k + poly.length - 1) % poly.length];
+    const cs = side(cur), ps = side(prev);
+    const cIn = keepNeg ? cs <= 1e-7 : cs >= -1e-7;
+    const pIn = keepNeg ? ps <= 1e-7 : ps >= -1e-7;
+    if (cIn){ if (!pIn) out.push(lineIx(prev, cur, a, b)); out.push(cur); }
+    else if (pIn) out.push(lineIx(prev, cur, a, b));
+  }
+  return out;
+}
+/* T3b: recorte de un polígono arbitrario contra una ventana convexa (p.ej. el poly del edificio) */
+function clipPolyPoly(subject, clip){
+  let win = clip.slice(), area2 = 0;
+  for (let i = 0; i < win.length; i++){ const p = win[i], q = win[(i+1) % win.length]; area2 += p.x*q.y - q.x*p.y; }
+  if (area2 < 0) win.reverse();
+  let out = subject.slice();
+  for (let i = 0; i < win.length && out.length >= 3; i++)
+    out = clipPolyHalfPlane(out, win[i], win[(i+1) % win.length], false);
+  return out;
+}
+function isConvexPoly(pts){
+  let sign = 0;
+  for (let i = 0; i < pts.length; i++){
+    const a = pts[i], b = pts[(i+1) % pts.length], c = pts[(i+2) % pts.length];
+    const cr = (b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x);
+    if (Math.abs(cr) < 1e-6) continue;
+    const s = cr > 0 ? 1 : -1;
+    if (!sign) sign = s; else if (s !== sign) return false;
+  }
+  return true;
+}
+/* T3b: ajusta el punto final del corte a múltiplos de 45° (con Shift o imán activado) */
+function cutSnap(a, p, shift){
+  let q = {x: grid(p.x), y: grid(p.y)};
+  if (doc().snap || shift){
+    const dx = q.x - a.x, dy = q.y - a.y, len = Math.hypot(dx, dy);
+    if (len > 1){
+      const st = Math.PI / 4, ang = Math.round(Math.atan2(dy, dx) / st) * st;
+      q = {x: grid(a.x + Math.cos(ang) * len), y: grid(a.y + Math.sin(ang) * len)};
+    }
+  }
+  return q;
+}
+
 const norm360 = v => ((v % 360) + 360) % 360;
 const itemCenter = z => polyCentroid(z.poly);
 function rotatePoint(p, c, deg){
@@ -556,15 +845,18 @@ function rotStr(z){
 
 /* ---------- datos ---------- */
 const PALETTE = ['#C7391F','#D97B2F','#D9A32E','#C29A37','#6E8F2E','#3F8C4F','#2E8C85','#2E6E9E','#7D4E8C','#A83A5C','#8A5A33','#6E6E66'];
-const KIND_LABEL = {area:'Zona sombreada', bldg:'Edificio', aud:'Auditorio', pitch:'Cancha deportiva', lot:'Estacionamiento', plaza:'Plaza / glorieta'};
-const KIND_GROUP = {area:'area', bldg:'bldg', aud:'aud', pitch:'pitch', lot:'lot', plaza:'plaza'};
-const GROUP_CHIPS = [['all','Todas'],['bldg','Edificios'],['pitch','Canchas'],['aud','Auditorios'],['lot','Estacionam.'],['plaza','Plazas'],['area','Zonas']];
+const KIND_LABEL = {area:'Zona sombreada', bldg:'Edificio', aud:'Auditorio', pitch:'Cancha deportiva', lot:'Estacionamiento', plaza:'Plaza / glorieta', bath:'Baño / sanitario', pool:'Piscina', shed:'Bodega'};
+const KIND_GROUP = {area:'area', bldg:'bldg', aud:'aud', pitch:'pitch', lot:'lot', plaza:'plaza', bath:'bath', pool:'pool', shed:'shed'};
+const GROUP_CHIPS = [['all','Todas'],['bldg','Edificios'],['pitch','Canchas'],['aud','Auditorios'],['lot','Estacionam.'],['plaza','Plazas'],['bath','Baños'],['pool','Piscinas'],['shed','Bodegas'],['area','Zonas']];
 const STAMPS = {
   bldg:  {w:230, h:130, name:'Edificio',        code:'ED'},
   aud:   {w:270, h:160, name:'Auditorio',       code:'AU'},
   pitch: {w:330, h:205, name:'Cancha',          code:'CD'},
   lot:   {w:300, h:250, name:'Estacionamiento', code:'ES'},
   plaza: {w:180, h:180, name:'Plaza',           code:'PL'},
+  bath:  {w:74,  h:56,  name:'Baño',            code:'BA'},
+  pool:  {w:230, h:110, name:'Piscina',         code:'PI'},
+  shed:  {w:150, h:95,  name:'Bodega',          code:'BD'},
 };
 
 const TERRAIN_DEFAULT = () => ([
@@ -602,7 +894,21 @@ function TREES_DEFAULT(){
   }
   return out;
 }
-const DOC_DEFAULT = () => ({title:'', subtitle:'', author:'', labelMode:'full', showArea:false, snap:false, grid:false, brushR:9, eraserR:36});
+const DEFAULT_CATALOG = () => ([
+  {key:'aula',     name:'Aula',               code:'AU', color:'#D9A32E', icon:'aula'},
+  {key:'labComp',  name:'Lab. de Cómputo',    code:'LC', color:'#2E6E9E', icon:'labComp'},
+  {key:'labRob',   name:'Lab. de Robótica',   code:'LR', color:'#7D4E8C', icon:'labRob'},
+  {key:'labIng',   name:'Lab. de Ingeniería', code:'LI', color:'#6E8F2E', icon:'labIng'},
+  {key:'labArte',  name:'Lab. de Arte',       code:'LA', color:'#A83A5C', icon:'labArte'},
+  {key:'labSalud', name:'Lab. de Salud',      code:'LS', color:'#C7391F', icon:'labSalud'},
+  {key:'oficina',  name:'Oficina',            code:'OF', color:'#D97B2F', icon:'oficina'},
+  {key:'bano',     name:'Baño',               code:'BA', color:'#2E8C85', icon:'bano'},
+  {key:'bodega',   name:'Bodega',             code:'BD', color:'#8A5A33', icon:'bodega'},
+  {key:'pasillo',  name:'Pasillo',            code:'PA', color:'#C29A37', icon:'pasillo'},
+  {key:'escala',   name:'Escalera',           code:'ES', color:'#6E6E66', icon:'escala'},
+  {key:'otro',     name:'Otro',               code:'—',  color:'#8F8A74', icon:'otro'},
+]);
+const DOC_DEFAULT = () => ({title:'', subtitle:'', author:'', labelMode:'full', snap:false, grid:false, brushR:9, eraserR:36, include3D:true, catalog: DEFAULT_CATALOG()});
 
 /* ---------- estado ---------- */
 const state = {
@@ -732,7 +1038,138 @@ function fAud(g, b){
       'stroke-width':1, opacity:.32, 'stroke-dasharray':'4 4'}, g);
   el('rect', {x:x+w*.3, y:y+h*.78, width:w*.4, height:h*.15, fill:'#EFE9D8', stroke:'#2C3024', 'stroke-width':1.2}, g);
 }
-const INTERIORS = {bldg:fBld, pitch:fPitch, lot:fLot, plaza:fPlaza, aud:fAud};
+function fBath(g, b, z){
+  const ink = 'rgba(36,39,29,.62)';
+  const baseY = b.y + b.h*.6, ph = Math.min(b.h*.46, b.w*.5), hr = ph*.19;
+  const shW = ph*.46, waW = ph*.28, sep = Math.min(b.w*.14, 12);
+  [-1, 1].forEach(sg => {
+    const px = b.x + b.w/2 + sg*sep;
+    el('circle', {cx:px, cy:baseY-ph+hr, r:hr, fill:ink}, g);
+    const ty = baseY - ph + hr*2.4;
+    el('path', {d:`M${(px-shW/2).toFixed(1)},${ty.toFixed(1)} L${(px+shW/2).toFixed(1)},${ty.toFixed(1)} L${(px+waW/2).toFixed(1)},${baseY.toFixed(1)} L${(px-waW/2).toFixed(1)},${baseY.toFixed(1)} Z`,
+      fill:ink, stroke:ink, 'stroke-width':1, 'stroke-linejoin':'round'}, g);
+  });
+  /* puerta: hoja y arco de giro sobre el borde inferior */
+  const dw = Math.min(b.w*.26, 16), dx = b.x + Math.max(b.w*.09, 6), dy = b.y + b.h - 2.5;
+  el('line', {x1:dx, y1:dy, x2:dx, y2:dy-dw, stroke:ink, 'stroke-width':1.6}, g);
+  el('path', {d:`M${dx},${(dy-dw).toFixed(1)} A${dw} ${dw} 0 0 1 ${(dx+dw).toFixed(1)},${dy}`,
+    fill:'none', stroke:ink, 'stroke-width':.9, 'stroke-dasharray':'2.5 2'}, g);
+}
+function fPool(g, b, z){
+  const x = b.x+4, y = b.y+4, w = b.w-8, h = b.h-8;
+  el('rect', {x, y, width:w, height:h, rx:Math.min(14, h*.22), fill:'#8FC7D4', opacity:.85,
+    stroke:'#4E93A6', 'stroke-width':1.2}, g);
+  for (let i = 1; i <= 4; i++)
+    el('line', {x1:x+w*i/5, y1:y+h*.08, x2:x+w*i/5, y2:y+h*.92, stroke:'#FFFFFF',
+      'stroke-width':2, 'stroke-dasharray':'9 7', opacity:.85}, g);
+  /* escalera de 3 peldaños en el borde izquierdo */
+  const l1 = x+w*.055, l2 = l1+6, lt = y+h*.3, lb = lt+h*.4;
+  el('line', {x1:l1, y1:lt, x2:l1, y2:lb, stroke:'#F4FBFD', 'stroke-width':1.7}, g);
+  el('line', {x1:l2, y1:lt, x2:l2, y2:lb, stroke:'#F4FBFD', 'stroke-width':1.7}, g);
+  for (let i = 1; i <= 3; i++)
+    el('line', {x1:l1, y1:lt+(lb-lt)*i/4, x2:l2, y2:lt+(lb-lt)*i/4, stroke:'#F4FBFD', 'stroke-width':1.4}, g);
+  /* ondas decorativas */
+  [[.63,.2],[.68,.8]].forEach(p =>
+    el('path', {d:`M${(x+w*p[0]).toFixed(1)},${(y+h*p[1]).toFixed(1)} q5,-5 10,0 q5,5 10,0`,
+      fill:'none', stroke:'#FFFFFF', 'stroke-width':1.4, opacity:.85, 'stroke-linecap':'round'}, g));
+}
+function fShed(g, b, z){
+  el('rect', {x:b.x+3, y:b.y+3, width:b.w-6, height:b.h-6, fill:'url(#shedHatch)'}, g);
+  const cx = b.x+b.w/2, cy = b.y+b.h/2;
+  const bw = Math.min(b.w*.36, 46), bh = Math.min(b.h*.21, 16), gap = 3;
+  [[cy-bh-gap/2, bw], [cy+gap/2, bw*.8]].forEach(([ry, rw], i) => {
+    el('rect', {x:cx-rw/2, y:ry, width:rw, height:bh, fill:'#FBF7EC', stroke:'#2C3024', 'stroke-width':1.3}, g);
+    if (!i) el('line', {x1:cx, y1:ry, x2:cx, y2:ry+bh, stroke:'#2C3024', 'stroke-width':.9, opacity:.6}, g);
+    else el('line', {x1:cx-rw/2, y1:ry+bh/2, x2:cx+rw/2, y2:ry+bh/2, stroke:'#2C3024', 'stroke-width':.8, opacity:.5}, g);
+  });
+}
+const INTERIORS = {bldg:fBld, pitch:fPitch, lot:fLot, plaza:fPlaza, aud:fAud, bath:fBath, pool:fPool, shed:fShed};
+
+/* =====================================================================
+   ÍCONOS VECTORIALES DE AMBIENTES (catálogo) — stroke-based, nítidos
+   a 14–20 px. Se dibujan en una caja 16×16 y se reutilizan en el plano
+   de detalle, el panel lateral y el modal de catálogo (T5 los usará).
+===================================================================== */
+const ICON_KEYS = ['aula','labComp','labRob','labIng','labArte','labSalud','oficina','bano','bodega','pasillo','escala','otro'];
+function roomIcon(parent, iconKey, x, y, size, inkColor){
+  const g = el('g', {transform:`translate(${x} ${y}) scale(${(size/16).toFixed(3)})`}, parent);
+  const ink = inkColor || '#24271D';
+  const s = {fill:'none', stroke:ink, 'stroke-width':1.4, 'stroke-linecap':'round', 'stroke-linejoin':'round'};
+  const f = {fill:ink, stroke:'none'};
+  const add = (tag, attrs) => el(tag, Object.assign({}, s, attrs), g);
+  switch(iconKey){
+    case 'aula': /* mesa + sillas */
+      add('rect', {x:3.4, y:7, width:9.2, height:2});
+      add('path', {d:'M5 9v3.4M11 9v3.4'});
+      add('rect', {x:6, y:3.6, width:4, height:1.7});
+      add('path', {d:'M6.7 5.3v1M9.3 5.3v1'});
+      add('rect', {x:6, y:10.7, width:4, height:1.7});
+      add('path', {d:'M6.7 10.7v-1M9.3 10.7v-1'});
+      break;
+    case 'labComp': /* persona frente a monitor */
+      add('rect', {x:2.2, y:4.6, width:7, height:5});
+      add('path', {d:'M5.7 9.6v1.6M4.2 11.2h3'});
+      el('circle', Object.assign({cx:12.3, cy:5.6, r:1.7}, f), g);
+      add('path', {d:'M10.1 12.4c0-2.7 4.4-2.7 4.4 0'});
+      break;
+    case 'labRob': /* brazo articulado */
+      add('rect', {x:3, y:13, width:6, height:1.4});
+      add('path', {d:'M6 13V9.2M6 9.2l4.6-3.6'});
+      el('circle', Object.assign({cx:6, cy:9.2, r:1.15}, f), g);
+      el('circle', Object.assign({cx:10.6, cy:5.6, r:1.15}, s), g);
+      add('path', {d:'M12.7 4.1l-1.1 1.5M13.4 6.5l-1.7-.5'});
+      break;
+    case 'labIng': /* engranaje */
+      el('circle', Object.assign({cx:8, cy:8, r:2.1}, s), g);
+      add('path', {d:'M8 2.6v2M8 11.4v2M2.6 8h2M11.4 8h2M4.1 4.1l1.4 1.4M10.5 10.5l1.4 1.4M11.9 4.1l-1.4 1.4M5.5 10.5l-1.4 1.4'});
+      break;
+    case 'labArte': /* paleta */
+      add('path', {d:'M8 3.1c3.5 0 5.9 2.2 5.9 5 0 2.5-2 3.5-3.3 3.5-1.1 0-1.3-.8-2-.8-.8 0-.9 1.1-2.4 1.1-2.3 0-4-2-4-4 0-2.8 2.3-4.8 5.8-4.8Z'});
+      el('circle', Object.assign({cx:5.4, cy:7.1, r:.95}, f), g);
+      el('circle', Object.assign({cx:8, cy:5.6, r:.95}, f), g);
+      el('circle', Object.assign({cx:10.6, cy:7.1, r:.95}, f), g);
+      break;
+    case 'labSalud': /* cruz */
+      el('path', Object.assign({d:'M6.7 3h2.6v3.7H13v2.6H9.3V13H6.7V9.3H3V6.7h3.7Z'}, f), g);
+      break;
+    case 'oficina': /* escritorio + silla */
+      add('rect', {x:2.4, y:6.6, width:7.4, height:1.7});
+      add('path', {d:'M3.6 8.3v4.5M8.6 8.3v4.5M3.9 6.6V4.3h3.9'});
+      add('rect', {x:11.2, y:8.9, width:2.8, height:1.5});
+      add('path', {d:'M12.6 8.9V6.2M11.4 6.2h2.4M11.9 10.4v2.4M13.3 10.4v2.4'});
+      break;
+    case 'bano': /* pictogramas de persona */
+      el('circle', Object.assign({cx:5.3, cy:4.2, r:1.35}, f), g);
+      el('path', Object.assign({d:'M3.9 12.6 4.6 7h1.4l.7 5.6Z'}, f), g);
+      el('circle', Object.assign({cx:10.7, cy:4.2, r:1.35}, f), g);
+      el('path', Object.assign({d:'M9.3 12.6 10 7h1.4l.7 5.6Z'}, f), g);
+      break;
+    case 'bodega': /* cajas apiladas */
+      add('rect', {x:2.6, y:8.4, width:4.8, height:4.4});
+      add('path', {d:'M2.6 10.6h4.8M5 8.4v4.4'});
+      add('rect', {x:8.6, y:5.4, width:4.8, height:7.4});
+      add('path', {d:'M11 5.4v7.4'});
+      break;
+    case 'pasillo': /* flecha doble */
+      add('path', {d:'M3.4 8h9.2M5.8 5.4 3.2 8l2.6 2.6M10.2 5.4 12.8 8l-2.6 2.6'});
+      break;
+    case 'escala': /* escalones */
+      add('path', {d:'M2.8 13.4h3v-3h3v-3h3v-3h2.4'});
+      add('path', {d:'M12.6 2.7l1.7 1.7-1.7 1.7'});
+      break;
+    default: /* otro: círculo punteado */
+      el('circle', {cx:8, cy:8, r:5.4, fill:'none', stroke:ink, 'stroke-width':1.3, 'stroke-dasharray':'2.4 2.2'}, g);
+      el('circle', Object.assign({cx:8, cy:8, r:1}, f), g);
+  }
+  return g;
+}
+function iconEl(key, size, ink){
+  const s = document.createElementNS(NS, 'svg');
+  s.setAttribute('width', size); s.setAttribute('height', size);
+  s.setAttribute('viewBox', '0 0 16 16');
+  roomIcon(s, key, 0, 0, 16, ink);
+  return s;
+}
 
 /* =====================================================================
    RENDER DE ÍTEMS (parameterizado: live y export comparten el dibujo)
@@ -791,9 +1228,28 @@ function buildItemNodeInto(z, clipParent, forExport){
           txt(lg, ln, {x:0, y:(i ? 12 : -1), 'text-anchor':'middle', class:'ft-s', 'font-weight':600,
             'font-size':12.5, fill:'#23261C', stroke:'#F4F0E1', 'stroke-width':4, 'paint-order':'stroke', 'stroke-linejoin':'round'}));
       }
-      if (doc().showArea)
-        txt(lg, '≈ ' + fmtA(polyArea(z.poly)*M2) + ' m²', {x:0, y:26, 'text-anchor':'middle', class:'ft-m',
-          'font-size':10.5, fill:'#4B4E40', stroke:'#F4F0E1', 'stroke-width':3.5, 'paint-order':'stroke'});
+    }
+  }
+  /* chip de interiores (también en exportes PNG/PDF página 1 — T5) */
+  if (z.kind === 'bldg' || z.kind === 'aud'){
+    const nLv = Math.max(1, Math.round(+z.nLevels || 1));
+    const nRm = Array.isArray(z.rooms) ? z.rooms.length : 0;
+    if (nLv > 1 || nRm > 0){
+      const lbl = nLv > 1 ? '×' + nLv : nRm + ' amb.';
+      const iconW = nLv > 1 ? 13 : 0;   /* mini escalera para multi-nivel */
+      const cw2 = lbl.length * 7 + 12 + iconW;
+      const wb = polyBBox(z.poly.map(p => worldPt(z, p)));
+      const bg = el('g', {class:'bbadge'}, g);
+      el('title', {}, bg).textContent = 'Doble clic para editar los ambientes interiores';
+      el('rect', {x:wb.x + wb.w - cw2 - 5, y:wb.y + 5, width:cw2, height:16, rx:2, fill:'#24271D',
+        stroke:'rgba(248,244,231,.3)', 'stroke-width':1}, bg);
+      if (nLv > 1){
+        const ig = el('g', {transform:`translate(${(wb.x + wb.w - cw2 - 2).toFixed(1)} ${(wb.y + 8).toFixed(1)}) scale(0.7)`}, bg);
+        el('path', {d:'M1 9h2.6V6.4h2.6V3.8h2.6V1.2h2.6', fill:'none', stroke:'#F8F4E7',
+          'stroke-width':1.6, 'stroke-linecap':'square'}, ig);
+      }
+      txt(bg, lbl, {x:wb.x + wb.w - 5 - iconW/2 - (cw2 - iconW)/2, y:wb.y + 16.5, 'text-anchor':'middle', class:'ft-m',
+        'font-weight':700, 'font-size':10, fill:'#F8F4E7', 'letter-spacing':.5});
     }
   }
   if (!forExport) applyZoneStyle(z);
@@ -876,7 +1332,6 @@ function ttAt(px, py){
 }
 function ttShow(html, px, py){ tt.innerHTML = html; ttAt(px, py); tt.classList.add('on'); }
 function ttHide(){ tt.classList.remove('on'); }
-const areaOf = z => fmtA(polyArea(z.poly)*M2);
 
 const HINTS = {
   select: '',
@@ -967,16 +1422,13 @@ function drawDrawingPreview(cursorP){
       stroke:col, 'stroke-width':1.4, 'stroke-dasharray':'4 5', opacity:.7}, gPreview);
   d.pts.forEach((p, i) =>
     el('circle', {cx:p.x, cy:p.y, r: i ? 3.5 : 7, fill: i ? col : '#F8F4E7', stroke:col, 'stroke-width':2}, gPreview));
-  if (d.pts.length >= 3 && cursorP)
-    txt(gPreview, '≈ ' + fmtA(polyArea(d.pts.concat([cursorP]))*M2) + ' m²', {x: cursorP.x + 14, y: cursorP.y - 10,
-      class:'ft-m', 'font-size':12, 'font-weight':700, fill:col, stroke:'#F2EDDF', 'stroke-width':4, 'paint-order':'stroke'}, gPreview);
 }
 function drawStampGhost(p){
   const s = STAMPS[state.stampKind];
   const g = el('g', {transform:`translate(${p.x - s.w/2} ${p.y - s.h/2})`, opacity:.75}, gPreview);
   el('rect', {x:0, y:0, width:s.w, height:s.h, fill:'#B04A26', 'fill-opacity':.12,
     stroke:'#B04A26', 'stroke-width':2.2, 'stroke-dasharray':'9 6'}, g);
-  txt(g, `${s.name} · ${fmt(s.w*M)} × ${fmt(s.h*M)} m`, {x:s.w/2, y:-10, class:'ft-m', 'font-size':12,
+  txt(g, s.name, {x:s.w/2, y:-10, class:'ft-m', 'font-size':12,
     'font-weight':700, fill:'#7A2B12', 'text-anchor':'middle', stroke:'#F2EDDF', 'stroke-width':4, 'paint-order':'stroke'}, g);
 }
 function drawToolGhost(p){
@@ -1007,8 +1459,8 @@ function placeStamp(p){
   const z = {id: uid(), kind: state.stampKind, code: nextCode(s.code), name: s.name + (n > 1 ? ' ' + n : ''),
     desc:'', color: nextColor(), visible:true, rot:0, poly};
   state.items.push(z);
-  select(z.id); save();
-  toast(`${s.name} colocada: girala con la manija R o tecleá grados exactos en el panel.`);
+  updateItemNode(z); select(z.id); save();
+  toast(`Zona colocada: ${s.name} — girala con la manija R o tecleá grados exactos en el panel.`);
 }
 
 function select(id){
@@ -1018,6 +1470,11 @@ function select(id){
   renderHandles(); renderEditor(); renderList();
   const item = document.querySelector(`.zitem[data-id="${id}"]`);
   if (item) item.scrollIntoView({block:'nearest'});
+  const zz = itemById(id);
+  if (zz && (zz.kind === 'bldg' || zz.kind === 'aud') && !dblHintShown){
+    dblHintShown = true;
+    toast('Doble clic sobre el edificio para editar sus ambientes interiores.');
+  }
 }
 function setTerrainEdit(on){
   state.terrainEdit = on; state.sel = on ? '__terrain' : state.sel;
@@ -1067,7 +1524,8 @@ svg.addEventListener('pointerdown', e => {
     const sAttr = t.getAttribute && t.getAttribute('data-scale');
     if (sAttr){
       const z = getSel(); if (!z || z.locked) return;
-      drag = {type:'scale', z, key:sAttr, orig: z.poly.map(q => ({...q})), snap:snapshot()};
+      drag = {type:'scale', z, key:sAttr, orig: z.poly.map(q => ({...q})),
+        orooms: (z.rooms || []).map(r => ({...r, poly: r.poly.map(p => ({...p}))})), snap:snapshot()};
       return;
     }
     if (t.getAttribute && t.getAttribute('data-rot')){
@@ -1139,8 +1597,7 @@ window.addEventListener('pointermove', e => {
         const g = gItems.querySelector(`g[data-id="${z.id}"]`);
         if (g) g.setAttribute('transform', tfAttr(drag.tf));
         gUi.setAttribute('transform', tfAttr(drag.tf));
-        const b = polyBBox(z.poly);
-        ttShow(`<span class="tt-name">${areaOf(z)} m² · ${fmt(b.w*M)} × ${fmt(b.h*M)} m</span>`, e.clientX, e.clientY);
+        ttShow(`<span class="tt-name">${escapeHtml(z.name || 'Sin nombre')}</span>`, e.clientX, e.clientY);
       }
       else if (drag.type === 'vertex'){
         const p = svgPoint(e), z = drag.z;
@@ -1164,7 +1621,7 @@ window.addEventListener('pointermove', e => {
           }
           renderHandles();
           const cur = drag.owner === 'terrain' ? state.terrain.points : z.poly;
-          ttShow(`<span class="tt-name">${fmtA(polyArea(cur)*M2)} m² · ${cur.length} vértices</span>`, e.clientX, e.clientY);
+          ttShow(`<span class="tt-name">${cur.length} vértices</span>`, e.clientX, e.clientY);
         }
       }
       else if (drag.type === 'scale'){
@@ -1180,7 +1637,6 @@ window.addEventListener('pointermove', e => {
         drag.tf = tf;
         z.poly = drag.orig.map(q => tfPoint(q, tf));
         scheduleFullItem(z);
-        ttShow(`<span class="tt-name">${fmt((x1-x0)*M)} × ${fmt((y1-y0)*M)} m</span>`, e.clientX, e.clientY);
       }
       else if (drag.type === 'rot'){
         const p = svgPoint(e), z = drag.z;
@@ -1208,7 +1664,7 @@ window.addEventListener('pointermove', e => {
         ttShow(`<span class="tt-code" style="background:${z.color};color:${textOn(z.color)}">${escapeHtml(z.code || '—')}</span>
           <div class="tt-name">${escapeHtml(z.name || 'Sin nombre')}</div>
           ${z.desc ? `<div class="tt-desc">${escapeHtml(z.desc)}</div>` : ''}
-          <div class="tt-hint">${areaOf(z)} m² · ${z.rot ? z.rot.toFixed(0)+'° · ' : ''}${z.locked ? 'bloqueada' : 'clic: editar · doble clic: enfocar'}</div>`, e.clientX - r.left, e.clientY - r.top);
+          <div class="tt-hint">${z.rot ? z.rot.toFixed(0)+'° · ' : ''}${z.locked ? 'bloqueada' : (z.kind === 'bldg' || z.kind === 'aud') ? 'clic: editar · doble clic: interiores' : 'clic: editar · doble clic: enfocar'}</div>`, e.clientX - r.left, e.clientY - r.top);
         return;
       }
     }
@@ -1233,7 +1689,7 @@ window.addEventListener('pointerup', () => {
       gPreview.innerHTML = ''; save();
     }
     else if (drag.type === 'erase'){
-      if (drag.erased > 0){ pushUndoAt(drag.snap); save(); toast(drag.erased + ' árboles eliminados.'); }
+      if (drag.erased > 0){ pushUndoAt(drag.snap); save(); toast(drag.erased === 1 ? '1 árbol eliminado.' : drag.erased + ' árboles eliminados.'); }
       gPreview.innerHTML = '';
     }
     else if (drag.type === 'move'){
@@ -1242,6 +1698,8 @@ window.addEventListener('pointerup', () => {
       gUi.removeAttribute('transform');
       if (drag.moved && drag.tf){
         drag.z.poly = drag.z.poly.map(p => tfPoint(p, drag.tf));
+        if (drag.z.rooms && drag.z.rooms.length)
+          drag.z.rooms.forEach(r => r.poly = r.poly.map(p => tfPoint(p, drag.tf)));
         updateItemNode(drag.z); pushUndoAt(drag.snap); save(); renderEditor();
       }
       renderHandles(); ttHide();
@@ -1253,6 +1711,8 @@ window.addEventListener('pointerup', () => {
       ttHide();
     }
     else if (drag.type === 'scale' && drag.tf){
+      if (drag.orooms && drag.orooms.length)
+        drag.z.rooms = drag.orooms.map(r => ({...r, poly: r.poly.map(q => tfPoint(q, drag.tf))}));
       updateItemNode(drag.z); pushUndoAt(drag.snap); save(); renderEditor();
       ttHide();
     }
@@ -1283,7 +1743,15 @@ svg.addEventListener('dblclick', e => {
     const vAttr = t.getAttribute && t.getAttribute('data-vidx');
     if (vAttr !== null && vAttr !== undefined && !isNaN(+vAttr)){ deleteVertex(t.getAttribute('data-owner'), +vAttr); return; }
     const zg = t.closest ? t.closest('g[data-id]') : null;
-    if (zg){ const z = itemById(zg.getAttribute('data-id')); if (z){ select(z.id); focusPoly(z.poly); return; } }
+    if (zg){
+      const z = itemById(zg.getAttribute('data-id'));
+      if (z){
+        select(z.id);
+        if (state.tool === 'select' && (z.kind === 'bldg' || z.kind === 'aud')){ openDetail(z.id); return; }
+        focusPoly(z.poly);
+        return;
+      }
+    }
     if (t.closest && t.closest('#gTerrain')) setTerrainEdit(!state.terrainEdit);
   }catch(err){ fail('doble clic', err); }
 });
@@ -1366,13 +1834,48 @@ function renderChips(){
   });
 }
 
+/* ---- T6 · búsqueda global de ambientes (nombre, código y categoría) ---- */
+const normTxt = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const ROOM_HIT_MAX = 30;
+function globalRoomHits(qn){
+  const out = [];
+  state.items.forEach(z => {
+    if (z.kind !== 'bldg' && z.kind !== 'aud') return;
+    const rooms = Array.isArray(z.rooms) ? z.rooms : [];
+    if (!rooms.length) return;
+    rooms.forEach(r => {
+      const cat = catOf(r.cat);
+      const hay = normTxt([r.name, r.code, cat.name, cat.code, z.name].join(' '));
+      if (hay.includes(qn)) out.push({b:z, r});
+    });
+  });
+  /* ordenadas por edificio (orden del campus); dentro de cada uno, por nivel y código */
+  out.sort((a, c) => a.b !== c.b ? 0 :
+    ((a.r.level || 0) - (c.r.level || 0)) || String(a.r.code || '').localeCompare(String(c.r.code || '')));
+  return out.slice(0, ROOM_HIT_MAX);
+}
+function goToRoom(bId, roomId){
+  const b = itemById(bId); if (!b) return;
+  const r = (Array.isArray(b.rooms) ? b.rooms : []).find(x => x.id === roomId); if (!r) return;
+  const same = DET.open && DET.bId === bId;
+  if (!same) openDetail(bId);
+  DET.level = clamp(r.level || 0, 0, Math.max(1, Math.round(+b.nLevels || 1)) - 1);
+  DET.sel = roomId; DET.filter = null; DET.burst = false;
+  if (same){ setDetailTool('select'); dCenterRoom(r); }
+  else {
+    detailRenderHead(); detailRenderSide();
+    DET.pendingSel = roomId;   /* detailFit centra el ambiente al terminar el encuadre */
+  }
+  toast(`Ambiente encontrado: ${r.name || catOf(r.cat).name} (${b.name || 'Edificio'}, ${lvlLabel(b, DET.level)})`);
+}
+
 function renderList(){
   const ul = $('zoneList'); ul.innerHTML = '';
-  const q = $('search').value.trim().toLowerCase();
-  state.items
+  const q = $('search').value.trim(), qn = normTxt(q);
+  const zones = state.items
     .filter(z => (state.filter === 'all' || KIND_GROUP[z.kind] === state.filter))
-    .filter(z => !q || (z.code||'').toLowerCase().includes(q) || (z.name||'').toLowerCase().includes(q))
-    .forEach(z => {
+    .filter(z => !qn || normTxt(z.code).includes(qn) || normTxt(z.name).includes(qn));
+  zones.forEach(z => {
       const li = document.createElement('li');
       li.className = 'zitem' + (state.sel === z.id ? ' sel' : '') + (z.visible === false ? ' hidden-zone' : '');
       li.dataset.id = z.id;
@@ -1380,7 +1883,8 @@ function renderList(){
         <span class="zcode">${escapeHtml(z.code || '—')}</span>
         <span class="zname">${escapeHtml(z.name || 'Sin nombre')}</span>
         <button class="mini lock" title="${z.locked ? 'Desbloquear' : 'Bloquear'}">${z.locked ? LOCK : UNLOCK}</button>
-        <button class="mini eye" title="${z.visible === false ? 'Mostrar' : 'Ocultar'}">${z.visible === false ? EYEOFF : EYE}</button>`;
+        <button class="mini eye" title="${z.visible === false ? 'Mostrar' : 'Ocultar'}">${z.visible === false ? EYEOFF : EYE}</button>
+        ${zMetaLine(z)}`;
       li.onclick = e => {
         if (e.target.closest('.lock')){
           z.locked = !z.locked; renderList(); renderHandles(); save();
@@ -1400,6 +1904,43 @@ function renderList(){
       li.onmouseleave = () => { hoverZone = null; applyZoneStyle(z); };
       ul.appendChild(li);
     });
+  /* ---- resultados de ambientes (T6): debajo de las zonas, agrupados por edificio ---- */
+  if (qn){
+    const hits = globalRoomHits(qn);
+    if (hits.length){
+      const h = document.createElement('li');
+      h.className = 'rhead';
+      h.textContent = `AMBIENTES · ${hits.length}${hits.length >= ROOM_HIT_MAX ? '+' : ''}`;
+      ul.appendChild(h);
+      hits.forEach(({b, r}) => {
+        const cat = catOf(r.cat);
+        const li = document.createElement('li');
+        li.className = 'rhit' + (DET.open && DET.bId === b.id && DET.sel === r.id ? ' sel' : '');
+        li.innerHTML = `<span class="zsw" style="background:${roomColor(r)}"></span>
+          <span class="rcol">
+            <span class="rrow"><span class="zcode">${escapeHtml(r.code || '—')}</span>
+            <span class="zname">${escapeHtml(r.name || cat.name)}</span></span>
+            <span class="rmeta">${escapeHtml(b.name || 'Edificio')} · ${escapeHtml(lvlLabel(b, r.level || 0))}</span>
+          </span>`;
+        li.onclick = () => goToRoom(b.id, r.id);
+        li.onmouseenter = () => { if (b.visible !== false){ hoverZone = b.id; applyZoneStyle(b); } };
+        li.onmouseleave = () => { hoverZone = null; applyZoneStyle(b); };
+        ul.appendChild(li);
+      });
+    } else if (!zones.length){
+      const li = document.createElement('li');
+      li.className = 'zempty';
+      li.textContent = `Ninguna zona ni ambiente coincide con «${q}».`;
+      ul.appendChild(li);
+    }
+  }
+}
+function zMetaLine(z){
+  if (z.kind !== 'bldg' && z.kind !== 'aud') return '';
+  const nL = clamp(Math.round(+z.nLevels || 1), 1, 20);
+  const nR = Array.isArray(z.rooms) ? z.rooms.length : 0;
+  if (!nR && nL <= 1) return '';
+  return `<span class="zmeta">${nR ? nR + ' amb. · ' : ''}×${nL} nivel${nL > 1 ? 'es' : ''}</span>`;
 }
 function updateCount(){ $('zcount').textContent = state.items.length; }
 
@@ -1412,8 +1953,7 @@ function renderEditorInner(){
       <div class="ed-title"><span class="sw" style="background:#C7351F"></span><b>${escapeHtml(T.name || 'Campus')}</b></div>
       <div class="field"><label>Nombre del campus</label><input id="edTName" type="text" maxlength="50" value="${escapeHtml(T.name || '')}"></div>
       <div class="meta-row">
-        Delimitación de forma libre · ${T.points.length} vértices<br>
-        Superficie ≈ ${fmtA(polyArea(T.points)*M2)} m² · perímetro ≈ ${fmtA(polyPerim(T.points)*M)} m
+        Delimitación de forma libre · ${T.points.length} vértices
       </div>
       <div class="ed-btns">
         <button class="btn accent" id="edTEdit">Editar contorno</button>
@@ -1470,6 +2010,8 @@ function renderEditorInner(){
       </div>
     </div>
     <div class="ed-btns">
+      ${(z.kind === 'bldg' || z.kind === 'aud') ? `<button class="btn primary" id="edInteriors" title="Abrir la vista de ambientes interiores (también: doble clic en el plano)">Editar interiores</button>
+      <button class="btn" id="edIso" title="Vista 3D isométrica: pisos apilados tipo vista explotada"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.8 14 5v6L8 14.2 2 11V5Z"/><path d="M2 5l6 3.2L14 5M8 8.2v6"/></svg> Vista 3D</button>` : ''}
       <button class="btn" id="edFocus">Enfocar</button>
       <button class="btn" id="edDup">Duplicar</button>
       <button class="btn" id="edFront" title="Traer al frente">Frente</button>
@@ -1478,7 +2020,7 @@ function renderEditorInner(){
       <button class="btn danger" id="edDel">Eliminar</button>
     </div>
     <div class="meta-row">
-      ${z.poly.length} vértices · superficie ≈ ${areaOf(z)} m² · rotación ${Math.round(z.rot || 0)}°<br>
+      ${z.poly.length} vértices · rotación ${Math.round(z.rot || 0)}°${(z.rooms && z.rooms.length) ? ` · ${z.rooms.length} ambiente(s) en ${Math.max(1, Math.round(+z.nLevels || 1))} nivel(es)` : ''}<br>
       ${locked ? 'Contorno protegido' : 'Editá la forma arrastrando los puntos (◇ inserta vértice).'}
     </div>`;
 
@@ -1504,10 +2046,14 @@ function renderEditorInner(){
   });
   $('edColor').addEventListener('input', e => { z.color = e.target.value; refresh(); });
   $('edFocus').onclick = () => focusPoly(z.poly);
+  const ei = $('edInteriors'); if (ei) ei.onclick = () => openDetail(z.id);
+  const eiso = $('edIso'); if (eiso) eiso.onclick = () => openIsoModal(z.id);
   $('edDup').onclick = () => {
     pushUndo();
     const c = {id: uid(), kind: z.kind, code: nextCode('Z'), name: (z.name || '') + ' (copia)', desc: z.desc,
-      color: z.color, visible: true, rot: z.rot || 0, opacity: z.opacity, poly: z.poly.map(p => ({x: p.x+26, y: p.y+26}))};
+      color: z.color, visible: true, rot: z.rot || 0, opacity: z.opacity,
+      nLevels: z.nLevels, rooms: (z.rooms || []).map(r => ({...r, id: uid()})),
+      poly: z.poly.map(p => ({x: p.x+26, y: p.y+26}))};
     state.items.push(c); renderItems(); select(c.id); focusPoly(c.poly); save();
     toast('Zona duplicada.');
   };
@@ -1543,6 +2089,1333 @@ function renderEditorInner(){
 }
 
 /* =====================================================================
+   VISTA DE DETALLE · AMBIENTES INTERIORES DE UN EDIFICIO
+   - Los rooms viven dentro del item (z.rooms) en el MISMO espacio local
+     del poly del edificio (sin rotación): viajan con mover/escalar y se
+     dibujan rotados junto al edificio automáticamente.
+===================================================================== */
+const DET = {open:false, bId:null, level:0, tool:'select', sel:null, stampCat:null,
+  byType:false, filter:null, burst:false, pendingSel:null, view:{k:1, tx:0, ty:0}};
+let dHover = null, dDrag = null, dRaf = 0, dGhostRaf = 0, dGhostP = null, dblHintShown = false;
+const detailWrap = $('detailWrap'), dsvg = $('dsvg'), dRoot = $('dRoot');
+const lvlName = i => i === 0 ? 'PB' : 'N' + i;
+const lvlLabel = (b, i) => (b && Array.isArray(b.levelNames) && b.levelNames[i]) || lvlName(i);
+const bld = () => itemById(DET.bId);
+const roomById = id => { const b = bld(); return (b && Array.isArray(b.rooms)) ? b.rooms.find(r => r.id === id) : null; };
+const roomsAt = lvl => { const b = bld(); return (b && Array.isArray(b.rooms)) ? b.rooms.filter(r => (r.level || 0) === lvl) : []; };
+function catOf(key){
+  const c = doc().catalog;
+  return (Array.isArray(c) && c.find(x => x.key === key)) ||
+    {key:'otro', name:'Otro', code:'—', color:'#8F8A74', icon:'otro'};
+}
+const roomColor = r => r.color || catOf(r.cat).color;
+function nextRoomCode(b){
+  const base = String(b.code || 'ED');
+  const used = new Set((b.rooms || []).map(r => String(r.code || '').toUpperCase()));
+  let i = 1;
+  while (used.has(base + '-' + String(i).padStart(2, '0'))) i++;
+  return base + '-' + String(i).padStart(2, '0');
+}
+
+/* ---- transformación propia de la vista de detalle ---- */
+function dApplyView(){
+  dRoot.setAttribute('transform',
+    `translate(${DET.view.tx.toFixed(1)} ${DET.view.ty.toFixed(1)}) scale(${(+DET.view.k).toFixed(4)})`);
+}
+function dPt(e){
+  const r = dsvg.getBoundingClientRect();
+  return {x:(e.clientX - r.left - DET.view.tx)/DET.view.k, y:(e.clientY - r.top - DET.view.ty)/DET.view.k};
+}
+function dSchedule(){ if (dRaf) return; dRaf = requestAnimationFrame(() => { dRaf = 0; detailRenderCanvas(); }); }
+function dGhostSchedule(p){
+  dGhostP = p;
+  if (dGhostRaf) return;
+  dGhostRaf = requestAnimationFrame(() => {
+    dGhostRaf = 0;
+    if (!DET.open) return;
+    dRoot.querySelectorAll('.dghost').forEach(n => n.remove());
+    if (!dGhostP) return;
+    if (DET.tool === 'stampRoom') drawDetailGhost(dGhostP);
+    else if (DET.tool === 'draw' && DET.drawing) drawDrawPreview(dGhostP);
+  });
+}
+function dZoomAt(sx, sy, factor){
+  const k2 = clamp(DET.view.k * factor, .15, 12);
+  const f = k2 / DET.view.k;
+  DET.view.tx = sx - (sx - DET.view.tx) * f;
+  DET.view.ty = sy - (sy - DET.view.ty) * f;
+  DET.view.k = k2;
+  dApplyView(); dSchedule();
+}
+function detailFit(){
+  const b = bld(); if (!b || !DET.open) return;
+  const r = dsvg.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  const bb = polyBBox(b.poly), pad = 90;
+  const k = clamp(Math.min((r.width - pad*2)/Math.max(bb.w, 40), (r.height - pad*2)/Math.max(bb.h, 40)), .15, 4);
+  DET.view.k = k;
+  DET.view.tx = r.width/2 - k*(bb.x + bb.w/2);
+  DET.view.ty = r.height/2 - k*(bb.y + bb.h/2);
+  dApplyView(); detailRenderCanvas();
+  /* T6: si se llegó desde la búsqueda global, seleccionar y centrar el ambiente pedido */
+  const pid = DET.pendingSel; DET.pendingSel = null;
+  if (pid){
+    const rp = roomById(pid);
+    if (rp){ DET.sel = pid; renderRoomList(); detailRenderProp(); dCenterRoom(rp); }
+  }
+}
+function dCenterRoom(r){
+  const rc = dsvg.getBoundingClientRect();
+  const c = polyCentroid(r.poly);
+  DET.view.tx = rc.width/2 - c.x*DET.view.k;
+  DET.view.ty = rc.height/2 - c.y*DET.view.k;
+  dApplyView(); detailRenderCanvas();
+}
+
+/* ---- dibujo del plano de detalle ---- */
+function detailRenderCanvas(){
+  if (!DET.open) return;
+  const b = bld(); if (!b) return;
+  const cp = $('dClipPath'); if (cp) cp.setAttribute('d', polyPath(b.poly));
+  dApplyView();
+  dRoot.innerHTML = '';
+  if (doc().grid) el('rect', {x:-2500, y:-2500, width:7000, height:7000, fill:'url(#dgrid)'}, dRoot);
+  el('path', {d: polyPath(b.poly), transform:'translate(7 8)', fill:'rgba(36,39,29,.13)'}, dRoot);
+  el('path', {d: polyPath(b.poly), fill:'#FBF7EC'}, dRoot);
+  roomsAt(DET.level).forEach(r => drawRoomNode(r));
+  el('path', {d: polyPath(b.poly), fill:'none', stroke:'#24271D', 'stroke-width':2.5, 'stroke-linejoin':'round'}, dRoot);
+  drawDetailHandles();
+  if (DET.tool === 'draw' && DET.drawing) drawDrawPreview(null);
+}
+function drawRoomNode(r){
+  const cat = catOf(r.cat);
+  const col = DET.byType ? cat.color : roomColor(r);
+  const sel = DET.sel === r.id, hov = dHover === r.id;
+  const g = el('g', {'data-rid': r.id}, dRoot);
+  el('path', {d: polyPath(r.poly), fill: col, 'fill-opacity': sel ? .55 : .45,
+    stroke: sel || hov ? '#B04A26' : '#24271D', 'stroke-width': sel ? 2.5 : hov ? 2 : 1.4,
+    'stroke-linejoin':'round', 'clip-path':'url(#dClip)'}, g);
+  const bb = polyBBox(r.poly);
+  const u = 1/DET.view.k;
+  const wScr = bb.w * DET.view.k, hScr = bb.h * DET.view.k;
+  const isStair = r.cat === 'escala' || cat.icon === 'escala';
+  if (isStair && wScr >= 40 && hScr >= 34){
+    /* T3b: escalera arquitectónica — escalones grandes + flecha SUBE */
+    if (wScr >= 54){
+      const lg = el('g', {transform:`translate(${bb.x.toFixed(1)} ${bb.y.toFixed(1)}) scale(${u.toFixed(3)})`}, g);
+      txt(lg, r.code || '', {x:5, y:11.5, class:'ft-m', 'font-weight':700, 'font-size':11,
+        fill:'#24271D', stroke:'#F4F0E1', 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round'});
+    }
+    const cx = bb.x + bb.w/2, cy = bb.y + bb.h/2;
+    const s = Math.min(bb.w, bb.h) * .58;
+    const ink = 'rgba(36,39,29,.82)';
+    roomIcon(g, 'escala', cx - s/2, cy - s/2 - 3*u, s, ink);
+    const ty = cy + s/2 + 9*u;
+    el('line', {x1:cx.toFixed(1), y1:(ty - 2.5*u).toFixed(1), x2:cx.toFixed(1), y2:(ty - 9*u).toFixed(1),
+      stroke:ink, 'stroke-width':(1.6*u).toFixed(2)}, g);
+    el('path', {d:`M${(cx - 2.8*u).toFixed(1)} ${(ty - 8*u).toFixed(1)} L${cx.toFixed(1)} ${(ty - 12.5*u).toFixed(1)} L${(cx + 2.8*u).toFixed(1)} ${(ty - 8*u).toFixed(1)} Z`, fill:ink}, g);
+    txt(g, 'SUBE', {x:cx.toFixed(1), y:(ty + 3.5*u).toFixed(1), 'text-anchor':'middle', class:'ft-m', 'font-weight':700,
+      'font-size':(10*u).toFixed(2), fill:'#24271D', 'letter-spacing':(1.4*u).toFixed(2),
+      stroke:'#F4F0E1', 'stroke-width':(3*u).toFixed(2), 'paint-order':'stroke'});
+  } else if (wScr >= 70 && hScr >= 24){
+    const lg = el('g', {transform:`translate(${bb.x.toFixed(1)} ${bb.y.toFixed(1)}) scale(${u.toFixed(3)})`}, g);
+    roomIcon(lg, cat.icon, 5, 5, 15, 'rgba(36,39,29,.85)');
+    txt(lg, r.code || '', {x:24, y:11.5, class:'ft-m', 'font-weight':700, 'font-size':11,
+      fill:'#24271D', stroke:'#F4F0E1', 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round'});
+    if (wScr >= 130 && hScr >= 52 && r.name){
+      wrapText(r.name, Math.max(8, Math.floor(wScr/6.4)), 2).forEach((ln, i) =>
+        txt(lg, ln, {x:5, y: i ? 38 : 27, class:'ft-s', 'font-weight':600, 'font-size':10.5,
+          fill:'#23261C', stroke:'#F4F0E1', 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round'}));
+    }
+  }
+}
+function drawDetailHandles(){
+  const r = roomById(DET.sel);
+  if (!r || DET.tool !== 'select') return;
+  const u = 1/DET.view.k;
+  if (r.poly.length <= 24)
+    r.poly.forEach((p, i) =>
+      el('circle', {cx:p.x, cy:p.y, r:5.5*u, fill:'#F8F4E7', stroke:'#B04A26', 'stroke-width':2*u,
+        'data-dv':i, style:'cursor:move'}, dRoot));
+  const b = polyBBox(r.poly), s = 9*u;
+  SCALE_KEYS.forEach(k => {
+    const hx = k.includes('w') ? b.x : b.x + b.w, hy = k.includes('n') ? b.y : b.y + b.h;
+    el('rect', {x:hx - s/2, y:hy - s/2, width:s, height:s, fill:'#F8F4E7', stroke:'#20241A',
+      'stroke-width':1.5*u, 'data-dsc':k, style:'cursor:nwse-resize'}, dRoot);
+  });
+}
+function drawDetailGhost(p){
+  const b = bld(); if (!b) return;
+  const cat = catOf(DET.stampCat);
+  if (!pointInPoly(p.x, p.y, b.poly)) return;
+  const gx = grid(p.x), gy = grid(p.y);
+  const clipped = clipPolyRect(b.poly, {x: gx - 32, y: gy - 24, w: 64, h: 48});
+  const g = el('g', {class:'dghost', opacity:.9}, dRoot);
+  if (clipped.length >= 3)
+    el('path', {d: polyPath(clipped), fill:cat.color, 'fill-opacity':.45, stroke:'#B04A26',
+      'stroke-width':1.6, 'stroke-dasharray':'6 4'}, g);
+  else
+    el('rect', {x:gx - 32, y:gy - 24, width:64, height:48, fill:cat.color, 'fill-opacity':.3,
+      stroke:'#B04A26', 'stroke-width':1.4, 'stroke-dasharray':'6 4'}, g);
+  const u = 1/DET.view.k;
+  const lg = el('g', {transform:`translate(${(gx - 32).toFixed(1)} ${(gy - 24 - 16*u).toFixed(1)}) scale(${u.toFixed(3)})`}, g);
+  roomIcon(lg, cat.icon, 0, 0, 13, 'rgba(36,39,29,.85)');
+  txt(lg, cat.name, {x:17, y:11, class:'ft-s', 'font-weight':600, 'font-size':11,
+    fill:'#23261C', stroke:'#F4F0E1', 'stroke-width':3, 'paint-order':'stroke'});
+}
+
+/* ---- cabecera / panel lateral / propiedades ---- */
+function detailRenderHead(){
+  const b = bld(); if (!b) return;
+  $('dName').textContent = b.name || 'Sin nombre';
+  $('dCode').textContent = b.code || '—';
+  const n = Math.max(1, Math.round(+b.nLevels || 1));
+  const lvChip = $('dLvChip');
+  if (lvChip){
+    if (n > 1){ lvChip.style.display = ''; lvChip.textContent = '×' + n + ' niveles'; }
+    else lvChip.style.display = 'none';
+  }
+  const tabs = $('dTabs'); tabs.innerHTML = '';
+  for (let i = 0; i < n; i++){
+    const t = document.createElement('button');
+    t.className = 'dtab' + (i === DET.level ? ' on' : '');
+    t.textContent = lvlLabel(b, i);
+    t.title = 'Nivel ' + lvlLabel(b, i);
+    t.onclick = () => { DET.level = i; DET.sel = null; DET.burst = false; detailRenderAll(); };
+    tabs.appendChild(t);
+  }
+  const plus = document.createElement('button');
+  plus.className = 'dtab';
+  plus.textContent = 'Niveles +';
+  plus.title = 'Gestionar niveles: añadir, renombrar, eliminar (los eliminados bajan a PB)';
+  plus.onclick = openLevelsModal;
+  tabs.appendChild(plus);
+  $('dToolSelect').classList.toggle('on', DET.tool === 'select');
+  $('dToolStamp').classList.toggle('on', DET.tool === 'stampRoom');
+  $('dToolCut').classList.toggle('on', DET.tool === 'cut');
+  $('dToolDraw').classList.toggle('on', DET.tool === 'draw');
+  $('dByType').checked = DET.byType;
+  $('dSideTitle').textContent = 'AMBIENTES · ' + lvlLabel(b, DET.level);
+}
+function detailRenderSide(){ renderRoomList(); detailRenderProp(); renderCatChips(); }
+function renderRoomList(){
+  const b = bld(), ul = $('dList'), chips = $('dChips');
+  if (!b || !ul || !chips) return;
+  const all = roomsAt(DET.level);
+  const catsPresent = [];
+  all.forEach(r => { if (!catsPresent.includes(r.cat)) catsPresent.push(r.cat); });
+  chips.innerHTML = '';
+  const mkChip = (key, lbl) => {
+    const c = document.createElement('button');
+    c.className = 'chip' + ((DET.filter || 'all') === key ? ' on' : '');
+    c.textContent = lbl;
+    c.onclick = () => { DET.filter = key === 'all' ? null : key; renderRoomList(); };
+    chips.appendChild(c);
+  };
+  mkChip('all', 'Todas (' + all.length + ')');
+  catsPresent.forEach(k => mkChip(k, catOf(k).name));
+  $('dCount').textContent = all.length;
+  if (!all.length){
+    ul.innerHTML = '<li class="dempty">Sin ambientes en este nivel.<br>Elegí una categoría del catálogo (abajo) o la herramienta <b>Estampar ambiente</b> y hacé clic dentro del edificio.</li>';
+    return;
+  }
+  ul.innerHTML = '';
+  const shown = all.filter(r => !DET.filter || r.cat === DET.filter);
+  if (!shown.length){
+    ul.innerHTML = '<li class="dempty">Ningún ambiente coincide con el filtro.</li>';
+    return;
+  }
+  shown.forEach(r => {
+    const li = document.createElement('li');
+    li.className = 'ditem' + (DET.sel === r.id ? ' sel' : '');
+    li.dataset.rid = r.id;
+    li.innerHTML = `<span class="zsw" style="background:${roomColor(r)}"></span>
+      <span class="zcode">${escapeHtml(r.code || '—')}</span>
+      <span class="zname">${escapeHtml(r.name || catOf(r.cat).name)}</span>
+      <button class="mini del" title="Eliminar ambiente (⌫)">×</button>`;
+    li.onclick = e => {
+      const del = e.target.closest('.del');
+      if (del){
+        e.stopPropagation();
+        if (del.dataset.armed){ detailDeleteRoom(r.id); }
+        else{
+          del.dataset.armed = '1'; del.classList.add('confirm'); del.textContent = '¿borrar?';
+          setTimeout(() => { if (del.isConnected){ del.dataset.armed = ''; del.classList.remove('confirm'); del.textContent = '×'; } }, 2600);
+        }
+        return;
+      }
+      DET.sel = r.id;
+      renderRoomList(); detailRenderProp(); detailRenderCanvas(); dCenterRoom(r);
+    };
+    ul.appendChild(li);
+  });
+}
+function detailRenderProp(){
+  const box = $('dProp'), r = roomById(DET.sel);
+  if (!r){ box.style.display = 'none'; box.innerHTML = ''; return; }
+  box.style.display = '';
+  box.innerHTML = `
+    <div class="ed-title"><span class="sw" style="background:${roomColor(r)}"></span><b>${escapeHtml(r.code || '—')}</b></div>
+    <div class="field"><label>Nombre del ambiente</label><input id="dpName" type="text" maxlength="60" value="${escapeHtml(r.name || '')}"></div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div class="field" style="margin:0"><label>Código</label><input id="dpCode" class="code" type="text" maxlength="10" value="${escapeHtml(r.code || '')}"></div>
+      <div class="field" style="margin:0;flex:1"><label>Categoría</label><select id="dpCat">${(doc().catalog || []).map(c => `<option value="${c.key}"${c.key === r.cat ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}</select></div>
+    </div>
+    <div class="field"><label>Color</label>
+      <div class="swatches" id="dpSw">
+        ${PALETTE.map(c => `<button class="swb${c.toLowerCase() === String(roomColor(r)).toLowerCase() ? ' on' : ''}" data-c="${c}" style="background:${c}" title="${c}"></button>`).join('')}
+        <input type="color" id="dpColor" value="${/^#[0-9a-fA-F]{6}$/.test(roomColor(r)) ? roomColor(r) : '#888888'}" title="Color personalizado">
+      </div>
+    </div>
+    <div class="field"><label>Descripción</label><textarea id="dpDesc" maxlength="200" style="min-height:40px">${escapeHtml(r.desc || '')}</textarea></div>
+    <div class="ed-btns"><button class="btn danger" id="dpDel">Eliminar ambiente</button></div>
+    <div class="meta-row">${r.poly.length} vértices · nivel ${escapeHtml(lvlLabel(bld(), r.level || 0))} · categoría: ${escapeHtml(catOf(r.cat).name)}</div>`;
+  $('dpName').addEventListener('input', e => { r.name = e.target.value; save(); renderRoomList(); detailRenderCanvas(); });
+  $('dpCode').addEventListener('input', e => {
+    r.code = e.target.value.toUpperCase(); save();
+    box.querySelector('.ed-title b').textContent = r.code || '—';
+    renderRoomList(); detailRenderCanvas();
+  });
+  $('dpCat').addEventListener('change', e => { pushUndo(); r.cat = e.target.value; save(); detailRenderProp(); renderRoomList(); detailRenderCanvas(); });
+  $('dpSw').addEventListener('click', e => {
+    const btn = e.target.closest('.swb'); if (!btn) return;
+    pushUndo(); r.color = btn.dataset.c; save(); detailRenderProp(); renderRoomList(); detailRenderCanvas();
+  });
+  $('dpColor').addEventListener('input', e => { r.color = e.target.value; save(); renderRoomList(); detailRenderCanvas(); });
+  $('dpDesc').addEventListener('input', e => { r.desc = e.target.value; save(); });
+  $('dpDel').onclick = () => detailDeleteRoom(r.id);
+}
+function renderCatChips(){
+  const box = $('dCatBox'); if (!box) return;
+  box.innerHTML = '<h4>CATÁLOGO · CLIC = ESTAMPAR</h4>';
+  (doc().catalog || []).forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'dcatg' + (DET.tool === 'stampRoom' && DET.stampCat === c.key ? ' on' : '');
+    b.title = 'Estampar ambiente «' + c.name + '» — clic de nuevo para volver a Seleccionar';
+    b.appendChild(iconEl(c.icon, 15, 'currentColor'));
+    const nm = document.createElement('span');
+    nm.textContent = c.name;
+    nm.style.cssText = 'flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+    b.appendChild(nm);
+    const sw = document.createElement('span');
+    sw.style.cssText = `width:11px;height:11px;background:${c.color};border:1px solid rgba(20,22,16,.4);flex:none`;
+    b.appendChild(sw);
+    b.onclick = () => {
+      if (DET.tool === 'stampRoom' && DET.stampCat === c.key) setDetailTool('select');
+      else { DET.stampCat = c.key; setDetailTool('stampRoom'); }
+    };
+    box.appendChild(b);
+  });
+}
+
+/* ---- entrar / salir / herramientas ---- */
+function openDetail(id){
+  const b = itemById(id);
+  if (!b || (b.kind !== 'bldg' && b.kind !== 'aud')) return;
+  cancelDrawing(); ttHide(); setHint('');
+  DET.open = true; DET.bId = id;
+  DET.level = clamp(DET.level || 0, 0, Math.max(1, Math.round(+b.nLevels || 1)) - 1);
+  DET.sel = null; DET.filter = null; DET.burst = false; dHover = null; dGhostP = null;
+  detailWrap.classList.add('on');
+  setDetailTool('select');
+  requestAnimationFrame(detailFit);
+}
+function closeDetail(){
+  DET.open = false; DET.sel = null; dDrag = null; dHover = null; dGhostP = null; DET.drawing = null;
+  detailWrap.classList.remove('on');
+  dsvg.classList.remove('panning', 'stamping');
+  renderHandles(); setHint(HINTS[state.tool] || '');
+}
+function setDetailTool(tool){
+  DET.tool = tool; DET.burst = false; DET.drawing = null;
+  if (tool === 'stampRoom' && !DET.stampCat) DET.stampCat = (doc().catalog[0] || {key:'otro'}).key;
+  dsvg.classList.toggle('stamping', tool === 'stampRoom' || tool === 'cut' || tool === 'draw');
+  detailRenderHead(); detailRenderSide(); detailRenderCanvas(); setDetailHint();
+}
+function setDetailHint(){
+  const h = $('dHint');
+  if (!DET.open){ h.classList.remove('on'); return; }
+  if (DET.tool === 'stampRoom'){
+    const c = catOf(DET.stampCat);
+    h.innerHTML = `Estampando <b>&nbsp;${escapeHtml(c.name)}&nbsp;</b> — clic dentro del edificio · <kbd>ESC</kbd> terminar`;
+  } else if (DET.tool === 'cut'){
+    h.innerHTML = `Cortar: arrastrá una línea — divide <b>&nbsp;todos&nbsp;</b> los ambientes que cruce · <kbd>SHIFT</kbd> rectas de 45° · <kbd>ESC</kbd> terminar`;
+  } else if (DET.tool === 'draw'){
+    h.innerHTML = `Dibujar ambiente: <kbd>clic</kbd> añade vértices · <kbd>ENTER</kbd>/<kbd>doble clic</kbd> cierra · <kbd>⌫</kbd> quita el último · <kbd>ESC</kbd> cancela`;
+  } else {
+    h.innerHTML = `Clic: seleccionar ambiente · arrastrar: mover · puntos: editar forma · <kbd>ESC</kbd> volver al campus`;
+  }
+  h.classList.add('on');
+}
+function detailRenderAll(){
+  if (!DET.open) return;
+  detailRenderHead(); detailRenderSide(); detailRenderCanvas(); setDetailHint();
+}
+function detailRefreshAfterCatalog(){
+  if (!DET.open) return;
+  renderCatChips(); renderRoomList(); detailRenderProp(); detailRenderCanvas();
+}
+function detailStamp(p){
+  const b = bld();
+  if (!b || DET.tool !== 'stampRoom') return;
+  if (!pointInPoly(p.x, p.y, b.poly)) return;
+  const gx = grid(p.x), gy = grid(p.y);
+  const poly = clipPolyRect(b.poly, {x: gx - 32, y: gy - 24, w: 64, h: 48});
+  if (poly.length < 3){ toast('El ambiente debe quedar dentro del edificio.', 'warn'); return; }
+  if (!DET.burst){ pushUndo(); DET.burst = true; }
+  const cat = catOf(DET.stampCat);
+  const r = {id: uid(), level: DET.level, cat: cat.key, code: nextRoomCode(b), name: cat.name, color: cat.color, desc:'', poly};
+  if (!Array.isArray(b.rooms)) b.rooms = [];
+  b.rooms.push(r);
+  DET.sel = r.id;
+  save(); detailRenderSide(); detailRenderCanvas();
+}
+function detailDeleteRoom(id){
+  const b = bld(); if (!b || !Array.isArray(b.rooms)) return;
+  const i = b.rooms.findIndex(r => r.id === id); if (i < 0) return;
+  pushUndo();
+  const [r] = b.rooms.splice(i, 1);
+  if (DET.sel === id) DET.sel = null;
+  save(); renderRoomList(); detailRenderProp(); detailRenderCanvas();
+  toast(`Ambiente ${r.code || ''} eliminado — Ctrl+Z para deshacer.`);
+}
+
+/* =====================================================================
+   T3b · GESTOR DE NIVELES
+===================================================================== */
+function bldgChipRefresh(b){ if (b && b.visible !== false) updateItemNode(b); }
+function openLevelsModal(){
+  const b = bld(); if (!b) return;
+  openModal(`
+    <h3>Niveles del edificio</h3>
+    <div class="m-sub">${escapeHtml((b.name || '').toUpperCase())} · MÁXIMO 20 NIVELES</div>
+    <p style="font-size:12px;color:var(--ink2);line-height:1.55;margin-bottom:12px">Renombrá cada nivel, añadí plantas nuevas o eliminá las que no uses: los ambientes de un nivel eliminado <b>pasan a planta baja (PB)</b>, nunca se pierden.</p>
+    <div id="lvRows"></div>
+    <div class="m-btns" style="justify-content:flex-start">
+      <button class="btn" id="lvAdd">+ Añadir nivel</button>
+      <button class="btn primary" id="lvDone">Listo</button>
+    </div>`);
+  renderLevelRows();
+  $('lvAdd').onclick = () => {
+    const b2 = bld(); if (!b2) return;
+    const n = Math.max(1, Math.round(+b2.nLevels || 1));
+    if (n >= 20){ toast('Se alcanzó el máximo de 20 niveles.', 'warn'); return; }
+    pushUndo();
+    b2.nLevels = n + 1;
+    DET.level = n; DET.sel = null;
+    bldgChipRefresh(b2); save();
+    detailRenderAll(); renderLevelRows();
+    toast(`Nivel ${lvlLabel(b2, n)} creado: estampá ambientes o usá el grid.`);
+  };
+  $('lvDone').onclick = closeModal;
+}
+function renderLevelRows(){
+  const b = bld(), box = $('lvRows'); if (!b || !box) return;
+  const n = Math.max(1, Math.round(+b.nLevels || 1));
+  box.innerHTML = '';
+  for (let i = 0; i < n; i++){
+    const cnt = Array.isArray(b.rooms) ? b.rooms.filter(r => (r.level || 0) === i).length : 0;
+    const row = document.createElement('div');
+    row.className = 'catrow';
+    row.innerHTML = `
+      <div class="cr1">
+        <span class="lvnum">${i}</span>
+        <input class="cat-name" type="text" maxlength="24" placeholder="${lvlName(i)}" value="${escapeHtml(lvlLabel(b, i))}" title="Nombre del nivel">
+        <span class="lvcount">${cnt} amb.</span>
+        ${i > 0 ? '<button class="crdel">Eliminar</button>' : '<span class="lvfixed" title="La planta baja siempre existe">SIEMPRE</span>'}
+      </div>
+      <div class="lvwarn" style="display:none"></div>`;
+    const inp = row.querySelector('input');
+    inp.addEventListener('input', () => {
+      if (!row.dataset.pushed){ pushUndo(); row.dataset.pushed = '1'; }
+      if (!Array.isArray(b.levelNames)) b.levelNames = [];
+      b.levelNames[i] = inp.value.trim();
+      save(); detailRenderHead();
+    });
+    const del = row.querySelector('.crdel');
+    if (del) del.onclick = () => {
+      const warn = row.querySelector('.lvwarn');
+      if (!del.dataset.armed){
+        del.dataset.armed = '1'; del.classList.add('confirm'); del.textContent = '¿borrar?';
+        if (cnt){ warn.style.display = ''; warn.textContent = `${cnt} ambiente${cnt === 1 ? '' : 's'} se moverá${cnt === 1 ? '' : 'n'} a PB`; }
+        setTimeout(() => {
+          if (del.isConnected){ del.dataset.armed = ''; del.classList.remove('confirm'); del.textContent = 'Eliminar'; warn.style.display = 'none'; }
+        }, 3400);
+        return;
+      }
+      pushUndo();
+      let moved = 0;
+      (b.rooms || []).forEach(r => { if ((r.level || 0) === i){ r.level = 0; moved++; } });
+      b.nLevels = Math.max(1, n - 1);
+      if (Array.isArray(b.levelNames)) b.levelNames.splice(i, 1);
+      if (i < DET.level) DET.level = Math.max(0, DET.level - 1);
+      DET.level = clamp(DET.level, 0, b.nLevels - 1);
+      DET.sel = null;
+      bldgChipRefresh(b); save();
+      detailRenderAll(); renderLevelRows();
+      toast(moved ? `Nivel eliminado: ${moved} ambiente${moved === 1 ? '' : 's'} pasaron a PB.` : 'Nivel eliminado.');
+    };
+    box.appendChild(row);
+  }
+  const add = $('lvAdd'); if (add) add.disabled = n >= 20;
+}
+
+/* =====================================================================
+   T3b · GRID (división filas × columnas)
+===================================================================== */
+function openGridModal(){
+  const b = bld(); if (!b) return;
+  const selRoom = roomById(DET.sel);
+  openModal(`
+    <h3>Dividir en grid</h3>
+    <div class="m-sub">DIVISIÓN AUTOMÁTICA · NIVEL ${escapeHtml(lvlLabel(b, DET.level)).toUpperCase()}</div>
+    <div style="display:flex;gap:10px">
+      <div class="field" style="width:92px"><label>Filas (1–8)</label><input id="grRows" type="number" min="1" max="8" step="1" value="3"></div>
+      <div class="field" style="width:100px"><label>Columnas (1–10)</label><input id="grCols" type="number" min="1" max="10" step="1" value="4"></div>
+      <div class="field" style="flex:1"><label>Categoría a aplicar</label>
+        <select id="grCat">${(doc().catalog || []).map(c => `<option value="${c.key}"${c.key === 'aula' ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}</select></div>
+    </div>
+    <label class="check"><input type="radio" name="grScope" value="bldg" checked> Aplicar a todo el edificio</label>
+    <label class="check"><input type="radio" name="grScope" value="room"${selRoom ? '' : ' disabled'}> Solo dentro del ambiente seleccionado${selRoom ? ' (' + escapeHtml(selRoom.code || '') + ')' : ' — antes seleccioná uno'}</label>
+    <label class="check" id="grKeepRow"><input type="checkbox" id="grKeep"> Conservar ambientes existentes del nivel</label>
+    <p class="m-note">Cada celda se recorta contra la forma real (edificio o ambiente) y los fragmentos despreciables se descartan. Si no conservás los ambientes existentes se eliminan los del nivel actual y el grid cubre todo el edificio; si los conservás pueden quedar superposiciones.</p>
+    <div class="m-btns"><button class="btn" id="grCancel">Cancelar</button><button class="btn primary" id="grOk">Crear grid</button></div>`);
+  const syncKeep = () => {
+    const sc = document.querySelector('input[name="grScope"]:checked');
+    $('grKeepRow').style.display = sc && sc.value === 'bldg' ? '' : 'none';
+  };
+  document.querySelectorAll('input[name="grScope"]').forEach(r => r.onchange = syncKeep);
+  syncKeep();
+  $('grCancel').onclick = closeModal;
+  $('grOk').onclick = () => {
+    const rows = clamp(Math.round(+$('grRows').value || 1), 1, 8);
+    const cols = clamp(Math.round(+$('grCols').value || 1), 1, 10);
+    const sc = document.querySelector('input[name="grScope"]:checked');
+    const scope = (sc && sc.value === 'room' && roomById(DET.sel)) ? 'room' : 'bldg';
+    const keep = $('grKeep').checked;
+    closeModal();
+    applyDetailGrid(rows, cols, $('grCat').value, scope, keep);
+  };
+}
+function applyDetailGrid(rows, cols, catKey, scope, keepExisting){
+  const b = bld(); if (!b) return;
+  const cat = catOf(catKey);
+  const target = scope === 'room' ? roomById(DET.sel) : null;
+  if (scope === 'room' && !target){ toast('Primero seleccioná un ambiente.', 'warn'); return; }
+  pushUndo();
+  if (!Array.isArray(b.rooms)) b.rooms = [];
+  const mk = poly => {
+    const r = {id: uid(), level: DET.level, cat: cat.key, code: nextRoomCode(b), name: cat.name, color: cat.color, desc:'', poly};
+    b.rooms.push(r);
+    return r;
+  };
+  const cells = poly => {
+    const bb = polyBBox(poly), cw = bb.w / cols, ch = bb.h / rows, out = [];
+    for (let ry = 0; ry < rows; ry++)
+      for (let cx = 0; cx < cols; cx++){
+        const piece = cleanPoly(clipPolyRect(poly, {x: bb.x + cx*cw, y: bb.y + ry*ch, w: cw, h: ch}));
+        if (piece.length >= 3 && polyArea(piece) >= 12) out.push(piece);
+      }
+    return out;
+  };
+  let created = 0;
+  if (target){
+    const pieces = cells(target.poly);
+    if (pieces.length){
+      const i = b.rooms.indexOf(target);
+      if (i >= 0) b.rooms.splice(i, 1);
+      pieces.forEach(mk); created = pieces.length;
+    }
+  } else {
+    if (!keepExisting) b.rooms = b.rooms.filter(r => (r.level || 0) !== DET.level);
+    cells(b.poly).forEach(p => { mk(p); created++; });
+  }
+  DET.sel = null;
+  setDetailTool('select');
+  bldgChipRefresh(b); save();
+  toast(created ? `Grid creado: ${created} ambientes.` : 'El grid no produjo ambientes: celdas demasiado chicas.', created ? 'ok' : 'warn');
+}
+
+/* =====================================================================
+   T3b · CORTAR (línea libre que divide todos los ambientes cruzados)
+===================================================================== */
+function drawCutPreview(){
+  dRoot.querySelectorAll('.dcutline').forEach(n => n.remove());
+  if (!DET.open || !dDrag || dDrag.type !== 'dcut') return;
+  const u = 1/DET.view.k;
+  const g = el('g', {class:'dcutline'}, dRoot);
+  el('line', {x1:dDrag.a.x.toFixed(1), y1:dDrag.a.y.toFixed(1), x2:dDrag.b.x.toFixed(1), y2:dDrag.b.y.toFixed(1),
+    stroke:'#B04A26', 'stroke-width':(2.2*u).toFixed(2), 'stroke-dasharray':(9*u).toFixed(1) + ' ' + (6*u).toFixed(1),
+    'stroke-linecap':'round'}, g);
+  [dDrag.a, dDrag.b].forEach(p =>
+    el('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:(3.5*u).toFixed(2), fill:'#F8F4E7', stroke:'#B04A26', 'stroke-width':(1.6*u).toFixed(2)}, g));
+}
+function doDetailCut(a, b2){
+  const b = bld(); if (!b) return;
+  const dx = b2.x - a.x, dy = b2.y - a.y, L2 = dx*dx + dy*dy;
+  if (L2 < 4) return;
+  const jobs = [];
+  for (const r of roomsAt(DET.level).slice()){
+    const sides = r.poly.map(p => dx*(p.y - a.y) - dy*(p.x - a.x));
+    if (!sides.some(s => s > .01) || !sides.some(s => s < -.01)) continue;
+    const ts = [];
+    for (let i = 0; i < r.poly.length; i++){
+      const s1 = sides[i], s2 = sides[(i + 1) % r.poly.length];
+      if (!s1 || !s2 || (s1 > 0) === (s2 > 0)) continue;
+      const p1 = r.poly[i], p2 = r.poly[(i + 1) % r.poly.length];
+      const t = s1 / (s1 - s2);
+      const ix = p1.x + (p2.x - p1.x)*t, iy = p1.y + (p2.y - p1.y)*t;
+      ts.push(((ix - a.x)*dx + (iy - a.y)*dy) / L2);
+    }
+    ts.sort((p, q) => p - q);
+    /* el segmento toca el polígono si el intervalo que la línea recorre
+       dentro de él se superpone con [0,1] (admite puntas adentro) */
+    if (ts.length < 2 || ts[0] > 1.002 || ts[ts.length - 1] < -.002) continue;
+    const pieces = [cleanPoly(clipPolyHalfPlane(r.poly, a, b2, false)), cleanPoly(clipPolyHalfPlane(r.poly, a, b2, true))]
+      .filter(p => p.length >= 3 && polyArea(p) >= 12);
+    if (pieces.length >= 2) jobs.push({r, pieces});
+  }
+  if (!jobs.length){ toast('La línea no cruza ningún ambiente.', 'warn'); return; }
+  pushUndo();
+  if (!Array.isArray(b.rooms)) b.rooms = [];
+  let count = 0;
+  for (const j of jobs){
+    const i = b.rooms.indexOf(j.r);
+    if (i >= 0) b.rooms.splice(i, 1);
+    const base = String(j.r.name || catOf(j.r.cat).name).replace(/\s+[AB]$/, '');
+    j.pieces.forEach((p, k) => {
+      b.rooms.push({id: uid(), level: DET.level, cat: j.r.cat, code: nextRoomCode(b),
+        name: base + ' ' + (k === 0 ? 'A' : 'B'), color: j.r.color || catOf(j.r.cat).color, desc: j.r.desc || '', poly: p});
+      count++;
+    });
+  }
+  if (DET.sel && !roomById(DET.sel)) DET.sel = null;
+  save(); renderRoomList(); detailRenderProp(); detailRenderCanvas(); bldgChipRefresh(b);
+  toast(`${count} ambiente${count === 1 ? '' : 's'} dividido${count === 1 ? '' : 's'}.`);
+}
+
+/* =====================================================================
+   T3b · DIBUJAR (polígono libre dentro del edificio)
+===================================================================== */
+function drawDrawPreview(cursorP){
+  const pts = DET.drawing || [];
+  if (!pts.length && !cursorP) return;
+  const u = 1/DET.view.k;
+  const g = el('g', {class:'dghost'}, dRoot);
+  const all = cursorP ? pts.concat([cursorP]) : pts;
+  if (all.length > 1)
+    el('path', {d:'M' + all.map(p => p.x.toFixed(1) + ' ' + p.y.toFixed(1)).join('L'),
+      fill: pts.length >= 2 ? 'rgba(176,74,38,.07)' : 'none', stroke:'#B04A26',
+      'stroke-width':(2*u).toFixed(2), 'stroke-dasharray':(8*u).toFixed(1) + ' ' + (5*u).toFixed(1)}, g);
+  pts.forEach((p, i) =>
+    el('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:((i ? 3.5 : 6)*u).toFixed(2), fill: i ? '#B04A26' : '#F8F4E7',
+      stroke:'#B04A26', 'stroke-width':(1.6*u).toFixed(2)}, g));
+}
+function dAddVertex(p){
+  if (!DET.drawing) DET.drawing = [];
+  const q = {x: grid(p.x), y: grid(p.y)};
+  const last = DET.drawing[DET.drawing.length - 1];
+  if (last && Math.hypot(q.x - last.x, q.y - last.y) < 2){ detailCloseDraw(); return; }  /* doble clic */
+  if (DET.drawing.length >= 3){
+    const f = DET.drawing[0];
+    if (Math.hypot(q.x - f.x, q.y - f.y) < 14/DET.view.k){ detailCloseDraw(); return; }
+  }
+  DET.drawing.push(q);
+  detailRenderCanvas();
+  dGhostSchedule(q);
+}
+function detailCloseDraw(){
+  if (!DET.drawing) return;
+  const b = bld();
+  const pts0 = DET.drawing; DET.drawing = null;
+  if (pts0.length >= 2){
+    const a = pts0[pts0.length - 1], c = pts0[pts0.length - 2];
+    if (Math.hypot(a.x - c.x, a.y - c.y) < 3) pts0.pop();
+  }
+  dRoot.querySelectorAll('.dghost').forEach(n => n.remove());
+  if (!b){ detailRenderCanvas(); return; }
+  if (pts0.length < 3){ toast('Se necesitan al menos 3 vértices.', 'warn'); detailRenderCanvas(); return; }
+  let pts = cleanPoly(pts0, .5);
+  if (pts.length < 3) pts = pts0;
+  if (isConvexPoly(b.poly)){
+    const clipped = cleanPoly(clipPolyPoly(pts, b.poly), .5);
+    if (clipped.length >= 3 && polyArea(clipped) > 1) pts = clipped;
+    else { toast('El ambiente quedó fuera del edificio.', 'warn'); detailRenderCanvas(); return; }
+  }
+  openDrawRoomModal(pts);
+}
+function openDrawRoomModal(pts){
+  const b = bld(); if (!b) return;
+  const cats = doc().catalog || [];
+  const pre = cats.some(c => c.key === DET.stampCat) ? DET.stampCat : (cats[0] || {key:'otro'}).key;
+  const cat0 = catOf(pre);
+  let color = cat0.color, touchedName = false, touchedColor = false;
+  openModal(`
+    <h3>Nuevo ambiente dibujado</h3>
+    <div class="m-sub">${pts.length} VÉRTICES · NIVEL ${escapeHtml(lvlLabel(b, DET.level)).toUpperCase()}</div>
+    <div class="field"><label>Categoría</label>
+      <select id="dwCat">${cats.map(c => `<option value="${c.key}"${c.key === cat0.key ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}</select></div>
+    <div class="field"><label>Nombre</label><input id="dwName" type="text" maxlength="60" value="${escapeHtml(cat0.name)}"></div>
+    <div class="field"><label>Color</label>
+      <div class="swatches" id="dwSw">
+        ${PALETTE.map(c => `<button class="swb${c.toLowerCase() === String(color).toLowerCase() ? ' on' : ''}" data-c="${c}" style="background:${c}" title="${c}"></button>`).join('')}
+        <input type="color" id="dwColor" value="${/^#[0-9a-fA-F]{6}$/.test(color) ? color : '#888888'}" title="Color personalizado">
+      </div></div>
+    <div class="m-btns"><button class="btn" id="dwCancel">Cancelar</button><button class="btn primary" id="dwOk">Crear ambiente</button></div>`);
+  const syncSw = () => $('dwSw').querySelectorAll('.swb').forEach(x => x.classList.toggle('on', x.dataset.c.toLowerCase() === String(color).toLowerCase()));
+  $('dwCat').addEventListener('change', e => {
+    const c = catOf(e.target.value);
+    if (!touchedName) $('dwName').value = c.name;
+    if (!touchedColor){ color = c.color; syncSw(); }
+  });
+  $('dwSw').addEventListener('click', e => {
+    const btn = e.target.closest('.swb'); if (!btn) return;
+    color = btn.dataset.c; touchedColor = true; syncSw();
+  });
+  $('dwColor').addEventListener('input', e => { color = e.target.value; touchedColor = true; });
+  $('dwName').addEventListener('input', () => touchedName = true);
+  $('dwCancel').onclick = () => { closeModal(); setDetailTool('select'); };
+  $('dwOk').onclick = () => {
+    const cat = catOf($('dwCat').value);
+    const name = $('dwName').value.trim() || cat.name;
+    pushUndo();
+    if (!Array.isArray(b.rooms)) b.rooms = [];
+    const r = {id: uid(), level: DET.level, cat: cat.key, code: nextRoomCode(b), name, color, desc:'', poly: pts};
+    b.rooms.push(r);
+    closeModal();
+    setDetailTool('select');
+    DET.sel = r.id;
+    renderRoomList(); detailRenderProp(); detailRenderCanvas(); dCenterRoom(r);
+    bldgChipRefresh(b); save();
+    toast(`Ambiente ${r.code} creado — ajustá nombre y color en el panel.`);
+  };
+  setTimeout(() => { const nm = $('dwName'); if (nm){ nm.focus(); nm.select(); } }, 60);
+}
+
+/* ---- modal del catálogo de ambientes ---- */
+function openCatalogModal(){
+  openModal(`
+    <h3>Catálogo de ambientes</h3>
+    <div class="m-sub">CATEGORÍAS PARA CLASIFICAR Y ESTAMPAR AMBIENTES</div>
+    <div id="catRows"></div>
+    <div class="m-btns" style="justify-content:flex-start;flex-wrap:wrap">
+      <button class="btn" id="catAdd">+ Añadir categoría</button>
+      <button class="btn" id="catReset" title="Volver a las 12 categorías originales">Restaurar original</button>
+      <button class="btn primary" id="catDone">Listo</button>
+    </div>`);
+  renderCatalogRows();
+  $('catAdd').onclick = () => {
+    pushUndo();
+    const used = doc().catalog.map(c => (c.color || '').toLowerCase());
+    doc().catalog.push({key: uid(), name:'Nueva categoría', code:'NC',
+      color: PALETTE.find(c => !used.includes(c.toLowerCase())) || '#6E6E66', icon:'otro'});
+    save(); renderCatalogRows(); detailRefreshAfterCatalog();
+    toast('Categoría añadida: ajustá su nombre, sigla, color e ícono.');
+  };
+  $('catReset').onclick = () => {
+    pushUndo(); doc().catalog = DEFAULT_CATALOG();
+    save(); renderCatalogRows(); detailRefreshAfterCatalog();
+    toast('Catálogo restaurado al original.');
+  };
+  $('catDone').onclick = closeModal;
+}
+function renderCatalogRows(){
+  const box = $('catRows'); if (!box) return;
+  box.innerHTML = '';
+  doc().catalog.forEach((c, idx) => {
+    const row = document.createElement('div');
+    row.className = 'catrow';
+    row.innerHTML = `
+      <div class="cr1">
+        <button class="cat-ic" title="Cambiar ícono"></button>
+        <input class="cat-name" type="text" maxlength="40" value="${escapeHtml(c.name)}" title="Nombre de la categoría">
+        <input class="cat-code" type="text" maxlength="4" value="${escapeHtml(c.code)}" title="Sigla corta">
+        <button class="crdel" title="Eliminar categoría: sus ambientes pasarán a «Otro»">Eliminar</button>
+      </div>
+      <div class="cr2">
+        ${PALETTE.map(pc => `<button class="swb${pc.toLowerCase() === String(c.color).toLowerCase() ? ' on' : ''}" data-c="${pc}" style="background:${pc}" title="${pc}"></button>`).join('')}
+        <input type="color" value="${/^#[0-9a-fA-F]{6}$/.test(c.color) ? c.color : '#888888'}" title="Color personalizado">
+      </div>
+      <div class="iconpick">${ICON_KEYS.map(k => `<button data-icon="${k}" class="${k === c.icon ? 'on' : ''}" title="${k}"></button>`).join('')}</div>`;
+    row.querySelector('.cat-ic').appendChild(iconEl(c.icon, 19, 'currentColor'));
+    row.querySelectorAll('.iconpick button').forEach(b => b.appendChild(iconEl(b.dataset.icon, 17, 'currentColor')));
+    row.querySelector('.cat-name').addEventListener('input', e => { c.name = e.target.value; save(); detailRefreshAfterCatalog(); });
+    row.querySelector('.cat-code').addEventListener('input', e => { c.code = e.target.value.toUpperCase(); save(); detailRefreshAfterCatalog(); });
+    row.querySelector('.cat-ic').onclick = () => row.querySelector('.iconpick').classList.toggle('on');
+    row.querySelector('.iconpick').addEventListener('click', e => {
+      const b = e.target.closest('button[data-icon]'); if (!b) return;
+      pushUndo(); c.icon = b.dataset.icon;
+      save(); renderCatalogRows(); detailRefreshAfterCatalog();
+    });
+    row.querySelector('.cr2').addEventListener('click', e => {
+      const b = e.target.closest('.swb'); if (!b) return;
+      pushUndo(); c.color = b.dataset.c;
+      save(); renderCatalogRows(); detailRefreshAfterCatalog();
+    });
+    row.querySelector('input[type=color]').addEventListener('input', e => { c.color = e.target.value; save(); detailRefreshAfterCatalog(); });
+    row.querySelector('.crdel').onclick = () => {
+      pushUndo();
+      doc().catalog.splice(idx, 1);
+      let moved = 0;
+      state.items.forEach(z => (z.rooms || []).forEach(r => { if (r.cat === c.key){ r.cat = 'otro'; moved++; } }));
+      save(); renderCatalogRows(); detailRefreshAfterCatalog();
+      toast(moved ? `Categoría eliminada: ${moved} ambiente(s) pasaron a «Otro».` : 'Categoría eliminada.');
+    };
+    box.appendChild(row);
+  });
+}
+
+/* ---- eventos de la vista de detalle ---- */
+function wireDetail(){
+  if (detailWrap.dataset.wired) return;
+  detailWrap.dataset.wired = '1';
+  $('dBack').onclick = closeDetail;
+  $('dToolSelect').onclick = () => setDetailTool('select');
+  $('dToolStamp').onclick = () => setDetailTool('stampRoom');
+  $('dToolGrid').onclick = openGridModal;
+  $('dToolCut').onclick = () => setDetailTool('cut');
+  $('dToolDraw').onclick = () => setDetailTool('draw');
+  $('dToolIso').onclick = () => openIsoModal(DET.bId);
+  $('dCatBtn').onclick = openCatalogModal;
+  $('dByType').onchange = e => { DET.byType = e.target.checked; detailRenderCanvas(); };
+  $('dZoomIn').onclick  = () => { const r = dsvg.getBoundingClientRect(); dZoomAt(r.width/2, r.height/2, 1.3); };
+  $('dZoomOut').onclick = () => { const r = dsvg.getBoundingClientRect(); dZoomAt(r.width/2, r.height/2, 1/1.3); };
+  $('dFit').onclick = detailFit;
+
+  dsvg.addEventListener('contextmenu', e => e.preventDefault());
+  dsvg.addEventListener('pointerdown', e => {
+    try{
+      if (!DET.open) return;
+      if (e.button === 2 || e.button === 1){
+        dDrag = {type:'dpan', sx:e.clientX, sy:e.clientY, tx0:DET.view.tx, ty0:DET.view.ty};
+        dsvg.classList.add('panning');
+        return;
+      }
+      if (e.button !== 0) return;
+      e.preventDefault();
+      const t = e.target, p = dPt(e);
+      if (DET.tool === 'stampRoom'){ detailStamp(p); return; }
+      if (DET.tool === 'cut'){
+        const a = {x: grid(p.x), y: grid(p.y)};
+        dDrag = {type:'dcut', a, b:a};
+        drawCutPreview();
+        return;
+      }
+      if (DET.tool === 'draw'){ dAddVertex(p); return; }
+      const dv = t.getAttribute && t.getAttribute('data-dv');
+      if (dv !== null && dv !== undefined && !isNaN(+dv)){
+        const r = roomById(DET.sel);
+        if (r) dDrag = {type:'dvertex', r, idx:+dv, snap:snapshot(), moved:false};
+        return;
+      }
+      const dsc = t.getAttribute && t.getAttribute('data-dsc');
+      if (dsc){
+        const r = roomById(DET.sel);
+        if (r) dDrag = {type:'dscale', r, key:dsc, orig:r.poly.map(q => ({...q})), snap:snapshot(), moved:false};
+        return;
+      }
+      const rg = t.closest ? t.closest('[data-rid]') : null;
+      if (rg){
+        const r = roomById(rg.getAttribute('data-rid'));
+        if (r){
+          if (DET.sel !== r.id){ DET.sel = r.id; renderRoomList(); detailRenderProp(); detailRenderCanvas(); }
+          dDrag = {type:'dmove', r, start:p, orig:r.poly.map(q => ({...q})), snap:snapshot(), moved:false};
+        }
+        return;
+      }
+      if (DET.sel){ DET.sel = null; renderRoomList(); detailRenderProp(); detailRenderCanvas(); }
+      dDrag = {type:'dpan', sx:e.clientX, sy:e.clientY, tx0:DET.view.tx, ty0:DET.view.ty};
+      dsvg.classList.add('panning');
+    }catch(err){ fail('detalle (clic)', err); dDrag = null; dsvg.classList.remove('panning'); }
+  });
+  dsvg.addEventListener('pointermove', e => {
+    if (!DET.open || dDrag) return;
+    const t = e.target;
+    const rg = t.closest ? t.closest('[data-rid]') : null;
+    const id = rg ? rg.getAttribute('data-rid') : null;
+    if (id !== dHover){
+      dHover = id;
+      dRoot.querySelectorAll('g[data-rid]').forEach(g => {
+        const pth = g.querySelector('path'); if (!pth) return;
+        const rid = g.getAttribute('data-rid'), sel = rid === DET.sel, hov = rid === dHover;
+        pth.setAttribute('stroke', sel || hov ? '#B04A26' : '#24271D');
+        pth.setAttribute('stroke-width', sel ? 2.5 : hov ? 2 : 1.4);
+        pth.setAttribute('fill-opacity', sel ? .55 : .45);
+      });
+    }
+    if (DET.tool === 'stampRoom' || DET.tool === 'draw') dGhostSchedule(dPt(e));
+  });
+  dsvg.addEventListener('pointerleave', () => {
+    dGhostP = null;
+    dRoot.querySelectorAll('.dghost').forEach(n => n.remove());
+    if (dHover){ dHover = null; detailRenderCanvas(); }
+  });
+  dsvg.addEventListener('wheel', e => {
+    if (!DET.open) return;
+    e.preventDefault();
+    const rc = dsvg.getBoundingClientRect();
+    dZoomAt(e.clientX - rc.left, e.clientY - rc.top, Math.pow(1.0016, -e.deltaY));
+  }, {passive:false});
+  dsvg.addEventListener('dblclick', e => {
+    if (DET.open && DET.tool === 'draw'){ e.preventDefault(); detailCloseDraw(); }
+  });
+
+  window.addEventListener('pointermove', e => {
+    if (!DET.open || !dDrag) return;
+    try{
+      if (dDrag.type === 'dpan'){
+        DET.view.tx = dDrag.tx0 + (e.clientX - dDrag.sx);
+        DET.view.ty = dDrag.ty0 + (e.clientY - dDrag.sy);
+        dApplyView();
+      }
+      else if (dDrag.type === 'dcut'){
+        dDrag.b = cutSnap(dDrag.a, dPt(e), e.shiftKey);
+        drawCutPreview();
+      }
+      else if (dDrag.type === 'dmove'){
+        const p = dPt(e);
+        let dx = p.x - dDrag.start.x, dy = p.y - dDrag.start.y;
+        if (doc().snap){ dx = Math.round(dx/10)*10; dy = Math.round(dy/10)*10; }
+        if (!dDrag.moved && Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+        dDrag.moved = true;
+        dDrag.r.poly = dDrag.orig.map(q => ({x: q.x + dx, y: q.y + dy}));
+        dSchedule();
+      }
+      else if (dDrag.type === 'dvertex'){
+        const p = dPt(e);
+        dDrag.r.poly[dDrag.idx] = {x: grid(p.x), y: grid(p.y)};
+        dDrag.moved = true;
+        dSchedule();
+      }
+      else if (dDrag.type === 'dscale'){
+        const p = dPt(e), o = polyBBox(dDrag.orig);
+        const ax = dDrag.key.includes('w') ? o.x + o.w : o.x;
+        const ay = dDrag.key.includes('n') ? o.y + o.h : o.y;
+        const hx = dDrag.key.includes('w') ? o.x : o.x + o.w;
+        const hy = dDrag.key.includes('n') ? o.y : o.y + o.h;
+        const d0 = Math.hypot(hx - ax, hy - ay) || 1;
+        const s = clamp(Math.hypot(p.x - ax, p.y - ay)/d0, .12, 10);
+        dDrag.r.poly = dDrag.orig.map(q => ({x: ax + (q.x - ax)*s, y: ay + (q.y - ay)*s}));
+        dDrag.moved = true;
+        dSchedule();
+      }
+    }catch(err){ fail('detalle (movimiento)', err); }
+  });
+  window.addEventListener('pointerup', () => {
+    if (!DET.open || !dDrag) return;
+    try{
+      const wasDrag = dDrag;
+      dDrag = null;
+      if (wasDrag.type === 'dpan'){ dsvg.classList.remove('panning'); return; }
+      if (wasDrag.type === 'dcut'){
+        dRoot.querySelectorAll('.dcutline').forEach(n => n.remove());
+        if (Math.hypot(wasDrag.b.x - wasDrag.a.x, wasDrag.b.y - wasDrag.a.y) >= 3) doDetailCut(wasDrag.a, wasDrag.b);
+        return;
+      }
+      if (wasDrag.moved){ pushUndoAt(wasDrag.snap); save(); renderRoomList(); detailRenderProp(); }
+      detailRenderCanvas();
+    }catch(err){ fail('detalle (soltar)', err); dDrag = null; }
+  });
+  window.addEventListener('resize', () => { if (DET.open) detailFit(); });
+}
+
+/* =====================================================================
+   T4 · VISTA 3D ISOMÉTRICA APILADA (vista explotada de pisos)
+   buildIsoSVG() es PURA: no muta estado y devuelve un nodo SVG detached
+   (mismo patrón que buildExportSVG), sirve en la modal in-app y serializada
+   a canvas para el PDF (T5 la reutiliza con opts.forExport).
+===================================================================== */
+const ISO = {angle:35, gapMul:1, bId:null};   /* estado transitorio de la modal (no se persiste) */
+
+function buildIsoSVG(b, opts){
+  opts = opts || {};
+  const W = Math.round(+opts.W || 1000), H = Math.round(+opts.H || 640);
+  const forExport = !!opts.forExport;
+  const showLabels = opts.showLabels !== false;
+  const ang = ((Math.round(+opts.angle || 0) % 360) + 360) % 360;
+  const gapMul = clamp(+opts.gapMul || 1, .3, 3);
+  const root = document.createElementNS(NS, 'svg');
+  root.setAttribute('xmlns', NS);
+  root.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  root.setAttribute('width', W); root.setAttribute('height', H);
+  root.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  if (!b || !Array.isArray(b.poly) || b.poly.length < 3) return root;
+
+  const st = document.createElementNS(NS, 'style');
+  st.textContent = ".ft-s{font-family:'Archivo','Trebuchet MS',sans-serif}.ft-m{font-family:'IBM Plex Mono','Courier New',monospace}";
+  root.appendChild(st);
+
+  /* fondo papel para el PDF (trama de puntos propia: serializable standalone) */
+  if (forExport){
+    const defs = el('defs', {}, root);
+    const pat = el('pattern', {id:'isoDots', width:14, height:14, patternUnits:'userSpaceOnUse'}, defs);
+    el('circle', {cx:1.4, cy:1.4, r:.9, fill:'#D8D2BC'}, pat);
+    el('rect', {x:0, y:0, width:W, height:H, fill:'#F2EDDF'}, root);
+    el('rect', {x:0, y:0, width:W, height:H, fill:'url(#isoDots)'}, root);
+  }
+
+  const nL = clamp(Math.round(+b.nLevels || 1), 1, 20);
+  const rooms = Array.isArray(b.rooms) ? b.rooms : [];
+  const bb = polyBBox(b.poly);
+  const cx = bb.x + bb.w/2, cy = bb.y + bb.h/2;
+  const base = Math.max(bb.w, bb.h, 80);
+  const slabH = clamp(base * .04, 6, 18);                  /* espesor de la losa */
+  let gap = clamp(base * .15, 26, 64);                     /* aire entre losas (relativo al tamaño) */
+  if (+opts.gap > 0) gap = +opts.gap;                      /* override absoluto opcional */
+  gap *= gapMul;
+  const rad = ang * Math.PI / 180, cA = Math.cos(rad), sA = Math.sin(rad);
+  const rotP = p => ({x: cA*(p.x-cx) - sA*(p.y-cy), y: sA*(p.x-cx) + cA*(p.y-cy)});
+  const C30 = Math.cos(Math.PI/6), S30 = .5;
+  const zTop = i => i * (slabH + gap);                     /* cara superior del nivel i (0 = PB) */
+  const PX = rp => (rp.x - rp.y) * C30;
+  const PY = (rp, z) => (rp.x + rp.y) * S30 - z;
+
+  const bldRot = b.poly.map(rotP);
+  const roomRots = rooms.map(r => Array.isArray(r.poly) ? r.poly.map(rotP) : []);
+  /* esquinas del bbox local del edificio, rotadas (conectores verticales) */
+  const cornersL = [{x:bb.x,y:bb.y},{x:bb.x+bb.w,y:bb.y},{x:bb.x+bb.w,y:bb.y+bb.h},{x:bb.x,y:bb.y+bb.h}].map(rotP);
+
+  /* --- bbox PROYECTADA exacta del contenido (T6): X=(x−y)·cos30 y suma (x+y) pre-z ---
+     (antes se estimaba con extremos rotados sin proyectar: sobreestimaba el alto en
+     plantas alargadas y dejaba el dibujo chico; ahora el fit es exacto) --- */
+  let x0=1e9, x1=-1e9, s0=1e9, s1=-1e9;
+  const acc = q => {
+    const X = (q.x - q.y) * C30, S = q.x + q.y;
+    if (X < x0) x0 = X; if (X > x1) x1 = X;
+    if (S < s0) s0 = S; if (S > s1) s1 = S;
+  };
+  bldRot.forEach(acc);
+  cornersL.forEach(acc);
+  roomRots.forEach(rp => rp.forEach(acc));
+  const zTopMax = zTop(nL - 1);
+  const gy0 = s0 * S30 - zTopMax, gy1 = s1 * S30 + slabH;   /* techo más alto + faldón inferior */
+  const bw = Math.max(x1 - x0, 1), bh = Math.max(gy1 - gy0, 1);
+  const lvlMidY = i => (s0 + s1) * S30 / 2 - zTop(i);
+
+  /* --- auto-fit: banda de título arriba + margen de etiquetas a la derecha ---
+     márgenes justos (26px) para que el dibujo aproveche ~90% del lienzo --- */
+  const pad = 26, titleBand = 48;
+  let labW = 0;
+  if (showLabels && !(nL === 1 && !rooms.length))
+    for (let i = 0; i < nL; i++) labW = Math.max(labW, lvlLabel(b, i).length * 7.8 + 24);
+  const availW = W - pad*2 - labW, availH = H - pad*2 - titleBand;
+  const k = Math.max(Math.min(availW / bw, availH / bh), .02);
+  const tx = pad + (availW - bw*k)/2 - x0*k;
+  const ty = pad + titleBand + (availH - bh*k)/2 - gy0*k;
+  const g = el('g', {transform:`translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${k.toFixed(4)})`}, root);
+  const u = px => +(px / k).toFixed(3);                    /* px de pantalla → unidades de mundo */
+  const sx = wx => (wx - tx) / k;                          /* pantalla → mundo (título) */
+  const sy = wy => (wy - ty) / k;
+  const INK = '#24271D';
+
+  /* --- conectores discontinuos entre losas (efecto explotado) --- */
+  if (nL > 1){
+    const cg = el('g', {stroke:'rgba(36,39,29,.35)', 'stroke-width':u(1.2), 'stroke-dasharray':`${u(5)} ${u(4)}`}, g);
+    cornersL.forEach(q => {
+      const X = PX(q).toFixed(2);
+      for (let i = 0; i < nL - 1; i++)
+        el('line', {x1:X, y1:PY(q, zTop(i)).toFixed(2), x2:X, y2:PY(q, zTop(i+1)).toFixed(2)}, cg);
+    });
+  }
+
+  /* --- losas de abajo hacia arriba (PB primero) --- */
+  for (let i = 0; i < nL; i++){
+    const z = zTop(i);
+    /* faldón: solo caras frontales visibles (normal exterior hacia la cámara);
+       2 tonos: cara "izquierda" (luz) más clara, cara "derecha" más oscura */
+    const skirt = el('g', {stroke:'rgba(36,39,29,.55)', 'stroke-width':u(1), 'stroke-linejoin':'round'}, g);
+    for (let e = 0; e < bldRot.length; e++){
+      const p = bldRot[e], q = bldRot[(e+1)%bldRot.length];
+      let nx = q.y - p.y, ny = -(q.x - p.x);
+      if (nx*((p.x+q.x)/2) + ny*((p.y+q.y)/2) < 0){ nx = -nx; ny = -ny; }  /* normal hacia afuera */
+      if (nx + ny <= .01) continue;                                        /* cara trasera: oculta */
+      const dark = (nx - ny) > 0;
+      const ax = PX(p), ay = PY(p, z), bx2 = PX(q), by2 = PY(q, z);
+      el('path', {d:`M${ax.toFixed(2)} ${ay.toFixed(2)}L${bx2.toFixed(2)} ${by2.toFixed(2)}` +
+        `L${bx2.toFixed(2)} ${(by2 + slabH).toFixed(2)}L${ax.toFixed(2)} ${(ay + slabH).toFixed(2)}Z`,
+        fill: dark ? 'rgba(36,39,29,.45)' : 'rgba(36,39,29,.26)'}, skirt);
+    }
+    /* cara superior de la losa */
+    el('path', {d:'M' + bldRot.map(p => PX(p).toFixed(2) + ' ' + PY(p, z).toFixed(2)).join('L') + 'Z',
+      fill:'#F8F4E7', stroke:INK, 'stroke-width':u(2), 'stroke-linejoin':'round'}, g);
+
+    /* ambientes del nivel proyectados sobre la cara superior */
+    rooms.forEach((r, ri) => {
+      if ((r.level || 0) !== i || roomRots[ri].length < 3) return;
+      const pts = roomRots[ri].map(p => ({x:PX(p), y:PY(p, z)}));
+      el('path', {d:'M' + pts.map(p => p.x.toFixed(2) + ' ' + p.y.toFixed(2)).join('L') + 'Z',
+        fill:r.color || catOf(r.cat).color || '#8F8A74', 'fill-opacity':.55,
+        stroke:INK, 'stroke-width':u(1), 'stroke-linejoin':'round'}, g);
+      let mx0=1e9, mx1=-1e9, my0=1e9, my1=-1e9;
+      pts.forEach(p => { if(p.x<mx0)mx0=p.x; if(p.x>mx1)mx1=p.x; if(p.y<my0)my0=p.y; if(p.y>my1)my1=p.y; });
+      const wPx = Math.max(mx1 - mx0, my1 - my0) * k;
+      const c = polyCentroid(pts);
+      if (wPx >= 60) roomIcon(g, (catOf(r.cat) || {}).icon || 'otro', c.x - u(7), c.y - u(18), u(14), INK);
+      if (wPx >= 34 && r.code)
+        txt(g, String(r.code), {x:c.x.toFixed(1), y:(c.y + u(9)).toFixed(1), class:'ft-m', 'font-weight':700,
+          'font-size':u(10.5), fill:INK, 'text-anchor':'middle', stroke:'#F8F4E7', 'stroke-width':u(3),
+          'paint-order':'stroke', 'stroke-linejoin':'round'});
+    });
+
+    if (nL === 1 && !rooms.length)
+      txt(g, 'Sin ambientes dibujados', {x:((x0 + x1)/2).toFixed(1), y:(((s0 + s1) * S30 / 2) + u(4)).toFixed(1),
+        class:'ft-m', 'font-size':u(12), fill:'#565A4A', 'text-anchor':'middle', 'letter-spacing':u(.5)});
+  }
+
+  /* --- etiquetas de nivel a la derecha de cada losa --- */
+  if (showLabels && !(nL === 1 && !rooms.length)){
+    const lg = el('g', {}, g);
+    for (let i = 0; i < nL; i++){
+      const y = lvlMidY(i);
+      el('line', {x1:(x1 + u(5)).toFixed(2), y1:y.toFixed(2), x2:(x1 + u(12)).toFixed(2), y2:y.toFixed(2),
+        stroke:'rgba(36,39,29,.4)', 'stroke-width':u(1)}, lg);
+      txt(lg, lvlLabel(b, i), {x:(x1 + u(16)).toFixed(2), y:(y + u(4.5)).toFixed(2), class:'ft-m',
+        'font-weight':700, 'font-size':u(13), fill:INK});
+    }
+  }
+
+  /* --- título arriba-izquierda: nombre + chip sigla + "×N niveles" --- */
+  const nm = String(b.name || 'Edificio');
+  txt(g, nm.length > 30 ? nm.slice(0, 29) + '…' : nm, {x:sx(24).toFixed(2), y:sy(32).toFixed(2),
+    class:'ft-s', 'font-weight':800, 'font-size':u(19), fill:INK});
+  const chipW = (String(b.code || 'ED').length * 7.6 + 14);
+  const chipX = sx(24) + Math.min(nm.length, 30) * 10.8 + 12;
+  el('rect', {x:chipX.toFixed(2), y:sy(18).toFixed(2), width:u(chipW).toFixed(2), height:u(20).toFixed(2), fill:INK}, g);
+  txt(g, String(b.code || 'ED'), {x:(chipX + u(chipW/2)).toFixed(2), y:sy(32.5).toFixed(2), class:'ft-m',
+    'font-weight':700, 'font-size':u(11.5), fill:'#F2EDDF', 'text-anchor':'middle', 'letter-spacing':u(1)});
+  txt(g, `×${nL} nivel${nL > 1 ? 'es' : ''} · ${rooms.length} ambiente${rooms.length === 1 ? '' : 's'}`,
+    {x:sx(24).toFixed(2), y:sy(52).toFixed(2), class:'ft-m', 'font-size':u(11), fill:'#565A4A', 'letter-spacing':u(.5)});
+  return root;
+}
+
+/* =====================================================================
+   T5 · GENERADOR DEL PLANO INTERIOR DE UN NIVEL (patrón buildIsoSVG:
+   SVG detached, auto-fit y listo para serializar a canvas en el PDF)
+===================================================================== */
+let lvlPlanSeq = 0;
+function buildLevelPlanSVG(b, level, opts){
+  opts = opts || {};
+  const W = Math.round(+opts.W || 1600), H = Math.round(+opts.H || 1000);
+  const forExport = !!opts.forExport;
+  const root = document.createElementNS(NS, 'svg');
+  root.setAttribute('xmlns', NS);
+  root.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  root.setAttribute('width', W); root.setAttribute('height', H);
+  root.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  if (!b || !Array.isArray(b.poly) || b.poly.length < 3) return root;
+
+  const st = document.createElementNS(NS, 'style');
+  st.textContent = ".ft-s{font-family:'Archivo','Trebuchet MS',sans-serif}.ft-m{font-family:'IBM Plex Mono','Courier New',monospace}";
+  root.appendChild(st);
+
+  const INK = '#24271D', INK2 = '#565A4A', FILL = '#F8F4E7';
+  /* fondo papel + borde de hoja fino para el PDF (patrón propio, serializable) */
+  if (forExport){
+    const defs = el('defs', {}, root);
+    const pat = el('pattern', {id:'lvlDots', width:14, height:14, patternUnits:'userSpaceOnUse'}, defs);
+    el('circle', {cx:1.4, cy:1.4, r:.9, fill:'#D8D2BC'}, pat);
+    el('rect', {x:0, y:0, width:W, height:H, fill:'#F2EDDF'}, root);
+    el('rect', {x:0, y:0, width:W, height:H, fill:'url(#lvlDots)'}, root);
+    el('rect', {x:12, y:12, width:W-24, height:H-24, fill:'none', stroke:'rgba(36,39,29,.5)', 'stroke-width':1.4}, root);
+    el('rect', {x:18, y:18, width:W-36, height:H-36, fill:'none', stroke:'rgba(36,39,29,.25)', 'stroke-width':.8}, root);
+  }
+
+  const nL = clamp(Math.round(+b.nLevels || 1), 1, 20);
+  level = clamp(Math.round(+level || 0), 0, nL - 1);
+  const rooms = (Array.isArray(b.rooms) ? b.rooms : [])
+    .filter(r => (r.level || 0) === level && Array.isArray(r.poly) && r.poly.length >= 3);
+
+  /* ---- leyenda inferior: chips de las categorías presentes en el nivel (máx 2 filas) ---- */
+  const pad = 60, titleBand = 64, chipGap = 10;
+  const present = [];
+  rooms.forEach(r => { if (!present.some(c => c.key === r.cat)) present.push(catOf(r.cat)); });
+  present.sort((a, c) =>
+    doc().catalog.findIndex(x => x.key === a.key) - doc().catalog.findIndex(x => x.key === c.key));
+  const chipOf = c => {
+    const code = String(c.code || '—');
+    const name = String(c.name || '').slice(0, 24);
+    return {c, code, name, w: 56 + code.length * 7.6 + name.length * 7};
+  };
+  const maxLegW = W - pad*2 - 20;
+  const legRows = [[]];
+  let legOverflow = 0;
+  present.forEach(cat => {
+    const ch = chipOf(cat);
+    const row = legRows[legRows.length - 1];
+    const cur = row.reduce((s, x) => s + x.w + chipGap, 0);
+    if (row.length && cur + ch.w > maxLegW){
+      if (legRows.length >= 2){ legOverflow++; return; }
+      legRows.push([ch]);
+    } else row.push(ch);
+  });
+
+  /* ---- auto-fit del edificio: título arriba + leyenda abajo + padding ---- */
+  const legH = rooms.length ? legRows.length * 32 : 0;
+  const availW = W - pad*2;
+  const availH = H - titleBand - legH - 26 - pad;
+  const bb = polyBBox(b.poly);
+  const k = Math.max(Math.min(availW / Math.max(bb.w, 1), availH / Math.max(bb.h, 1)), .02);
+  const tx = (W - bb.w*k)/2 - bb.x*k;
+  const ty = titleBand + (availH - bb.h*k)/2 - bb.y*k;
+  const g = el('g', {transform:`translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${k.toFixed(4)})`}, root);
+  const u = px => +(px / k).toFixed(3);          /* px de pantalla → unidades de mundo */
+
+  /* clip de los ambientes contra el polígono del edificio */
+  const cid = 'lvlClip' + (++lvlPlanSeq);
+  const defs2 = el('defs', {}, root);
+  const cp = el('clipPath', {id: cid}, defs2);
+  el('path', {d: polyPath(b.poly)}, cp);
+
+  /* sombra + relleno del edificio (local, sin rotar) */
+  el('path', {d: polyPath(b.poly), transform:'translate(7 8)', fill:'rgba(36,39,29,.13)'}, g);
+  el('path', {d: polyPath(b.poly), fill: FILL}, g);
+
+  /* ambientes del nivel */
+  const rg = el('g', {'clip-path': `url(#${cid})`}, g);
+  rooms.forEach(r => {
+    const cat = catOf(r.cat), col = r.color || cat.color || '#8F8A74';
+    const rb = polyBBox(r.poly);
+    el('path', {d: polyPath(r.poly), fill: col, 'fill-opacity': .45, stroke: INK,
+      'stroke-width': u(1.4), 'stroke-linejoin':'round'}, rg);
+    const wScr = rb.w * k, hScr = rb.h * k;
+    if (wScr >= 76 && hScr >= 26){
+      /* etiqueta completa: ícono en esquina + código + nombre si cabe */
+      const lg = el('g', {transform:`translate(${rb.x.toFixed(1)} ${rb.y.toFixed(1)}) scale(${u(1).toFixed(4)})`}, rg);
+      roomIcon(lg, cat.icon, 4, 4, 16, 'rgba(36,39,29,.85)');
+      txt(lg, r.code || '', {x:25, y:12.5, class:'ft-m', 'font-weight':700, 'font-size':12.5,
+        fill:INK, stroke:'#F4F0E1', 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round'});
+      if (wScr >= 140 && hScr >= 56 && r.name)
+        wrapText(r.name, Math.max(8, Math.floor(wScr/7.2)), 2).forEach((ln, i) =>
+          txt(lg, ln, {x:5, y: i ? 44 : 29, class:'ft-s', 'font-weight':600, 'font-size':12,
+            fill:'#23261C', stroke:'#F4F0E1', 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round'}));
+    } else if (wScr >= 36 && r.code){
+      const c = polyCentroid(r.poly);
+      txt(rg, String(r.code), {x:c.x.toFixed(1), y:(c.y + u(4)).toFixed(1), 'text-anchor':'middle', class:'ft-m',
+        'font-weight':700, 'font-size':u(10.5), fill:INK, stroke:'#F8F4E7', 'stroke-width':u(3),
+        'paint-order':'stroke', 'stroke-linejoin':'round'});
+    }
+  });
+  if (!rooms.length){
+    const c = polyCentroid(b.poly);
+    txt(g, 'Nivel sin ambientes', {x:c.x.toFixed(1), y:(c.y + u(4)).toFixed(1), 'text-anchor':'middle',
+      class:'ft-m', 'font-size':u(13), fill:INK2, 'letter-spacing':u(.6)});
+  }
+
+  /* contorno del edificio por encima de todo */
+  el('path', {d: polyPath(b.poly), fill:'none', stroke:INK, 'stroke-width':u(2.5), 'stroke-linejoin':'round'}, g);
+
+  /* ---- título arriba-izquierda: nombre + sigla + nivel ---- */
+  const nm = String(b.name || 'Edificio');
+  const nmShort = nm.length > 28 ? nm.slice(0, 27) + '…' : nm;
+  txt(root, nmShort, {x:24, y:36, class:'ft-s', 'font-weight':800, 'font-size':20, fill:INK});
+  const chipW = String(b.code || 'ED').length * 7.6 + 14;
+  const chipX = 24 + nmShort.length * 11.2 + 12;
+  el('rect', {x:chipX.toFixed(1), y:21, width:chipW.toFixed(1), height:20, fill:INK}, root);
+  txt(root, String(b.code || 'ED'), {x:(chipX + chipW/2).toFixed(1), y:35.5, class:'ft-m', 'font-weight':700,
+    'font-size':11.5, fill:'#F2EDDF', 'text-anchor':'middle', 'letter-spacing':1});
+  txt(root, `NIVEL ${String(lvlLabel(b, level)).toUpperCase()} · ${rooms.length} ambiente${rooms.length === 1 ? '' : 's'}`,
+    {x:24, y:58, class:'ft-m', 'font-size':11, fill:INK2, 'letter-spacing':.8});
+
+  /* ---- mini-leyenda abajo ---- */
+  if (rooms.length){
+    let ly = H - pad - legRows.length*32 + 8;
+    legRows.forEach((row, ri) => {
+      let x = pad - 6;
+      row.forEach(ch => {
+        el('rect', {x:x.toFixed(1), y:ly.toFixed(1), width:ch.w.toFixed(1), height:26, rx:3,
+          fill:'#F6F2E3', stroke:'rgba(36,39,29,.4)', 'stroke-width':1}, root);
+        el('rect', {x:(x+9).toFixed(1), y:(ly+6).toFixed(1), width:14, height:14,
+          fill:ch.c.color, stroke:'rgba(20,22,16,.45)', 'stroke-width':1}, root);
+        txt(root, ch.code, {x:x+28, y:ly+18, class:'ft-m',
+          'font-weight':700, 'font-size':11.5, fill:INK});
+        txt(root, ch.name, {x:(x+28+ch.code.length*7.6+6).toFixed(1), y:ly+18,
+          class:'ft-m', 'font-size':11.5, fill:INK2});
+        x += ch.w + chipGap;
+      });
+      if (legOverflow && ri === legRows.length - 1)
+        txt(root, `+${legOverflow} categoría${legOverflow === 1 ? '' : 's'} más`,
+          {x:(x+4).toFixed(1), y:ly+18, class:'ft-m', 'font-size':11.5, fill:INK2});
+      ly += 32;
+    });
+  }
+  return root;
+}
+
+/* ---- modal in-app "Vista 3D" ---- */
+function openIsoModal(bId){
+  const b = itemById(bId);
+  if (!b || (b.kind !== 'bldg' && b.kind !== 'aud')) return;
+  ISO.bId = bId;
+  const nL = clamp(Math.round(+b.nLevels || 1), 1, 20);
+  const nR = (Array.isArray(b.rooms) ? b.rooms : []).length;
+  const PRESETS = [['ISO NE', 35], ['ISO NO', 325], ['ISO SE', 145], ['ISO SO', 215], ['PLANTA', 0]];
+  openModal(`
+    <h3>Vista 3D isométrica</h3>
+    <div class="m-sub">${escapeHtml(String(b.name || '').toUpperCase())} · ${nL} NIVEL${nL > 1 ? 'ES' : ''} · ${nR} AMBIENTE${nR === 1 ? '' : 'S'}</div>
+    <div class="isoStage" id="isoStage"></div>
+    <div class="isoCtrls">
+      <div class="isoRow">
+        <div class="field" style="flex:1;min-width:190px;margin:0">
+          <label>Ángulo <b id="isoAngV">${ISO.angle}°</b></label>
+          <input type="range" id="isoAngle" min="0" max="359" step="5" value="${ISO.angle}">
+        </div>
+        <div class="isoChips" id="isoPresets">
+          ${PRESETS.map(([l, a]) => `<button class="ichip${a === ISO.angle ? ' on' : ''}" data-a="${a}" type="button">${l}</button>`).join('')}
+        </div>
+      </div>
+      <div class="isoRow">
+        <div class="field" style="flex:1;min-width:190px;margin:0">
+          <label>Separación de pisos <b id="isoGapV">${ISO.gapMul.toFixed(1).replace('.', ',')}×</b></label>
+          <input type="range" id="isoGap" min="0.5" max="2" step="0.1" value="${ISO.gapMul}">
+        </div>
+        <label class="check" style="flex:1;padding:0" title="El PDF incluirá una página con estas vistas 3D">
+          <input type="checkbox" id="isoPdf"${doc().include3D !== false ? ' checked' : ''}> Incluir vistas 3D en el PDF</label>
+      </div>
+      <div class="m-btns" style="margin-top:8px">
+        <button class="btn primary" id="isoClose">Cerrar</button>
+      </div>
+    </div>`);
+  $('modalCard').style.width = 'min(1000px, 86vw)';
+  renderIso();
+  const markChips = () => $('isoPresets').querySelectorAll('.ichip')
+    .forEach(ch => ch.classList.toggle('on', +ch.dataset.a === ISO.angle));
+  $('isoAngle').addEventListener('input', e => {
+    ISO.angle = +e.target.value; $('isoAngV').textContent = ISO.angle + '°';
+    markChips(); renderIso();
+  });
+  $('isoGap').addEventListener('input', e => {
+    ISO.gapMul = +e.target.value; $('isoGapV').textContent = ISO.gapMul.toFixed(1).replace('.', ',') + '×';
+    renderIso();
+  });
+  $('isoPresets').addEventListener('click', e => {
+    const ch = e.target.closest('.ichip'); if (!ch) return;
+    ISO.angle = +ch.dataset.a;
+    $('isoAngle').value = ISO.angle; $('isoAngV').textContent = ISO.angle + '°';
+    markChips(); renderIso();
+  });
+  $('isoPdf').onchange = e => {
+    doc().include3D = !!e.target.checked; save();
+    toast(e.target.checked ? 'Las vistas 3D se incluirán en el PDF.' : 'El PDF se generará sin vistas 3D.');
+  };
+  $('isoClose').onclick = closeModal;
+}
+function renderIso(){
+  const b = itemById(ISO.bId);
+  const stage = $('isoStage');
+  if (!b || !stage) return;
+  const t0 = performance.now();
+  /* T6: el lienzo usa el aspecto REAL del stage (la modal es más ancha que alta:
+     con el H fijo 620 el SVG quedaba letterboxed y el dibujo, chico) */
+  const sr = stage.getBoundingClientRect();
+  const W = 1000;
+  const H = clamp(Math.round(W * (sr.height || 470) / Math.max(sr.width || 930, 240)), 380, 860);
+  const node = buildIsoSVG(b, {angle: ISO.angle, gapMul: ISO.gapMul, W, H, forExport:false});
+  stage.innerHTML = '';
+  stage.appendChild(node);
+  stage.dataset.ms = String(Math.round(performance.now() - t0));   /* diagnóstico de rendimiento */
+}
+
+/* =====================================================================
    MODALES
 ==================================================================== */
 function openModal(html){
@@ -1559,6 +3432,7 @@ function openModal(html){
 }
 function closeModal(){
   $('modalWrap').classList.remove('on');
+  $('modalCard').style.width = '';   /* la modal 3D la ensancha; el resto vuelve al ancho estándar */
   $('modalWrap').dispatchEvent(new CustomEvent('modalclosed'));
 }
  $('modalWrap').addEventListener('click', e => { if (e.target === $('modalWrap')) closeModal(); });
@@ -1567,7 +3441,7 @@ function openNewZone(pts){
   const color = nextColor();
   openModal(`
     <h3>Nueva zona delimitada</h3>
-    <div class="m-sub">${pts.length} VÉRTICES · ≈ ${fmtA(polyArea(pts)*M2)} m²</div>
+    <div class="m-sub">${pts.length} VÉRTICES</div>
     <div style="display:flex;gap:10px;margin-bottom:12px">
       <div class="field" style="margin:0"><label>Sigla</label><input class="code" id="nzCode" type="text" maxlength="8" value="${nextCode('Z')}"></div>
       <div class="field" style="margin:0;flex:1"><label>Nombre</label><input id="nzName" type="text" maxlength="60" placeholder="Ej. Edificio / cancha / área…"></div>
@@ -1622,7 +3496,6 @@ function openSettings(){
         <option value="none"${d.labelMode === 'none' ? ' selected' : ''}>Sin etiquetas</option>
       </select>
     </div>
-    <label class="check"><input type="checkbox" id="dcArea"${d.showArea ? ' checked' : ''}>Mostrar superficie (m²) bajo el nombre</label>
     <label class="check"><input type="checkbox" id="dcSnap"${d.snap ? ' checked' : ''}>Imán a la rejilla de 10 px al dibujar y mover</label>
     <label class="check"><input type="checkbox" id="dcGrid"${d.grid ? ' checked' : ''}>Mostrar rejilla de fondo</label>
     <div class="m-btns"><button class="btn primary" id="dcOk">Aplicar</button></div>`);
@@ -1631,7 +3504,6 @@ function openSettings(){
     d.subtitle = $('dcSub').value.trim();
     d.author = $('dcAuthor').value.trim();
     d.labelMode = $('dcLabels').value;
-    d.showArea = $('dcArea').checked;
     d.snap = $('dcSnap').checked;
     d.grid = $('dcGrid').checked;
     setGrid(d.grid);
@@ -1648,7 +3520,10 @@ function openHelp(){
     <p style="margin-bottom:9px"><b>Rotar elementos:</b> manija <b>R</b> sobre la selección (Shift ajusta a 15°), campo de grados exactos, botones ±90° o tecla <b>R</b>.</p>
     <p style="margin-bottom:9px"><b>Vegetación:</b> <b>N</b> pincel (arrastrar para plantar) y <b>X</b> goma. El radio se ajusta en el panel flotante.</p>
     <p style="margin-bottom:9px"><b>Campus:</b> doble clic sobre el campus para editar su contorno, o redibujalo con <b>T</b>.</p>
-    <p style="margin-bottom:9px"><b>Exportar:</b> PNG y PDF siempre incluyen TODO el contenido (campus, zonas y vegetación), con vista previa antes de guardar el PDF. El botón de encuadre total ( marco ) muestra todo el croquis de una vez.</p>
+    <p style="margin-bottom:9px"><b>Ambientes interiores:</b> doble clic sobre un edificio o auditorio (o el botón «Editar interiores» del panel) abre la vista de ambientes: estampá aulas, laboratorios y oficinas desde el catálogo, movelos, escalalos y organizalos por nivel. <kbd>ESC</kbd> vuelve al campus.</p>
+    <p style="margin-bottom:9px"><b>Niveles, grid, corte y dibujo (en interiores):</b> <b>Niveles +</b> añade, renombra o elimina plantas — lo eliminado baja a PB; <b>Grid</b> divide el edificio o un ambiente en filas × columnas recortadas a la forma real; <b>Cortar</b> divide con una línea arrastrada a todos los ambientes cruzados (Shift ajusta a 45°); <b>Dibujar</b> traza un ambiente poligonal a mano. La categoría Escalera dibuja escalones con flecha SUBE.</p>
+    <p style="margin-bottom:9px"><b>Vista 3D:</b> el botón «Vista 3D» (en la vista de interiores o en el panel del campus) muestra los pisos apilados en isométrico tipo vista explotada; ajustá ángulo y separación, y decidí si el PDF incluye estas vistas.</p>
+    <p style="margin-bottom:9px"><b>Exportar:</b> PNG y PDF incluyen TODO el contenido (campus, zonas y vegetación). El PDF se arma en páginas: plano del campus + registro jerárquico (edificios con sus ambientes por nivel) + un plano interior por nivel de cada edificio + vistas 3D en dos ángulos. El botón de encuadre total ( marco ) muestra todo el croquis de una vez.</p>
     <div class="help-keys">
       <kbd>V</kbd><span>seleccionar / mover / rotar / editar</span>
       <kbd>P</kbd><span>dibujar zona por vértices</span>
@@ -1656,8 +3531,10 @@ function openHelp(){
       <kbd>T</kbd><span>redibujar el límite del campus</span>
       <kbd>N</kbd><span>pincel de vegetación</span>
       <kbd>X</kbd><span>goma de vegetación</span>
-      <kbd>B · A · C · E · G</kbd><span>edificio · auditorio · cancha · estacionamiento · plaza</span>
+      <kbd>B · A · C · E · G · H · S · D</kbd><span>edificio · auditorio · cancha · estacionamiento · plaza · baño · piscina · bodega</span>
       <kbd>R</kbd><span>rotar 90° la selección</span>
+      <kbd>DBL CLIC</kbd><span>entrar a los interiores de un edificio / auditorio</span>
+      <kbd>G · C · D</kbd><span>en interiores: grid · cortar · dibujar</span>
       <kbd>⌫</kbd><span>quitar vértice al dibujar / borrar zona</span>
       <kbd>ENTER</kbd><span>cerrar polígono en curso</span>
       <kbd>ESC</kbd><span>cancelar / cerrar panel / deseleccionar</span>
@@ -1691,6 +3568,15 @@ function undo(){
   state.sel = state.sel && (state.sel === '__terrain' || itemById(state.sel)) ? state.sel : null;
   state.terrainEdit = false; setHint('');
   buildTerrain(); renderTrees(); renderItems(); renderEditor();
+  if (DET.open){
+    if (!itemById(DET.bId)){ DET.open = false; detailWrap.classList.remove('on'); }
+    else{
+      const b = bld();
+      DET.level = clamp(DET.level, 0, Math.max(1, Math.round(+b.nLevels || 1)) - 1);
+      if (DET.sel && !roomById(DET.sel)) DET.sel = null;
+      detailRenderAll();
+    }
+  }
   setGrid(doc().grid); renderBrushOpts(); save(); updateUndoBtn();
   toast('Último cambio deshecho.');
 }
@@ -1705,15 +3591,41 @@ function save(){
   }, 350);
 }
 
-function sanitizeItem(z){
+function sanitizeRoom(r){
+  if (!r || typeof r !== 'object' || !Array.isArray(r.poly) || r.poly.length < 3) return null;
+  const poly = r.poly.filter(p => p && isFinite(+p.x) && isFinite(+p.y)).map(p => ({x:+p.x, y:+p.y}));
+  if (poly.length < 3) return null;
+  const cat = doc().catalog;
+  const catEntry = (Array.isArray(cat) && cat.find(c => c && c.key === r.cat)) || null;
   return {
+    id: r.id || uid(),
+    level: clamp(Math.round(+r.level || 0), 0, 999),
+    cat: catEntry ? r.cat : 'otro',
+    code: String(r.code || '').slice(0, 12),
+    name: String(r.name || '').slice(0, 80),
+    color: /^#[0-9a-fA-F]{6}$/.test(r.color) ? r.color : (catEntry ? (catEntry.color || '#8F8A74') : '#8F8A74'),
+    desc: String(r.desc || ''),
+    poly
+  };
+}
+function sanitizeItem(z){
+  const nLevels = clamp(Math.round(+z.nLevels || 1), 1, 20);
+  const rooms = (Array.isArray(z.rooms) ? z.rooms.map(sanitizeRoom) : [])
+    .filter(Boolean)
+    .map(r => ({...r, level: clamp(r.level, 0, nLevels - 1)}));
+  const out = {
     id: z.id || uid(), kind: KIND_LABEL[z.kind] ? z.kind : 'area',
     code: String(z.code || 'Z'), name: String(z.name || 'Sin nombre'), desc: String(z.desc || ''),
     color: /^#[0-9a-fA-F]{6}$/.test(z.color) ? z.color : '#6E6E66',
     visible: z.visible !== false, locked: !!z.locked,
     rot: clamp(+z.rot || 0, 0, 359), opacity: z.opacity != null ? clamp(+z.opacity, 0, .68) : .24,
-    poly: (Array.isArray(z.poly) && z.poly.length >= 3) ? z.poly : rectPts(300, 300, 200, 120)
+    poly: (Array.isArray(z.poly) && z.poly.length >= 3) ? z.poly : rectPts(300, 300, 200, 120),
+    nLevels,
+    rooms
   };
+  /* T3b: nombres de niveles personalizados (si no hay, se usan PB/N1/N2…) */
+  if (Array.isArray(z.levelNames)) out.levelNames = z.levelNames.map(s => String(s || '').slice(0, 24)).slice(0, nLevels);
+  return out;
 }
 function loadState(){
   const d = DOC_DEFAULT();
@@ -1723,10 +3635,10 @@ function loadState(){
       const s = JSON.parse(raw);
       if (s && Array.isArray(s.items) && s.terrain && Array.isArray(s.terrain.points)){
         state.terrain = s.terrain;
+        Object.assign(d, s.doc || {});   /* el catálogo queda disponible antes de sanitizar */
+        state.doc = d;
         state.items = s.items.map(sanitizeItem);
         state.trees = Array.isArray(s.trees) ? s.trees : TREES_DEFAULT();
-        Object.assign(d, s.doc || {});
-        state.doc = d;
         return;
       }
     }
@@ -1744,7 +3656,7 @@ function loadState(){
     }
   }catch(e){ fail('carga de datos', e); }
   state.terrain = {points: TERRAIN_DEFAULT(), name: 'Campus'};
-  state.items = ITEMS_DEFAULT();
+  state.items = ITEMS_DEFAULT().map(sanitizeItem);
   state.trees = TREES_DEFAULT();
   state.doc = d;
 }
@@ -1838,20 +3750,33 @@ function buildCartela(b){
   return g;
 }
 
+/* CSS de fuentes con data-URLs, calculado UNA sola vez (el PDF multipágina
+   serializa varios SVG) y reutilizado por embedFonts */
+let _fontsCSSPromise = null;
+function fontsCSS(){
+  if (!_fontsCSSPromise){
+    _fontsCSSPromise = (async () => {
+      try{
+        const cssURL = 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap';
+        let css = await (await fetch(cssURL)).text();
+        const urls = [...new Set([...css.matchAll(/url\((https:\/\/[^)]+)\)/g)].map(m => m[1]))];
+        for (const u of urls){
+          const blob = await (await fetch(u)).blob();
+          const dataUrl = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(blob); });
+          css = css.split(u).join(dataUrl);
+        }
+        return css;
+      }catch(e){ return ''; }
+    })();
+  }
+  return _fontsCSSPromise;
+}
 async function embedFonts(svgRoot){
-  try{
-    const cssURL = 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap';
-    let css = await (await fetch(cssURL)).text();
-    const urls = [...new Set([...css.matchAll(/url\((https:\/\/[^)]+)\)/g)].map(m => m[1]))];
-    for (const u of urls){
-      const blob = await (await fetch(u)).blob();
-      const dataUrl = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(blob); });
-      css = css.split(u).join(dataUrl);
-    }
-    const st = document.createElementNS(NS, 'style');
-    st.textContent = css;
-    svgRoot.insertBefore(st, svgRoot.firstChild);
-  }catch(e){ console.warn('Fuentes no incrustadas en la exportación.'); }
+  const css = await fontsCSS();
+  if (!css){ console.warn('Fuentes no incrustadas en la exportación.'); return; }
+  const st = document.createElementNS(NS, 'style');
+  st.textContent = css;
+  svgRoot.insertBefore(st, svgRoot.firstChild);
 }
 
 async function renderMapCanvas(targetLong, withCartela){
@@ -1878,6 +3803,28 @@ async function renderMapCanvas(targetLong, withCartela){
   return cv;
 }
 
+/* T5 · SVG detached → canvas PNG (mismo enfoque que renderMapCanvas:
+   XMLSerializer → blob URL → Image → canvas). Reutilizable por las
+   páginas de planos interiores y vistas 3D del PDF. */
+async function svgNodeToCanvas(svgRoot, pw, ph){
+  pw = Math.round(pw); ph = Math.round(ph);
+  svgRoot.setAttribute('width', pw); svgRoot.setAttribute('height', ph);
+  await embedFonts(svgRoot);
+  const xml = new XMLSerializer().serializeToString(svgRoot);
+  const url = URL.createObjectURL(new Blob([xml], {type:'image/svg+xml;charset=utf-8'}));
+  try{
+    const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+    const cv = document.createElement('canvas');
+    cv.width = pw; cv.height = ph;
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#F2EDDF';
+    ctx.fillRect(0, 0, pw, ph);
+    ctx.drawImage(img, 0, 0, pw, ph);
+    return cv;
+  } finally { URL.revokeObjectURL(url); }
+}
+
 async function exportPNG(){
   toast('Generando PNG del croquis completo…');
   try{
@@ -1897,7 +3844,8 @@ function previewAndConfirm(dataUrl, w, h){
       <div class="pvbox"><img src="${dataUrl}" alt="Vista previa del plano"></div>
       <p style="font-size:11.5px;color:var(--ink2)">El plano se ajusta automáticamente para incluir <b>todo</b> el contenido
       (campus, zonas y vegetación), sin importar el zoom actual o si dibujaste fuera del área inicial.
-      Después de esta página va el registro de zonas con sigla, nombre, tipo, área y descripción.</p>
+      Después van el <b>registro jerárquico</b> (edificios con sus ambientes por nivel), los <b>planos interiores</b>
+      de cada nivel y las <b>vistas 3D</b>.</p>
       <div class="m-btns">
         <button class="btn" id="pvCancel">Cancelar</button>
         <button class="btn primary" id="pvOk">Guardar PDF</button>
@@ -1929,12 +3877,19 @@ async function exportPDF(){
 
     /* 3) armado del documento */
     const {jsPDF} = window.jspdf;
-    const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4'});
+    const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4', compress:true});
     const d = doc();
     const fecha = new Date().toLocaleDateString('es-SV', {day:'numeric', month:'long', year:'numeric'});
     const title = d.title || 'Croquis del campus';
     const sub = d.subtitle || 'Plano de delimitación libre';
+    const isBldg = z => z.kind === 'bldg' || z.kind === 'aud';
+    const items = state.items.filter(z => z.visible !== false);
+    const hidden = state.items.length - items.length;
+    const nLvOf = z => clamp(Math.round(+z.nLevels || 1), 1, 20);
+    const roomsOf = z => Array.isArray(z.rooms) ? z.rooms : [];
+    const bldgsConInterior = items.filter(z => isBldg(z) && roomsOf(z).length > 0);
 
+    /* cabecera de página 1: marco doble + título/subtítulo/fecha/autor */
     pdf.setDrawColor(30,33,25); pdf.setLineWidth(.9); pdf.rect(8, 8, 281, 194);
     pdf.setLineWidth(.25); pdf.rect(10.5, 10.5, 276, 189);
     pdf.setFont('helvetica','bold'); pdf.setFontSize(17); pdf.setTextColor(30,33,25);
@@ -1952,12 +3907,23 @@ async function exportPDF(){
     if (ih > availH){ ih = availH; iw = availH * ar; }
     pdf.addImage(mapUrl, 'PNG', (297-iw)/2, 36 + (availH-ih)/2, iw, ih);
 
-    const items = state.items.filter(z => z.visible !== false);
-    const hidden = state.items.length - items.length;
     pdf.setFont('helvetica','normal'); pdf.setFontSize(8); pdf.setTextColor(96,100,86);
-    pdf.text(`Zonas: ${items.length}${hidden ? ' (+ ' + hidden + ' ocultas)' : ''}  ·  Vegetación: ${state.trees.length} árboles  ·  Campus: ${fmtA(polyArea(state.terrain.points)*M2)} m2 aprox.`, 14, 197.5);
+    pdf.text(`Zonas: ${items.length}${hidden ? ' (+ ' + hidden + ' ocultas)' : ''}  ·  Vegetación: ${state.trees.length} árboles  ·  Edificios con interiores: ${bldgsConInterior.length}`, 14, 197.5);
 
-    const HEAD = [['SW', 12, 12], ['SIGLA', 15, 17], ['NOMBRE', 55, 32], ['TIPO', 30, 87], ['ÁREA', 14, 117], ['DESCRIPCIÓN', 150, 131]];
+    /* encabezado de páginas de sección (registro, planos, 3D) */
+    const sectionHead = (main, right) => {
+      pdf.addPage();
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(12); pdf.setTextColor(30,33,25);
+      pdf.text(String(main).slice(0, 80), 12, 16);
+      if (right){
+        pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5); pdf.setTextColor(96,100,86);
+        pdf.text(right, 285, 16, {align:'right'});
+      }
+      pdf.setDrawColor(30,33,25); pdf.setLineWidth(.5); pdf.line(12, 19, 285, 19);
+    };
+
+    /* ===== REGISTRO DE ZONAS (jerárquico: edificio → sus ambientes por nivel) ===== */
+    const HEAD = [['SW', 12], ['SIGLA', 17], ['NOMBRE', 34], ['TIPO', 82], ['NIVEL', 138], ['DESCRIPCIÓN', 168]];
     let y = 0, rowIdx = 0;
     const drawTableHead = () => {
       pdf.setFillColor(36,39,25); pdf.rect(12, 24, 273, 8, 'F');
@@ -1966,41 +3932,71 @@ async function exportPDF(){
       y = 34; rowIdx = 0;
     };
     const newTablePage = () => {
-      pdf.addPage();
-      pdf.setFont('helvetica','bold'); pdf.setFontSize(12); pdf.setTextColor(30,33,25);
-      pdf.text('REGISTRO DE ZONAS', 12, 16);
-      pdf.setDrawColor(30,33,25); pdf.setLineWidth(.5); pdf.line(12, 19, 285, 19);
+      sectionHead('REGISTRO DE ZONAS', `${items.length} zonas · registro jerárquico`);
       drawTableHead();
     };
     newTablePage();
 
-    for (const z of items){
-      const desc = (z.desc || '').trim() || '—';
-      const descLines = pdf.splitTextToSize(desc, 148);
-      const nameLines = pdf.splitTextToSize(z.name || z.code || '—', 53);
-      const rowH = Math.max(9, descLines.length*4.3 + 4.5, nameLines.length*4.3 + 4.5);
+    /* una fila del registro; c = {color, sig, name, tipo, nivel, desc, indent, bldg} */
+    const regRow = c => {
+      const ind = c.indent || 0;
+      const xSig = 17 + ind, xNom = 34 + ind, xTip = 82 + ind, xNiv = 138 + ind, xDes = 168 + ind;
+      const wNom = Math.max(xTip - xNom - 2, 20), wNiv = 26, wDes = 284 - xDes;
+      const descLines = pdf.splitTextToSize((c.desc || '').trim() || '—', wDes);
+      const nameLines = pdf.splitTextToSize(c.name || c.sig || '—', wNom);
+      const nivLines = pdf.splitTextToSize(c.nivel || '—', wNiv);
+      const rowH = Math.max(9, descLines.length*4.3 + 4.5, nameLines.length*4.3 + 4.5, nivLines.length*4.3 + 4.5);
       if (y + rowH > 192) newTablePage();
-      if (rowIdx % 2 === 0){ pdf.setFillColor(245,242,232); pdf.rect(12, y, 273, rowH, 'F'); }
-      const [r, g, b] = hexRGB(z.color);
-      pdf.setFillColor(r, g, b); pdf.rect(13.5, y + rowH/2 - 3, 6, 6, 'F');
-      pdf.setDrawColor(30,33,25); pdf.setLineWidth(.3); pdf.rect(13.5, y + rowH/2 - 3, 6, 6);
-      pdf.setTextColor(30,33,25);
-      pdf.setFont('helvetica','bold'); pdf.setFontSize(8);
-      pdf.text(String(z.code || '—'), 18.5, y + 5.8);
-      pdf.text(nameLines, 33.5, y + 5.8);
-      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); pdf.setTextColor(96,100,86);
-      pdf.text(KIND_LABEL[z.kind] || 'Zona', 88.5, y + 5.8);
-      pdf.text(fmtA(polyArea(z.poly)*M2) + ' m2', 118.5, y + 5.8);
-      pdf.setTextColor(52,55,44);
-      pdf.text(descLines, 132.5, y + 5.8);
+      if (c.bldg){ pdf.setFillColor(237,233,221); pdf.rect(12, y, 273, rowH, 'F'); }
+      else if (rowIdx % 2 === 0){ pdf.setFillColor(245,242,232); pdf.rect(12, y, 273, rowH, 'F'); }
+      const [r, g, b] = hexRGB(c.color || '#8F8A74');
+      pdf.setFillColor(r, g, b); pdf.rect(13.5 + ind, y + rowH/2 - 3, 6, 6, 'F');
+      pdf.setDrawColor(30,33,25); pdf.setLineWidth(.3); pdf.rect(13.5 + ind, y + rowH/2 - 3, 6, 6);
+      /* sigla + nombre (bold; en edificios todo el renglón destaca) */
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(8); pdf.setTextColor(30,33,25);
+      pdf.text(String(c.sig || '—'), xSig + 1.5, y + 5.8);
+      pdf.text(nameLines, xNom, y + 5.8);
+      pdf.setFont('helvetica', c.bldg ? 'bold' : 'normal'); pdf.setFontSize(7.5);
+      pdf.setTextColor(c.bldg ? 52 : 96, c.bldg ? 55 : 100, c.bldg ? 44 : 86);
+      pdf.text(String(c.tipo || 'Zona'), xTip, y + 5.8);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7); pdf.setTextColor(96,100,86);
+      pdf.text(nivLines, xNiv, y + 5.8);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); pdf.setTextColor(52,55,44);
+      pdf.text(descLines, xDes, y + 5.8);
       y += rowH; rowIdx++;
+    };
+
+    for (const z of items){
+      const rms = isBldg(z) ? roomsOf(z) : [];
+      if (isBldg(z)){
+        /* fila de EDIFICIO (banda más oscura + bold) */
+        regRow({
+          color: z.color, sig: z.code || '—', name: z.name || z.code || 'Edificio',
+          tipo: KIND_LABEL[z.kind] || 'Edificio', nivel: '—',
+          desc: (z.desc || '').trim() || (rms.length ? `${rms.length} ambiente${rms.length === 1 ? '' : 's'} interiores` : ''),
+          bldg: true
+        });
+        /* filas de ambientes, indentadas y ordenadas por nivel */
+        [...rms].sort((a, b2) => (a.level || 0) - (b2.level || 0)).forEach(r => regRow({
+          color: r.color || catOf(r.cat).color,
+          sig: r.code || '—',
+          name: r.name || catOf(r.cat).name || 'Ambiente',
+          tipo: (catOf(r.cat) || {}).name || 'Ambiente',
+          nivel: lvlLabel(z, clamp(Math.round(+r.level || 0), 0, 999)),
+          desc: (r.desc || '').trim(),
+          indent: 6
+        }));
+      } else {
+        regRow({
+          color: z.color, sig: z.code || '—', name: z.name || z.code || '—',
+          tipo: KIND_LABEL[z.kind] || 'Zona', nivel: '—', desc: (z.desc || '').trim()
+        });
+      }
     }
 
     const T = state.terrain;
     const lines = [
       `Vértices del límite: ${T.points.length}`,
-      `Perímetro del campus: ${fmtA(polyPerim(T.points)*M)} m`,
-      `Superficie del campus: ${fmtA(polyArea(T.points)*M2)} m2 (aprox.)`,
       `Zonas delimitadas: ${items.length}  ·  Vegetación registrada: ${state.trees.length} árboles`
     ];
     const need = 26 + lines.length*6;
@@ -2013,6 +4009,58 @@ async function exportPDF(){
     pdf.setFont('helvetica','normal'); pdf.setFontSize(9); pdf.setTextColor(52,55,44);
     lines.forEach(l => { pdf.text(l, 12, ry + 4); ry += 6; });
 
+    /* ===== SECCIÓN: PLANOS INTERIORES (una página por edificio y nivel) ===== */
+    let planPages = 0;
+    if (bldgsConInterior.length){
+      toast('Dibujando planos interiores…');
+      await new Promise(r => setTimeout(r, 60));
+      for (const b of bldgsConInterior){
+        const nL = nLvOf(b);
+        for (let lv = 0; lv < nL; lv++){
+          const lvRooms = roomsOf(b).filter(r => (r.level || 0) === lv);
+          if (!lvRooms.length && nL === 1) continue;   /* PB vacío de un edificio de 1 nivel */
+          const lvLbl = String(lvlLabel(b, lv));
+          sectionHead(`EDIFICIO ${b.name || b.code || ''} — ${/^nivel/i.test(lvLbl) ? lvLbl.toUpperCase() : 'NIVEL ' + lvLbl.toUpperCase()}`,
+            'PLANOS INTERIORES');
+          const node = buildLevelPlanSVG(b, lv, {W:1600, H:1000, forExport:true});
+          const pcv = await svgNodeToCanvas(node, 2200, 1375);
+          const pUrl = pcv.toDataURL('image/png');
+          const par = pcv.width / pcv.height;
+          let pw2 = 258, ph2 = pw2 / par;
+          const topY = 26, botY = 190;
+          if (ph2 > botY - topY){ ph2 = botY - topY; pw2 = ph2 * par; }
+          pdf.addImage(pUrl, 'PNG', (297 - pw2)/2, topY + (botY - topY - ph2)/2, pw2, ph2);
+          planPages++;
+        }
+      }
+    }
+
+    /* ===== SECCIÓN: VISTAS 3D (dos ángulos por edificio, si doc.include3D) ===== */
+    let isoPages = 0;
+    if (d.include3D !== false){
+      const isoBldgs = items.filter(z => isBldg(z) && (nLvOf(z) > 1 || roomsOf(z).length > 0));
+      if (isoBldgs.length){
+        toast('Dibujando vistas 3D…');
+        await new Promise(r => setTimeout(r, 60));
+        for (const b of isoBldgs){
+          sectionHead(`VISTAS 3D — EDIFICIO ${b.name || b.code || ''}`, 'ISOMÉTRICO · VISTA EXPLOTADA');
+          const mkIso = async ang => {
+            const node = buildIsoSVG(b, {angle: ang, forExport:true, W:1000, H:880});
+            return (await svgNodeToCanvas(node, 1500, 1320)).toDataURL('image/png');
+          };
+          const u1 = await mkIso(35), u2 = await mkIso(215);
+          const iw2 = 130, ih2 = iw2 * 0.88;
+          const x1 = 14, x2 = 297 - 14 - iw2, iy = 30;
+          pdf.addImage(u1, 'PNG', x1, iy, iw2, ih2);
+          pdf.addImage(u2, 'PNG', x2, iy, iw2, ih2);
+          pdf.setFont('helvetica','bold'); pdf.setFontSize(9); pdf.setTextColor(52,55,44);
+          pdf.text('ISO NE 35°', x1 + iw2/2, iy + ih2 + 7, {align:'center'});
+          pdf.text('ISO SO 215°', x2 + iw2/2, iy + ih2 + 7, {align:'center'});
+          isoPages++;
+        }
+      }
+    }
+
     const n = pdf.internal.getNumberOfPages();
     for (let i = 1; i <= n; i++){
       pdf.setPage(i);
@@ -2023,7 +4071,10 @@ async function exportPDF(){
     }
     const slug = (d.title || 'croquis-campus').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0, 48);
     pdf.save(slug + '.pdf');
-    toast('PDF guardado: croquis completo + registro de ' + items.length + ' zonas.');
+    const parts = ['campus', 'registro jerárquico'];
+    if (planPages) parts.push(`${planPages} ${planPages === 1 ? 'plano interior' : 'planos interiores'}`);
+    if (isoPages) parts.push(`${isoPages} ${isoPages === 1 ? 'vista 3D' : 'vistas 3D'}`);
+    toast('PDF guardado: ' + parts.join(' + ') + '.');
   }catch(e){ fail('PDF', e); toast('No se pudo generar el PDF.', 'err'); }
 }
 
@@ -2046,11 +4097,35 @@ document.addEventListener('keydown', e => {
     }
     if (e.key === 'Escape'){
       if ($('modalWrap').classList.contains('on')){ closeModal(); return; }
+      if (DET.open){
+        if (DET.tool === 'draw' && DET.drawing){ DET.drawing = null; detailRenderCanvas(); setDetailHint(); return; }
+        if (DET.tool === 'stampRoom' || DET.tool === 'cut' || DET.tool === 'draw'){ setDetailTool('select'); return; }
+        closeDetail(); return;
+      }
       if (state.drawing){ cancelDrawing(); setHint(HINTS[state.tool] || ''); return; }
       if (state.terrainEdit){ setTerrainEdit(false); return; }
       if (document.body.classList.contains('presenting')){ setPresenting(false); return; }
       if (state.tool !== 'select'){ setTool('select'); return; }
       if (state.sel){ state.sel = null; state.items.forEach(applyZoneStyle); renderHandles(); renderEditor(); renderList(); }
+      return;
+    }
+    /* T6: con una modal abierta no se procesan atajos (evita que G/C/D/Delete o
+       herramientas del campus actúen detrás de la modal); ESC ya fue atendido arriba */
+    if ($('modalWrap').classList.contains('on')) return;
+    if (DET.open){
+      if (!inField){
+        if (DET.tool === 'draw' && e.key === 'Enter'){ e.preventDefault(); detailCloseDraw(); return; }
+        if (DET.tool === 'draw' && e.key === 'Backspace'){
+          e.preventDefault();
+          if (DET.drawing && DET.drawing.length){ DET.drawing.pop(); detailRenderCanvas(); }
+          return;
+        }
+        if ((e.key === 'Delete' || e.key === 'Backspace') && DET.sel && DET.tool !== 'draw'){ e.preventDefault(); detailDeleteRoom(DET.sel); return; }
+        const dk = e.key.toLowerCase();
+        if (dk === 'g'){ openGridModal(); return; }
+        if (dk === 'c'){ setDetailTool('cut'); return; }
+        if (dk === 'd'){ setDetailTool('draw'); return; }
+      }
       return;
     }
     if (inField || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -2060,7 +4135,7 @@ document.addEventListener('keydown', e => {
       if (k === 'backspace'){ e.preventDefault(); popDrawVertex(); return; }
     }
     const tools = {v:'select', p:'poly', f:'free', t:'terrainDraw', n:'brush', x:'eraser'};
-    const stamps = {b:'bldg', a:'aud', c:'pitch', e:'lot', g:'plaza'};
+    const stamps = {b:'bldg', a:'aud', c:'pitch', e:'lot', g:'plaza', h:'bath', s:'pool', d:'shed'};
     if (tools[k]){ setTool(tools[k]); return; }
     if (stamps[k]){ setStamp(stamps[k]); return; }
     if (k === 'r' && state.sel && state.sel !== '__terrain'){
@@ -2130,8 +4205,11 @@ function wireUI(){
           const map = {cd:'pitch', est:'lot', au:'aud', plz:'plaza'};
           items = d.map(z => sanitizeItem({...z, kind: map[z.id] || 'area', poly: rectPts(+z.x || 300, +z.y || 300, +z.w || 200, +z.h || 120)}));
         } else if (d.items && d.terrain){
-          terrain = d.terrain; items = d.items.map(sanitizeItem);
-          trees = Array.isArray(d.trees) ? d.trees : null; docO = d.doc || null;
+          terrain = d.terrain;
+          docO = d.doc || null;
+          if (docO) Object.assign(state.doc, docO);  /* antes de sanitizar: valida el catálogo */
+          items = d.items.map(sanitizeItem);
+          trees = Array.isArray(d.trees) ? d.trees : null;
         } else throw new Error('formato desconocido');
         if (!items.length) throw new Error('sin zonas');
         pushUndo();
@@ -2139,7 +4217,6 @@ function wireUI(){
           state.terrain = {points: terrain.points, name: terrain.name || 'Campus'};
         state.items = items;
         if (trees) state.trees = trees;
-        if (docO) Object.assign(state.doc, docO);
         state.sel = null; state.terrainEdit = false;
         buildTerrain(); renderTrees(); renderItems(); renderEditor(); setGrid(doc().grid); save();
         toast(`Croquis importado: ${state.items.length} zonas.`);
@@ -2165,7 +4242,7 @@ function wireUI(){
       localStorage.removeItem('croquis_campus_v3');
       localStorage.removeItem('ugb_croquis_libre_v1');
       state.terrain = {points: TERRAIN_DEFAULT(), name: 'Campus'};
-      state.items = ITEMS_DEFAULT();
+      state.items = ITEMS_DEFAULT().map(sanitizeItem);
       state.trees = TREES_DEFAULT();
       state.doc = DOC_DEFAULT();
       state.sel = null; state.terrainEdit = false; undoStack.length = 0; updateUndoBtn();
@@ -2200,6 +4277,7 @@ function boot(){
   try{
     buildBase();
     loadState();
+    wireDetail();
     buildTerrain();
     renderTrees();
     renderItems();

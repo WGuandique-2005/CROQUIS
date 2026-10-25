@@ -1,186 +1,160 @@
-# 🗺️ Croquis — Editor de Planos y Campus
+# 🗺️ Croquis — Editor de campus e interiores
 
-[![Despliegue en GitHub Pages](https://img.shields.io/badge/Demo_en_vivo-GitHub_Pages-2ea44f?style=for-the-badge&logo=github)](https://wguandique-2005.github.io/CROQUIS/)
+[![Demo en vivo](https://img.shields.io/badge/Demo_en_vivo-GitHub_Pages-2ea44f?style=for-the-badge&logo=github)](https://wguandique-2005.github.io/CROQUIS/)
 
-> 🌐 **Acceso y Demostración en vivo:** [https://wguandique-2005.github.io/CROQUIS/](https://wguandique-2005.github.io/CROQUIS/)
+> Demo: [wguandique-2005.github.io/CROQUIS](https://wguandique-2005.github.io/CROQUIS/)
 
-**Croquis** es una aplicación web interactiva, ligera y autónoma diseñada para la delimitación, edición y diseño vectorial de planos de campus, complejos deportivos, recintos educativos e instalaciones arquitectónicas. 
+**Croquis** es una aplicación web autónoma para diseñar planos vectoriales de campus y detallar los ambientes interiores de edificios o auditorios. Todo el proyecto reside en un único `index.html`: no requiere instalación, dependencias de Node.js ni compilación.
 
-Desarrollado exclusivamente con tecnologías web nativas (**HTML5**, **CSS3**, **Vanilla JavaScript** y gráficos vectoriales **SVG**), funciona directamente en cualquier navegador web sin requerir instalaciones, dependencias externas complejas ni procesos de compilación (*zero-build*).
-
----
-
-## 🚀 Características Principales
-
-### 📐 1. Delimitación y Geometría Vectorial Libre
-* **Límite perimetral del terreno:** Permite definir el contorno del campus mediante polígonos editables vértice a vértice, calculando automáticamente perímetro ($m$) y área total ($\approx m^2$).
-* **Dibujo vértice a vértice (`P`):** Creación precisa de polígonos personalizados haciendo clic para colocar puntos y cerrando con `Enter` o doble clic.
-* **Trazo libre a mano alzada (`F`):** Dibujo continuo de zonas que se simplifica y suaviza automáticamente mediante el algoritmo matemático **Douglas-Peucker**.
-* **Edición interactiva de vértices:** Manipulación en tiempo real de nodos, inserción de vértices en los puntos medios (`◇`) y eliminación precisa (`Alt + Clic` o tecla `Supr`).
-
-### 🏛️ 2. Sellos y Tipologías de Zonas Predefinidas
-Incluye sellos paramétricos con estilos arquitectónicos y patrones gráficos vectoriales únicos:
-* **Edificios (`B`):** Estructura arquitectónica con achurado interno y contorno de muros.
-* **Auditorios (`A`):** Distribución de escenario, gradas y butacas radiales estilizadas.
-* **Canchas Deportivas (`C`):** Campo de juego reglamentario con césped rayado, círculo central, áreas de meta y porterías.
-* **Estacionamientos (`E`):** Carriles de circulación, cajones de aparcamiento, flechas de tráfico y vehículos generados proceduralmente.
-* **Plazas / Glorietas (`G`):** Suelos adoquinados, fuentes o monumentos centrales, bancas de descanso y jardinería periférica.
-
-### 🌳 3. Sistema de Vegetación Procedural
-* **Pincel de Vegetación (`N`):** Coloca árboles dispersos dinámicamente arrastrando el ratón sobre el plano, con variaciones de tono y tamaño configurable.
-* **Borrador de Vegetación (`X`):** Radio circular de borrado para remover árboles de forma no destructiva sin alterar los polígonos de las edificaciones ni el terreno.
-
-### ⚙️ 4. Transformación y Edición Detallada
-* **Manipulación total:** Traslación, escalado multidireccional desde las esquinas y rotación libre mediante la manija superior `R` (con ajuste a intervalos de 15° manteniendo presionada la tecla `Shift`).
-* **Panel de atributos:** Personalización de código/sigla (ej. *HL*, *CD*, *AU*), nombre, tipo de zona, descripción enriquecida, opacidad y paleta cromática (o selector de color nativo).
-* **Gestión de capas:** Traer al frente, enviar al fondo, duplicar elementos, alternar visibilidad (mostrar/ocultar) y bloqueo de seguridad (*candado*) para proteger contornos y ubicaciones contra movimientos accidentales.
-
-### 📄 5. Exportación de Alta Fidelidad (Desde Datos Vectoriales)
-A diferencia de capturas de pantalla convencionales, el motor de exportación reconstruye una imagen vectorial nítida desde el estado matemático del proyecto:
-* **Encuadre automático:** Detecta el *bounding box* de todos los elementos presentes (campus, edificaciones y vegetación) para que ningún objeto quede recortado, sin importar el nivel de zoom actual.
-* **Exportación PNG (3200 px):** Renderizado en ultra alta resolución acompañado de cartela técnica profesional, leyenda de colores, fecha de generación y metadatos de autor.
-* **Exportación PDF Multipágina (jsPDF):**
-  * **Página 1:** Plano general en orientación horizontal (A4) con marco arquitectónico, cartela, leyenda y estadísticas.
-  * **Páginas siguientes:** Tabla formal de *Registro de Zonas* con código, nombre, categoría, superficie calculada en $m^2$ y descripción detallada de cada espacio.
-  * **Vista previa interactiva:** Ventana modal de previsualización antes de confirmar la descarga.
-
-### 💾 6. Persistencia y Portabilidad
-* **Autoguardado Local:** Guarda automáticamente cada cambio en `localStorage` con historial de deshacer/rehacer (**Undo** con `Ctrl + Z` hasta 40 pasos).
-* **Importación y Exportación JSON:** Respaldo completo de la estructura del plano en archivos `.json` compatibles para compartir, versionar o migrar proyectos.
-* **Modo Presentación:** Oculta paneles, barras de herramientas y menús para proyectar o visualizar el plano a pantalla completa en reuniones o exhibiciones.
+Está construido con HTML, CSS, JavaScript nativo y SVG. Guarda los cambios localmente y permite exportar el proyecto, imágenes y documentación técnica.
 
 ---
 
-## ⌨️ Atajos de Teclado
+## Características
+
+### Plano del campus
+
+- Delimitación editable del terreno, con cálculo de área y perímetro.
+- Zonas por polígonos de vértices o dibujo a mano alzada, simplificado con Douglas–Peucker.
+- Sellos para edificios, auditorios, canchas, estacionamientos, plazas, baños, piscinas y bodegas.
+- Mover, escalar, rotar, duplicar, ordenar por capas, ocultar y bloquear zonas.
+- Edición de vértices: inserción en puntos medios y eliminación con `Alt` + clic.
+- Vegetación procedural con pincel y goma de radio ajustable.
+- Búsqueda y filtros de zonas; la búsqueda también encuentra ambientes interiores.
+- Zoom, desplazamiento, encuadre de todo el contenido, rejilla e imán de 10 px.
+
+### Interiores y niveles
+
+Los edificios y auditorios pueden abrirse en una vista de detalle mediante doble clic o con **Editar interiores**.
+
+- Ambientes por nivel: añadir, renombrar o eliminar hasta 20 niveles. Al eliminar un nivel, sus ambientes pasan a planta baja.
+- Catálogo editable de ambientes: aulas, laboratorios, oficinas, baños, bodegas, pasillos, escaleras y otros.
+- Estampado de ambientes, edición de sus polígonos, movimiento, escala, color, código, descripción y categoría.
+- Creación automática de grids por filas y columnas, recortados a la forma real del edificio o del ambiente seleccionado.
+- Corte de todos los ambientes atravesados por una línea; `Shift` ajusta el corte a 45°.
+- Dibujo manual de ambientes poligonales y representación especial para escaleras.
+- Vista 3D isométrica explotada, con control de ángulo y separación entre niveles.
+
+### Exportación y datos
+
+- **PNG:** plano completo a 3200 px en su lado mayor, con cartela y leyenda.
+- **PDF con vista previa:** plano de campus, registro jerárquico de zonas y ambientes, planos interiores por nivel y vistas 3D opcionales.
+- **JSON:** importación y exportación del estado completo del proyecto.
+- **Autoguardado** en `localStorage` y hasta 40 estados de deshacer con `Ctrl` + `Z`.
+- **Modo presentación** para visualizar el plano sin paneles.
+
+Las exportaciones se reconstruyen desde los datos SVG, por lo que no dependen del zoom ni de la zona visible en pantalla.
+
+---
+
+## Atajos
 
 | Tecla | Acción |
 | :---: | :--- |
-| <kbd>V</kbd> | Herramienta de selección (mover, escalar, rotar y editar vértices) |
-| <kbd>P</kbd> | Dibujar zona poligonal punto a punto |
-| <kbd>F</kbd> | Dibujar zona a mano alzada (trazo libre) |
-| <kbd>T</kbd> | Redibujar el límite perimetral del campus |
-| <kbd>B</kbd> | Colocar sello de **Edificio** |
-| <kbd>A</kbd> | Colocar sello de **Auditorio** |
-| <kbd>C</kbd> | Colocar sello de **Cancha deportiva** |
-| <kbd>E</kbd> | Colocar sello de **Estacionamiento** |
-| <kbd>G</kbd> | Colocar sello de **Plaza / Glorieta** |
-| <kbd>N</kbd> | Pincel de vegetación (plantar árboles) |
-| <kbd>X</kbd> | Goma de vegetación (borrar árboles) |
-| <kbd>R</kbd> | Rotar la zona seleccionada 90° en sentido horario |
-| <kbd>Enter</kbd> | Cerrar y finalizar el polígono en curso |
-| <kbd>Backspace</kbd> / <kbd>Supr</kbd> | Eliminar el último vértice dibujado o borrar la zona seleccionada |
-| <kbd>Ctrl + Z</kbd> | Deshacer la última acción |
-| <kbd>Esc</kbd> | Cancelar herramienta activa / Deseleccionar / Salir de presentación |
+| `V` | Seleccionar, mover, escalar, rotar y editar |
+| `P` / `F` | Dibujar zona por vértices / a mano alzada |
+| `T` | Redibujar el límite del campus |
+| `N` / `X` | Pincel / goma de vegetación |
+| `B` `A` `C` `E` `G` `H` `S` `D` | Edificio, auditorio, cancha, estacionamiento, plaza, baño, piscina y bodega |
+| `R` | Girar 90° la zona seleccionada |
+| `Enter` | Cerrar el polígono en curso |
+| `Backspace` / `Supr` | Quitar vértice al dibujar o eliminar la selección |
+| `Ctrl` + `Z` | Deshacer |
+| `Esc` | Cancelar, deseleccionar, cerrar un panel o salir de presentación |
+
+En la vista de interiores: `G` abre el grid, `C` activa el corte y `D` inicia el dibujo de un ambiente.
 
 ---
 
-## 🛠️ Tecnologías y Fundamentos Matemáticos
-
-* **Frontend:** HTML5 semántico, CSS3 moderno (Variables CSS, CSS Grid, Flexbox).
-* **Gráficos:** SVG (*Scalable Vector Graphics*) nativo en el DOM, `<pattern>`, `<clipPath>`, transformaciones afines y renderizado dinámico en `<canvas>`.
-* **Tipografía:** [Archivo](https://fonts.google.com/specimen/Archivo) e [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono).
-* **Librerías externas:** [jsPDF v2.5.1](https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js) (CDN para compilación de documentos PDF).
-* **Algoritmos implementados en JavaScript:**
-  * **Fórmula de Gauss / Área de Lazar (Shoelace formula):** Cálculo exacto del área de polígonos irregulares.
-  * **Cálculo de Centroides Poligonales:** Posicionamiento automático y centrado de etiquetas de texto sobre cada zona.
-  * **Douglas-Peucker:** Reducción de puntos y optimización de curvas en el trazo libre.
-  * **Point-in-Polygon (Ray Casting):** Detección de colisiones e inclusión de puntos dentro de polígonos.
-  * **Mulberry32 & FNV/djb2 Hashing:** Generador pseudoaleatorio basado en semillas fijas para recrear patrones idénticos (ej. distribución de vehículos en estacionamientos).
-
----
-
-## 📁 Estructura del Repositorio
+## Estructura del proyecto
 
 ```text
 CROQUIS/
-├── index.html               # Aplicación completa (HTML, CSS y JavaScript integrados)
-├── croquis-campus.json      # Archivo de datos de ejemplo (exportación en formato JSON)
-├── croquis-campus-UGB.pdf   # Ejemplo del PDF generado con el croquis y registro de zonas
-└── README.md                # Documentación del proyecto
+├── index.html               # Aplicación completa: interfaz, estilos y lógica
+├── croquis-campus.json      # Ejemplo de datos exportados
+├── croquis-campus-UGB.pdf   # Ejemplo de PDF generado
+└── README.md                # Documentación
 ```
 
 ---
 
-## 🖥️ Cómo Ejecutar el Proyecto
+## Uso
 
-No se requieren herramientas de construcción (*bundlers* como Webpack o Vite) ni servidores de Node.js.
+Abre `index.html` directamente en un navegador moderno o utiliza la [demo en GitHub Pages](https://wguandique-2005.github.io/CROQUIS/). No hay proceso de instalación.
 
-### Opción 1: Acceso en Línea (GitHub Pages)
-Puedes acceder y utilizar la aplicación directamente en tu navegador sin instalar nada:
-👉 **[https://wguandique-2005.github.io/CROQUIS/](https://wguandique-2005.github.io/CROQUIS/)**
+Si prefieres servirlo por HTTP local:
 
-### Opción 2: Apertura Local Directa
-1. Haz doble clic sobre el archivo `index.html` o arrástralo directamente a cualquier navegador web moderno (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Brave).
+```bash
+python3 -m http.server 8000
+```
 
-### Opción 3: Mediante un Servidor Local Ligero (Opcional)
-Si deseas servir el proyecto a través de HTTP/HTTPS local:
-
-* **Con Python 3:**
-  ```bash
-  python3 -m http.server 8000
-  ```
-  Abre en tu navegador `http://localhost:8000/`.
-
-* **Con Node.js (npx serve):**
-  ```bash
-  npx serve .
-  ```
+Luego visita `http://localhost:8000/`.
 
 ---
 
-## 📊 Estructura de Datos (JSON)
+## Formato JSON
 
-Al exportar mediante el menú **Datos > Exportar JSON**, se produce un archivo estructurado con la siguiente especificación:
+La exportación conserva el campus, las zonas, la vegetación, la configuración del documento y, dentro de cada edificio o auditorio, sus niveles y ambientes.
 
 ```json
 {
   "version": 4,
   "terrain": {
     "name": "Campus",
-    "points": [
-      { "x": 200, "y": 160 },
-      { "x": 560, "y": 110 }
-    ]
+    "points": [{ "x": 200, "y": 160 }]
   },
-  "items": [
-    {
-      "id": "z_abc123",
-      "kind": "bldg",
-      "code": "HL",
-      "name": "Edificio Hugo Lindo",
-      "desc": "Aulas de Ingeniería y Sistemas.",
-      "color": "#D97B2F",
-      "visible": true,
-      "locked": false,
-      "rot": 0,
-      "opacity": 0.24,
-      "poly": [
-        { "x": 250, "y": 185 },
-        { "x": 560, "y": 185 },
-        { "x": 560, "y": 300 },
-        { "x": 250, "y": 300 }
-      ]
-    }
-  ],
-  "trees": [
-    { "x": 420, "y": 310, "r": 9, "tone": 0.65 }
-  ],
+  "items": [{
+    "id": "hl",
+    "kind": "bldg",
+    "code": "HL",
+    "name": "Edificio Hugo Lindo",
+    "color": "#D97B2F",
+    "visible": true,
+    "locked": false,
+    "rot": 0,
+    "opacity": 0.24,
+    "poly": [{ "x": 250, "y": 185 }],
+    "nLevels": 2,
+    "levelNames": ["PB", "Nivel 1"],
+    "rooms": [{
+      "id": "r_001",
+      "level": 0,
+      "cat": "aula",
+      "code": "HL-01",
+      "name": "Aula",
+      "color": "#D9A32E",
+      "desc": "",
+      "poly": [{ "x": 280, "y": 210 }]
+    }]
+  }],
+  "trees": [{ "x": 420, "y": 310, "r": 9, "tone": 0.65 }],
   "doc": {
     "title": "Croquis del campus",
-    "subtitle": "Plano de delimitación libre",
+    "subtitle": "Plano de referencia",
     "author": "Universidad",
     "labelMode": "full",
-    "showArea": false,
     "snap": false,
     "grid": false,
     "brushR": 9,
-    "eraserR": 36
+    "eraserR": 36,
+    "include3D": true,
+    "catalog": []
   }
 }
 ```
 
+`poly` y `terrain.points` deben contener al menos tres puntos para formar una figura válida. Las categorías del catálogo se identifican por `cat` dentro de cada ambiente.
+
 ---
 
-## 📜 Licencia
+## Tecnologías
 
-Distribuido para uso libre en la planificación, edición y presentación de planos educativos e institucionales.
+- HTML5, CSS3 y JavaScript nativo.
+- SVG para el renderizado y la edición vectorial.
+- Canvas para la exportación de imágenes.
+- [jsPDF 2.5.1](https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js) para documentos PDF.
+- Google Fonts: [Archivo](https://fonts.google.com/specimen/Archivo) e [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono).
+
+## Licencia
+
+Uso libre para planificación, edición y presentación de planos educativos e institucionales.
